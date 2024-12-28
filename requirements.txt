@@ -1,0 +1,4 @@
+asgiref
+Django
+django-cors-headers
+djangorestframework
