@@ -8,7 +8,7 @@ class User(AbstractUser):
         ('admin', 'Admin'),
         ('super_admin', 'Super Admin')
     ]
-    email = None
+
     type = models.CharField(max_length=20, choices=USER_TYPES, default='basic')
     middle_initial = models.CharField(max_length=1, null=True, blank=True, default='')
     classroom = models.ForeignKey(
