@@ -9,18 +9,35 @@ class User(AbstractUser):
         ('super_admin', 'Super Admin')
     ]
 
+    USER_ROLES = [
+        ('student', 'Student'),
+        ('teacher', 'Teacher'),
+    ]
+
+    SEX_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    ]
+
     type = models.CharField(max_length=20, choices=USER_TYPES, default='basic')
+    role = models.CharField(max_length=20, choices=USER_ROLES, default='student')
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, null=True)
     middle_initial = models.CharField(max_length=1, null=True, blank=True, default='')
     classroom = models.ForeignKey(
         'Classroom', on_delete=models.SET_NULL, null=True, blank=True, related_name='users'
     )
 
-    def __str__(self):
+    @property
+    def full_name(self):
         middle_initial = ' '
         if self.middle_initial:
             middle_initial = f' {self.middle_initial}. '
         
         return f'{self.first_name}{middle_initial}{self.last_name}'   # Ex: Aiden Tyler E. Mendoza | 'Aiden Tyler' for first_name
+    
+    def __str__(self):
+        return self.full_name
 
 
 class Classroom(models.Model):
@@ -28,6 +45,9 @@ class Classroom(models.Model):
     strand = models.CharField(max_length=255, null=True, blank=True)
     grade = models.IntegerField()
     drive_folder = models.CharField(max_length=255)
+    class_adviser = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name='advising_class'
+    )
     created_by = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_classrooms'
     )
