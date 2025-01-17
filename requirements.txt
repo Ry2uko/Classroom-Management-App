@@ -2,3 +2,6 @@ asgiref
 Django
 django-cors-headers
 djangorestframework
+django-environ
+(GOOGLE DRIVE API)
+Pillow
