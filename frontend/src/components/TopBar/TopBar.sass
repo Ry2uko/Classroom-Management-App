@@ -1,0 +1,50 @@
+@import '../../App'
+
+.TopBar
+    display: flex
+    padding: 1.5rem 2rem
+    align-items: center
+
+    .date-container
+        .date-text
+            color: #464646
+            font:
+                family: $ff-merriweather-sans
+                weight: 400
+                size: 1.1rem
+
+    .search-bar-container
+        flex: 1
+
+        .search-bar-input-group
+            position: relative
+            display: flex
+            height: 45px
+
+            button.search-btn
+                position: absolute
+                color: $theme1
+                background-color: $theme1-transparent
+                border: none
+                font-size: 1.3rem
+                height: 45px
+                width: 45px
+                border-radius: 0.8rem
+                cursor: pointer
+        
+            .input-text-container
+                input.search-input-text
+                    padding-left: 25px
+                    margin-left: 30px
+                    height: 100%
+                    width: 100%
+                    border: none
+                    border-radius: 0.4rem
+                    font:
+                        family: $ff-merriweather-sans
+                        size: 1rem
+                        weight: 400
+                        
+
+                    &:focus
+                        outline: none

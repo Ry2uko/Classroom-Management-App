@@ -29,13 +29,95 @@ const MainContent = () => (
                 </Link>
             </div>
             <div className="courses-items-container">
-
+                <div className="course-card">
+                    <div className="title-section">
+                        <h5 className="course-title">Media Information Literacy</h5>
+                        <h6 className="course-strand">CORE</h6>
+                    </div>
+                    <div className="details-section">
+                        <div className="course-files">
+                            <i className="fa-regular fa-folder"></i>
+                            <span>8 Files</span>
+                        </div>  
+                        <div className="course-teacher">
+                            <i className="fa-regular fa-circle-user"></i>
+                            <span>Ms. Angelika</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="course-card">
+                    <div className="title-section">
+                        <h5 className="course-title">General Chemistry 2</h5>
+                        <h6 className="course-strand">STEM</h6>
+                    </div>
+                    <div className="details-section">
+                        <div className="course-files">
+                            <i className="fa-regular fa-folder"></i>
+                            <span>14 Files</span>
+                        </div>  
+                        <div className="course-teacher">
+                            <i className="fa-regular fa-circle-user"></i>
+                            <span>Ms. Juvie</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="course-card">
+                    <div className="title-section">
+                        <h5 className="course-title">Sacraments</h5>
+                        <h6 className="course-strand">CORE</h6>
+                    </div>
+                    <div className="details-section">
+                        <div className="course-files">
+                            <i className="fa-regular fa-folder"></i>
+                            <span>2 Files</span>
+                        </div>  
+                        <div className="course-teacher">
+                            <i className="fa-regular fa-circle-user"></i>
+                            <span>Ms. Glo</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div className="qlinks-section section-container">
             <h4>Quick Links</h4>
             <div className="qlinks-items-container">
-
+                <div className="qlinks-card orange">
+                    <div className="qlinks-text">
+                        <i className="fa-solid fa-clipboard-user"></i>
+                        <span>Attendance</span>
+                    </div>
+                </div>
+                <div className="qlinks-card red">
+                    <div className="qlinks-text">
+                        <i className="fa-solid fa-bullhorn"></i>
+                        <span>Announcements</span>
+                    </div>
+                </div>
+                <div className="qlinks-card blue">
+                    <div className="qlinks-text">
+                        <i className="fa-regular fa-clock"></i>
+                        <span>Schedule</span>
+                    </div>
+                </div>
+                <div className="qlinks-card purple">
+                    <div className="qlinks-text">
+                        <i className="fa-regular fa-calendar"></i>
+                        <span>School Calendar</span>
+                    </div>
+                </div>
+                <div className="qlinks-card yellow">
+                    <div className="qlinks-text">
+                        <i className="fa-solid fa-chalkboard"></i>
+                        <span>Classroom</span>
+                    </div>
+                </div>
+                <div className="qlinks-card teal">
+                    <div className="qlinks-text">
+                        <i className="fa-solid fa-school"></i>
+                        <span>School</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -52,7 +134,7 @@ const WelcomeBanner = () => {
                 <h2 className="greetings">Good morning, Gab!</h2>
                 <div className="attendance-status-text-container">
                     <p className="attendance-status-text">You are marked as <span className="attendance-highlight">Present</span></p>
-                    <button type="button" classame="check-attendance-btn" onClick={handleCheckAttendance}>
+                    <button type="button" className="check-attendance-btn" onClick={handleCheckAttendance}>
                         Check Attendance
                     </button>
                 </div>
@@ -69,7 +151,7 @@ const WelcomeBanner = () => {
 const AttendanceStatus = () => {
     return (
         <div className="AttendanceStatus">
-            
+            <i className="fa-solid fa-check"></i>
         </div>
     )
 }

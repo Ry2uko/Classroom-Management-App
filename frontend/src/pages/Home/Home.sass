@@ -3,12 +3,13 @@
 .Home
     display: flex
     background-color: $bg-alt
-    border-radius: 1.5rem
+    border-radius: 2rem
     width: 100%
     height: 100%
 
     .main-content-container
         flex: 1
+        overflow: auto
 
     .profile-content-container .ProfileContent
         display: flex
@@ -16,7 +17,7 @@
         background-color: $bg-main
         width: 320px
         height: 100%
-        border-radius: 1.5rem
+        border-radius: 2rem
 
         .profile-section-container
             display: flex
@@ -116,3 +117,217 @@
                     color: #fff
                     background-color: $theme1
                     border-radius: 0.3rem
+
+.MainContent
+    padding: 0.5rem 2rem
+
+    .section-container
+        padding: 1rem 0
+
+        h4
+            color: #424242
+            font:
+                family: $ff-merriweather-sans
+                weight: 500
+                size: 1.2rem
+
+        .section-header
+            display: flex
+            align-items: center
+
+            .view-all-btn
+                margin-left: auto
+                text-decoration: none
+                color: #424242
+                padding: 4px 15px
+                background-color: #0000001e
+                border-radius: 1rem
+                font:
+                    family: $ff-merriweather-sans
+                    weight: 400
+                    size: 0.9rem
+
+    .courses-section
+        margin-top: 1rem
+
+        .courses-items-container
+            display: flex
+            justify-content: space-between
+            margin-top: 15px
+
+            .course-card
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+                background-color: #fff
+                display: flex
+                flex-direction: column
+                width: 220px
+                height: 160px
+                border-radius: 0.5rem
+                padding: 1rem
+                cursor: pointer
+
+                .title-section
+                    h5.course-title
+                        text-overflow: ellipsis
+                        overflow: hidden
+                        white-space: nowrap
+                        color: $theme1-text
+                        font:
+                            family: $ff-merriweather-sans
+                            size: 1.1rem
+                    
+                    h6.course-strand
+                        font:
+                            family: $ff-nunito
+                            size: 0.9rem
+                
+                .details-section
+                    margin-top: auto
+                    font:
+                        family: $ff-merriweather-sans
+                        weight: 300
+                        size: 1rem                    
+
+                    i
+                        margin-right: 10px
+
+                    .course-files
+                        padding: 5px 0
+
+    .qlinks-section
+        margin-top: 1rem
+
+        .qlinks-items-container
+            display: grid
+            grid-template-columns: auto auto auto
+            justify-content: space-between
+
+            .qlinks-card
+                width: 220px
+                height: 160px
+                margin-top: 1rem
+                background-color: #fff
+                border-radius: 0.5rem
+                border-bottom-width: 4px
+                border-bottom-style: solid
+                display: flex
+                justify-content: center
+                align-items: center
+                cursor: pointer
+
+                .qlinks-text
+                    text-align: center
+                    display: flex
+                    flex-direction: column
+                    font:
+                        weight: 400
+                        family: $ff-merriweather-sans
+                        size: 1.2rem
+                    
+                    i
+                        font-size: 1.7rem
+                        margin-bottom: 10px
+
+                &.blue
+                    border-color: #007BFF
+
+                    i
+                        color: #007BFF
+
+                &.red
+                    border-color: #DC3545
+
+                    i
+                        color: #DC3545
+
+                &.orange
+                    border-color: #FD7E14 
+
+                    i
+                        color: #FD7E14
+
+                &.purple
+                    border-color: #6F42C1 
+
+                    i
+                        color: #6F42C1
+
+                &.yellow
+                    border-color: #FFC107 
+
+                    i
+                        color: #FFC107
+
+                &.teal
+                    border-color: #20C997 
+
+                    i
+                        color: #20C997
+
+
+    .WelcomeBanner
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+        display: flex
+        background-color: #fff
+        width: 100%
+        height: 200px
+        border-radius: 0.5rem
+        padding: 10px
+
+        .banner-section-left
+            display: flex
+            flex-direction: column
+            justify-content: center
+            padding: 1rem
+            height: 100%
+            flex: 1
+
+            h2.greetings
+                color: $theme1-text
+                font:
+                    family: $ff-merriweather-sans
+                    size: 1.8rem
+                    weight: 800
+
+            .attendance-status-text-container
+                margin-top: 15px
+
+                .attendance-status-text
+                    color: #464646
+                    font:
+                        family: $ff-merriweather-sans
+                        size: 1rem
+                        weight: 400
+
+                button.check-attendance-btn
+                    margin-top: 20px
+                    padding: 8px 20px
+                    background-color: $theme1
+                    color: #fff
+                    border: none
+                    border-radius: 0.8rem
+                    cursor: pointer
+                    font:
+                        family: $ff-nunito
+                        size: 1rem
+                        weight: 400
+
+        .banner-section-right
+            display: flex
+            height: 100%
+            justify-content: center
+            align-items: center
+            width: 40%
+    
+    .AttendanceStatus
+        width: 145px
+        height: 145px
+        border-radius: 50%
+        background-color: $theme1
+        display: flex
+        justify-content: center
+        align-items: center
+
+        i
+            font-size: 7rem
+            color: #fff

@@ -3,5 +3,9 @@ Django
 django-cors-headers
 djangorestframework
 django-environ
-(GOOGLE DRIVE API)
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+pandas
 Pillow

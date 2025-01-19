@@ -66,7 +66,8 @@ class Classroom(models.Model):
     name = models.CharField(max_length=255)
     strand = models.CharField(max_length=255, null=True, blank=True)
     grade = models.IntegerField()
-    drive_folder = models.CharField(max_length=255)
+    drive_folder_id = models.CharField(max_length=255, blank=True, default='')
+    sheet_id = models.CharField(max_length=255, blank=True, default='')
     class_adviser = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name='advising_class'
     )

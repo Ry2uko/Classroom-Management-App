@@ -1,9 +1,21 @@
+import { useEffect, useState } from 'react';
 import './TopBar.css';
 
 const TopBar = () => {
     const handleSearch = () => {
         return;
     };
+
+    const [dateText, setDateText] = useState('');
+    useEffect(() => {
+        const currDate = new Date();
+        setDateText(currDate.toLocaleDateString('en-us', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        }));
+    }, []);
 
     return (
         <div className="TopBar">
@@ -20,7 +32,7 @@ const TopBar = () => {
                 </div>
             </div>
             <div className="date-container">
-                <span className="date-text">Thursday, 16 January 2025</span>
+                <span className="date-text">{dateText}</span>
             </div>
         </div>
     )

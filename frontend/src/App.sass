@@ -1,9 +1,11 @@
 $ff-nunito: "Nunito", serif
 $ff-merriweather-sans: "Merriweather Sans", serif
 $ff-roboto: "Roboto", serif
+$ff-schoolbell: 'Schoolbell', serif
 $bg-main: #fff
 $bg-alt: #e8eaee
 $theme1: #239732
+$theme1-transparent: #9DCAA7
 $theme1-text: #167f24
 $theme2: #98c324
 $theme3: #e1cc4f
@@ -17,78 +19,10 @@ $theme4: #ffd886
 body, html, #root
     width: 100%
     height: 100vh
-    overflow-x: hidden
 
 .parent-container
     display: flex
     position: relative
     width: 100%
-    height: 100%
-
-
-.Navigation
-    display: flex
-    flex-direction: column
-    color: $bg-main
-    height: 100%
-    width: 250px
-
-    .logo-container 
-        padding: 1.5rem 1rem 0 1rem
-
-        .logo-title
-            a
-                display: flex
-                text-decoration: none
-                align-items: center
-                color: $theme1-text
-
-            img.logo
-                width: 65px
-                height: 65px
-                margin-right: 5px
-            
-            h1.title
-                font:
-                    family: $ff-nunito
-                    size: 2.2rem
-                    weight: 700
-
-    .navbar-menu
-        display: flex
-        flex-direction: column
-        flex: 0
-        padding: 15px 1.5rem
-
-        &.navbar-main
-            justify-content: center
-            flex: 1
-
-        &.navbar-settings
-            border-top: 1px solid #aaa
-
-        .navbar-item
-            padding: 15px 0
-
-            a, button#signout-btn
-                text-decoration: none
-                color: $theme1-text
-                font:
-                    family: $ff-merriweather-sans
-                    weight: 500
-                    size: 1.4rem
-                opacity: 0.65
-                
-                &.active
-                    opacity: 1
-                
-            button#signout-btn
-                background: #fff
-                border: none
-
-            i
-                margin-right: 15px
-
-    &.mobile-view
-        display: none
-            
+    height: 100%         
+    overflow: hidden

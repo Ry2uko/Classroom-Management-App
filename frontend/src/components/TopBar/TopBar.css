@@ -1,1 +1,63 @@
-/*# sourceMappingURL=TopBar.css.map */
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.parent-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.TopBar {
+  display: flex;
+  padding: 1.5rem 2rem;
+  align-items: center;
+}
+.TopBar .date-container .date-text {
+  color: #464646;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+.TopBar .search-bar-container {
+  flex: 1;
+}
+.TopBar .search-bar-container .search-bar-input-group {
+  position: relative;
+  display: flex;
+  height: 45px;
+}
+.TopBar .search-bar-container .search-bar-input-group button.search-btn {
+  position: absolute;
+  color: #239732;
+  background-color: #9DCAA7;
+  border: none;
+  font-size: 1.3rem;
+  height: 45px;
+  width: 45px;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+.TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text {
+  padding-left: 25px;
+  margin-left: 30px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 0.4rem;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text:focus {
+  outline: none;
+}/*# sourceMappingURL=TopBar.css.map */
