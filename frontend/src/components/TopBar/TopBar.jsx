@@ -11,7 +11,7 @@ const TopBar = () => {
                 <div className="search-bar-input-group">
                     <div className="search-bar-btn-container">
                         <button type="button" onClick={handleSearch} className="search-btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <i className="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
                     <div className="input-text-container">

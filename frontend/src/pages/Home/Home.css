@@ -1,0 +1,197 @@
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.parent-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.Navigation {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  height: 100%;
+  width: 250px;
+}
+.Navigation .logo-container {
+  padding: 1.5rem 1rem 0 1rem;
+}
+.Navigation .logo-container .logo-title a {
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  color: #167f24;
+}
+.Navigation .logo-container .logo-title img.logo {
+  width: 65px;
+  height: 65px;
+  margin-right: 5px;
+}
+.Navigation .logo-container .logo-title h1.title {
+  font-family: "Nunito", serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+.Navigation .navbar-menu {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  padding: 15px 1.5rem;
+}
+.Navigation .navbar-menu.navbar-main {
+  justify-content: center;
+  flex: 1;
+}
+.Navigation .navbar-menu.navbar-settings {
+  border-top: 1px solid #aaa;
+}
+.Navigation .navbar-menu .navbar-item {
+  padding: 15px 0;
+}
+.Navigation .navbar-menu .navbar-item a, .Navigation .navbar-menu .navbar-item button#signout-btn {
+  text-decoration: none;
+  color: #167f24;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 500;
+  font-size: 1.4rem;
+  opacity: 0.65;
+}
+.Navigation .navbar-menu .navbar-item a.active, .Navigation .navbar-menu .navbar-item button#signout-btn.active {
+  opacity: 1;
+}
+.Navigation .navbar-menu .navbar-item button#signout-btn {
+  background: #fff;
+  border: none;
+}
+.Navigation .navbar-menu .navbar-item i {
+  margin-right: 15px;
+}
+.Navigation.mobile-view {
+  display: none;
+}
+
+.Home {
+  display: flex;
+  background-color: #e8eaee;
+  border-radius: 1.5rem;
+  width: 100%;
+  height: 100%;
+}
+.Home .main-content-container {
+  flex: 1;
+}
+.Home .profile-content-container .ProfileContent {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 320px;
+  height: 100%;
+  border-radius: 1.5rem;
+}
+.Home .profile-content-container .ProfileContent .profile-section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+.Home .profile-content-container .ProfileContent .profile-section-container .user-icon-container {
+  width: 120px;
+  height: 120px;
+}
+.Home .profile-content-container .ProfileContent .profile-section-container .user-icon-container img.user-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.Home .profile-content-container .ProfileContent .calendar-section-container {
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  margin: 15px 0;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container {
+  padding: 1rem;
+  margin-top: 10px;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container h6 {
+  font-family: "Merriweather Sans", serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+.Home .profile-content-container .ProfileContent .user-detail-container {
+  margin-top: 12px;
+  text-align: center;
+}
+.Home .profile-content-container .ProfileContent .user-detail-container h3.user-name {
+  margin: 0;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+.Home .profile-content-container .ProfileContent .user-detail-container h5.user-role {
+  margin: 0;
+  font-family: "Nunito", serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.Home .profile-content-container .ProfileContent .user-profile-btn-container {
+  margin-top: 15px;
+}
+.Home .profile-content-container .ProfileContent .user-profile-btn-container .user-profile-btn {
+  padding: 6px 30px;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: #fff;
+  background-color: #239732;
+  font-family: "Roboto", serif;
+  font-size: 1.1rem;
+}
+
+.Calendar {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+}
+.Calendar .calendar-header {
+  display: flex;
+  justify-content: space-between;
+}
+.Calendar .calendar-body {
+  display: flex;
+  flex-direction: column;
+}
+.Calendar .calendar-body .calendar-weekdays {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+.Calendar .calendar-body .calendar-days {
+  display: flex;
+  flex-wrap: wrap;
+}
+.Calendar .calendar-body .calendar-days .calendar-day {
+  width: 14.28%;
+  text-align: center;
+  font-family: "Nunito", serif;
+  font-weight: 400;
+  font-size: 1rem;
+}
+.Calendar .calendar-body .calendar-days .calendar-day.dimmed {
+  opacity: 0.5;
+}
+.Calendar .calendar-body .calendar-days .calendar-day.today {
+  color: #fff;
+  background-color: #239732;
+  border-radius: 0.3rem;
+}/*# sourceMappingURL=Home.css.map */

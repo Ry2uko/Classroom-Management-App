@@ -13,7 +13,7 @@ ReactDOM.createRoot(root).render(
 
 /* TODOs */
 
-/* 18/01/25 */
+/* 20/01/25 */
 // TODO: Designing Home (Desktop)
 
 // TODO: Loading courses on Home

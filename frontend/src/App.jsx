@@ -14,7 +14,7 @@ const App = () => {
   }
 
   return (
-    <div className="App">
+    <div className="App parent-container">
       <Navigation 
         handleLogin={handleLogin}
       />
