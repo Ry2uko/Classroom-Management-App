@@ -29,6 +29,7 @@ body, html, #root {
   overflow: auto;
 }
 .Home .profile-content-container .ProfileContent {
+  overflow: auto;
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -54,17 +55,55 @@ body, html, #root {
 .Home .profile-content-container .ProfileContent .calendar-section-container {
   display: flex;
   justify-content: center;
-  height: 150px;
   margin: 15px 0;
+  max-height: 240px;
 }
 .Home .profile-content-container .ProfileContent .reminders-section-container {
-  padding: 1rem;
+  padding: 0 1rem;
   margin-top: 10px;
 }
 .Home .profile-content-container .ProfileContent .reminders-section-container h6 {
   font-family: "Merriweather Sans", serif;
   font-weight: 400;
   font-size: 1.1rem;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item {
+  cursor: pointer;
+  display: flex;
+  padding: 10px 5px;
+  transition: 0.1s ease-out;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item:hover {
+  background-color: #C5E4C9;
+  border-radius: 0.3rem;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container {
+  background-color: #C5E4C9;
+  color: #167f24;
+  border-radius: 0.4rem;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container .reminder-title {
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container .reminder-date {
+  margin-top: 3px;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 300;
+  font-size: 0.9rem;
 }
 .Home .profile-content-container .ProfileContent .user-detail-container {
   margin-top: 12px;
@@ -99,12 +138,33 @@ body, html, #root {
   width: 280px;
   display: flex;
   flex-direction: column;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 300;
+  font-size: 1rem;
 }
 .Calendar .calendar-header {
   display: flex;
   justify-content: space-between;
 }
+.Calendar .calendar-header button#calendar-prev-btn, .Calendar .calendar-header button#calendar-next-btn {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  background-color: #fff;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border-radius: 0.5rem;
+  transition: 0.1s ease-out;
+}
+.Calendar .calendar-header button#calendar-prev-btn:hover, .Calendar .calendar-header button#calendar-next-btn:hover {
+  background-color: #f1f1f1;
+}
+.Calendar .calendar-header #calendar-month-year {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
 .Calendar .calendar-body {
+  margin-top: 7px;
   display: flex;
   flex-direction: column;
 }
@@ -113,14 +173,21 @@ body, html, #root {
   justify-content: space-around;
   text-align: center;
 }
+.Calendar .calendar-body .calendar-weekdays .weekday {
+  width: 14.28%;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
 .Calendar .calendar-body .calendar-days {
+  margin-top: 7px;
   display: flex;
   flex-wrap: wrap;
 }
 .Calendar .calendar-body .calendar-days .calendar-day {
+  padding: 4px;
   width: 14.28%;
   text-align: center;
-  font-family: "Nunito", serif;
+  font-family: "Roboto", serif;
   font-weight: 400;
   font-size: 1rem;
 }
@@ -223,6 +290,7 @@ body, html, #root {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: 0.2s ease-out;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text {
   text-align: center;
@@ -234,7 +302,7 @@ body, html, #root {
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text i {
   font-size: 1.7rem;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue {
   border-color: #007BFF;
@@ -242,11 +310,29 @@ body, html, #root {
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue i {
   color: #007BFF;
 }
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover {
+  background-color: #007BFF;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover .qlinks-text {
+  color: #fff;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover .qlinks-text i {
+  color: #fff;
+}
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red {
   border-color: #DC3545;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red i {
   color: #DC3545;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover {
+  background-color: #DC3545;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover .qlinks-text {
+  color: #fff;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover .qlinks-text i {
+  color: #fff;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange {
   border-color: #FD7E14;
@@ -254,11 +340,29 @@ body, html, #root {
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange i {
   color: #FD7E14;
 }
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover {
+  background-color: #FD7E14;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover .qlinks-text {
+  color: #fff;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover .qlinks-text i {
+  color: #fff;
+}
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple {
   border-color: #6F42C1;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple i {
   color: #6F42C1;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover {
+  background-color: #6F42C1;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover .qlinks-text {
+  color: #fff;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover .qlinks-text i {
+  color: #fff;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow {
   border-color: #FFC107;
@@ -266,11 +370,29 @@ body, html, #root {
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow i {
   color: #FFC107;
 }
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover {
+  background-color: #FFC107;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover .qlinks-text {
+  color: #fff;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover .qlinks-text i {
+  color: #fff;
+}
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal {
   border-color: #20C997;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal i {
   color: #20C997;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover {
+  background-color: #20C997;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover .qlinks-text {
+  color: #fff;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover .qlinks-text i {
+  color: #fff;
 }
 .MainContent .WelcomeBanner {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -280,6 +402,7 @@ body, html, #root {
   height: 200px;
   border-radius: 0.5rem;
   padding: 10px;
+  position: relative;
 }
 .MainContent .WelcomeBanner .banner-section-left {
   display: flex;
@@ -290,6 +413,7 @@ body, html, #root {
   flex: 1;
 }
 .MainContent .WelcomeBanner .banner-section-left h2.greetings {
+  z-index: 1;
   color: #167f24;
   font-family: "Merriweather Sans", serif;
   font-size: 1.8rem;
@@ -323,16 +447,10 @@ body, html, #root {
   align-items: center;
   width: 40%;
 }
-.MainContent .AttendanceStatus {
-  width: 145px;
-  height: 145px;
-  border-radius: 50%;
-  background-color: #239732;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.MainContent .AttendanceStatus i {
-  font-size: 7rem;
-  color: #fff;
+.MainContent .WelcomeBanner .banner-section-right .banner-hero-container img.banner-hero {
+  z-index: 0;
+  bottom: 0;
+  right: -20px;
+  position: absolute;
+  width: 350px;
 }/*# sourceMappingURL=Home.css.map */

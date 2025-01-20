@@ -12,6 +12,7 @@
         overflow: auto
 
     .profile-content-container .ProfileContent
+        overflow: auto
         display: flex
         flex-direction: column
         background-color: $bg-main
@@ -37,17 +38,58 @@
         .calendar-section-container
             display: flex
             justify-content: center
-            height: 150px
             margin: 15px 0
+            max-height: 240px
 
         .reminders-section-container
-            padding: 1rem
+            padding: 0 1rem
             margin-top: 10px
+
             h6
                 font:
                     family: $ff-merriweather-sans
                     weight: 400
                     size: 1.1rem
+            
+            .reminders-items-container
+                margin-top: 5px
+                display: flex
+                flex-direction: column
+
+                .reminder-item
+                    cursor: pointer
+                    display: flex
+                    padding: 10px 5px
+                    transition: 0.1s ease-out
+
+                    &:hover
+                        background-color: $theme1-transparent2
+                        border-radius: 0.3rem
+
+                    .icon-container
+                        background-color: $theme1-transparent2
+                        color: $theme1-text
+                        border-radius: 0.4rem
+                        padding: 10px 15px
+                        font-size: 1.2rem
+
+                    .text-container
+                        display: flex
+                        flex-direction: column
+                        margin-left: 12px
+
+                        .reminder-title
+                            font:
+                                family: $ff-merriweather-sans
+                                size: 1.1rem
+                                weight: 400
+
+                        .reminder-date
+                            margin-top: 3px
+                            font:
+                                family: $ff-merriweather-sans
+                                weight: 300
+                                size: 0.9rem
 
         .user-detail-container
             margin-top: 12px
@@ -84,12 +126,35 @@
     width: 280px
     display: flex
     flex-direction: column
+    font:
+        family: $ff-merriweather-sans
+        weight: 300
+        size: 1rem
 
     .calendar-header
         display: flex
         justify-content: space-between
+        
+        button#calendar-prev-btn, button#calendar-next-btn
+            padding: 5px 10px
+            cursor: pointer
+            font-size: 1.1rem
+            background-color: #fff
+            border: none
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px
+            border-radius: 0.5rem
+            transition: 0.1s ease-out
+
+            &:hover
+                background-color: #f1f1f1
+
+        #calendar-month-year
+            font:
+                weight: 600
+                size: 1.1rem
 
     .calendar-body
+        margin-top: 7px
         display: flex
         flex-direction: column
 
@@ -97,16 +162,24 @@
             display: flex
             justify-content: space-around
             text-align: center
+
+            .weekday
+                width: 14.28%
+                font:
+                    weight: 600
+                    size: 0.9rem
         
         .calendar-days
+            margin-top: 7px
             display: flex
             flex-wrap: wrap
 
             .calendar-day
+                padding: 4px
                 width: 14.28%
                 text-align: center
                 font:
-                    family: $ff-nunito
+                    family: $ff-roboto
                     weight: 400
                     size: 1rem
                 
@@ -214,6 +287,7 @@
                 justify-content: center
                 align-items: center
                 cursor: pointer
+                transition: 0.2s ease-out
 
                 .qlinks-text
                     text-align: center
@@ -226,43 +300,97 @@
                     
                     i
                         font-size: 1.7rem
-                        margin-bottom: 10px
+                        margin-bottom: 12px
 
                 &.blue
-                    border-color: #007BFF
+                    border-color: $blue
 
                     i
-                        color: #007BFF
+                        color: $blue
+
+                    &:hover
+                        background-color: $blue
+
+                        .qlinks-text
+                            color: #fff
+
+                            i
+                                color: #fff
 
                 &.red
-                    border-color: #DC3545
+                    border-color: $red
 
                     i
-                        color: #DC3545
+                        color: $red
+                    
+                    &:hover
+                        background-color: $red
+
+                        .qlinks-text
+                            color: #fff
+
+                            i
+                                color: #fff
 
                 &.orange
-                    border-color: #FD7E14 
+                    border-color: $orange
 
                     i
-                        color: #FD7E14
+                        color: $orange
+
+                    &:hover
+                        background-color: $orange
+
+                        .qlinks-text
+                            color: #fff
+
+                            i
+                                color: #fff
 
                 &.purple
-                    border-color: #6F42C1 
+                    border-color: $purple
 
                     i
-                        color: #6F42C1
+                        color: $purple
+                    
+                    &:hover
+                        background-color: $purple
+
+                        .qlinks-text
+                            color: #fff
+
+                            i
+                                color: #fff
 
                 &.yellow
-                    border-color: #FFC107 
+                    border-color: $yellow
 
                     i
-                        color: #FFC107
+                        color: $yellow
+
+                    &:hover
+                        background-color: $yellow
+
+                        .qlinks-text
+                            color: #fff
+
+                            i
+                                color: #fff
 
                 &.teal
-                    border-color: #20C997 
+                    border-color: $teal 
 
                     i
-                        color: #20C997
+                        color: $teal
+
+                    &:hover
+                        background-color: $teal
+
+                        .qlinks-text
+                            color: #fff
+
+                            i
+                                color: #fff
 
 
     .WelcomeBanner
@@ -273,6 +401,7 @@
         height: 200px
         border-radius: 0.5rem
         padding: 10px
+        position: relative
 
         .banner-section-left
             display: flex
@@ -283,6 +412,7 @@
             flex: 1
 
             h2.greetings
+                z-index: 1
                 color: $theme1-text
                 font:
                     family: $ff-merriweather-sans
@@ -318,16 +448,11 @@
             justify-content: center
             align-items: center
             width: 40%
-    
-    .AttendanceStatus
-        width: 145px
-        height: 145px
-        border-radius: 50%
-        background-color: $theme1
-        display: flex
-        justify-content: center
-        align-items: center
-
-        i
-            font-size: 7rem
-            color: #fff
+            
+            .banner-hero-container
+                img.banner-hero
+                    z-index: 0
+                    bottom: 0
+                    right: -20px
+                    position: absolute
+                    width: 350px

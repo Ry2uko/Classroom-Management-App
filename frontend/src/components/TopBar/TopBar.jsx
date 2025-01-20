@@ -9,12 +9,15 @@ const TopBar = () => {
     const [dateText, setDateText] = useState('');
     useEffect(() => {
         const currDate = new Date();
-        setDateText(currDate.toLocaleDateString('en-us', {
-            weekday: 'long',
-            day: 'numeric',
+        let formattedDate = currDate.toLocaleDateString('en-us', {
+            day: '2-digit',
             month: 'long',
+            weekday: 'long',
             year: 'numeric',
-        }));
+        });
+        
+        const parts = formattedDate.split(', ')
+        setDateText(`${parts[1].split(' ')[1]} ${parts[1].split(' ')[0]} ${parts[2]}, ${parts[0]}`);
     }, []);
 
     return (

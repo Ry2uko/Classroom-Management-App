@@ -140,21 +140,13 @@ const WelcomeBanner = () => {
                 </div>
             </div>
             <div className="banner-section-right">
-                <div className="attendance-status-container">
-                    <AttendanceStatus />
+                <div className="banner-hero-container">
+                    <img src="/images/banner-hero.png" alt="banner-hero" className="banner-hero" />
                 </div>
             </div>
         </div>
     );
 };
-
-const AttendanceStatus = () => {
-    return (
-        <div className="AttendanceStatus">
-            <i className="fa-solid fa-check"></i>
-        </div>
-    )
-}
 
 
 /* ProfileContent */
@@ -283,7 +275,33 @@ const ProfileContent = () => (
         <div className="reminders-section-container">
             <h6>Reminders</h6>
             <div className="reminders-items-container">
-                
+                <div className="reminder-item">
+                    <div className="icon-container">
+                        <i className="fa-regular fa-bell"></i>
+                    </div>
+                    <div className="text-container">
+                        <span className="reminder-title">Midterm Exam Schedule</span>
+                        <span className="reminder-date">20 January 2025, Monday</span>
+                    </div>
+                </div>
+                <div className="reminder-item">
+                    <div className="icon-container">
+                        <i className="fa-regular fa-bell"></i>
+                    </div>
+                    <div className="text-container">
+                        <span className="reminder-title">Card Giving Date</span>
+                        <span className="reminder-date">20 January 2025, Monday</span>
+                    </div>
+                </div>
+                <div className="reminder-item">
+                    <div className="icon-container">
+                        <i className="fa-regular fa-bell"></i>
+                    </div>
+                    <div className="text-container">
+                        <span className="reminder-title">School Clean-up Drive</span>
+                        <span className="reminder-date">19 January 2025, Sunday</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
