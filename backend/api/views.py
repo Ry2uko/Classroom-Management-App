@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Count, Q
 from rest_framework import viewsets
-from rest_framework.exceptions import ValidationError
-from .models import User, Classroom
-from .serializers import UserSerializer, ClassroomSerializer
+from rest_framework.exceptions import ValidationError, NotFound
+from .models import User, Classroom, Content, Course
+from .serializers import UserSerializer, ClassroomSerializer, ContentSerializer, CourseSerializer
+from .constants import STRAND_CHOICES
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -32,6 +33,55 @@ class UserViewSet(viewsets.ModelViewSet):
         return queryset
 
 
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+    def get_queryset(self):
+        queryset = Course.objects.all().annotate(
+            contents_count=Count('contents')
+        )
+        
+        strand = self.request.query_params.get('strand', None)
+        if strand is not None:
+            strand_choices = [strand_choice[0] for strand_choice in STRAND_CHOICES]
+            if (strand := strand.upper()) not in strand_choices:
+                raise ValidationError('Invalid strand')
+            
+            queryset = queryset.filter(
+                Q(classroom__strand=strand)|Q(classroom__isnull=True)
+            )
+        
+        major_only = self.request.query_params.get('major_only', False)
+        if major_only and strand is not None:
+            if major_only.lower() == 'true':
+                queryset = queryset.filter(
+                    classroom__strand=strand
+                )
+
+        return queryset
+
+
 class ClassroomViewSet(viewsets.ModelViewSet):
     queryset = Classroom.objects.all()
     serializer_class = ClassroomSerializer
+
+    def get_queryset(self):
+        queryset = Classroom.objects.all()
+        user_id = self.request.query_params.get('user', None)
+        if user_id is not None:
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                raise NotFound(detail='User not found')
+            
+            queryset = queryset.filter(id=user.classroom.id)
+
+
+        return queryset
+
+
+
+class ContentViewSet(viewsets.ModelViewSet):
+    queryset = Content.objects.all()
+    serializer_class = ContentSerializer

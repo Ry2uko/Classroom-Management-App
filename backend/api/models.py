@@ -1,25 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from .constants import *
 import os
 
+
 class User(AbstractUser):
-    USER_TYPES = [
-        ('basic', 'Basic'),
-        ('admin', 'Admin'),
-        ('super_admin', 'Super Admin')
-    ]
-
-    USER_ROLES = [
-        ('student', 'Student'),
-        ('teacher', 'Teacher'),
-    ]
-
-    SEX_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
-    ]
-
     type = models.CharField(max_length=20, choices=USER_TYPES, default='basic')
     role = models.CharField(max_length=20, choices=USER_ROLES, default='student')
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, null=True)
@@ -85,7 +70,7 @@ class Course(models.Model):
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_courses'
     )
     classroom = models.ForeignKey(
-        Classroom, on_delete=models.CASCADE, related_name='courses'
+        Classroom, on_delete=models.CASCADE, null=True, blank=True, related_name='courses'
     )
 
     def __str__(self):
@@ -93,17 +78,6 @@ class Course(models.Model):
     
 
 class Content(models.Model):
-    CONTENT_TYPES = [
-        ('text', 'Text'),
-        ('file', 'File'),
-        ('mixed', 'Mixed'),
-    ]
-
-    VISIBILITY_CHOICES = [
-        ('school', 'School'),
-        ('classroom', 'Classroom'),
-    ]
-
     title = models.CharField(max_length=255)
     content = models.TextField(null=True, blank=True, default='')
     content_type = models.CharField(max_length=20, choices=CONTENT_TYPES, default='text')
@@ -124,27 +98,6 @@ class Content(models.Model):
 
 
 class File(models.Model):
-    FILE_TYPES = [
-        ('pdf', 'PDF Document'),
-        ('docx', 'Word Document'),
-        ('pptx', 'Powerpoint Presentation'),
-        ('xlsx', 'Excel Spreadsheet'),
-        ('jpg', 'JPEG Image'),
-        ('png', 'PNG Image'),
-        ('mp4', 'MP4 Video'),
-        ('other', 'Other File Type'),
-    ]
-
-    MIME_TYPES = [
-        ('application/pdf', 'PDF Document'),
-        ('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Word Document'),
-        ('application/vnd.openxmlformats-officedocument.presentationml.presentation', 'PowerPoint Presentation'),
-        ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Excel Spreadsheet'),
-        ('image/jpeg', 'JPEG Image'),
-        ('image/png', 'PNG Image'),
-        ('video/mp4', 'MP4 Video'),
-    ]
-
     file_name = models.CharField(max_length=255)
     drive_web_link = models.TextField(blank=True, null=True, default='') 
     drive_id = models.CharField(max_length=255)

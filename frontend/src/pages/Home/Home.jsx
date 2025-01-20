@@ -1,127 +1,174 @@
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
+import axios from 'axios';
 import './Home.css'
 
+/* TEST DATA */
+const TEST_USER_ID = 11
+
 const Home = () => {
+    const [userData, setUserData] = useState({});
+    const [userClassroomData, setUserClassroomData] = useState({});
+    const [coursesData, setCoursesData] = useState([]);
+    const [attendanceData, setAttendanceData] = useState({});
+    const [dataLoaded, setDataLoaded] = useState(false);
+
+    const fetchData = async (path) => {
+        try {
+            const res = await axios.get(`http://127.0.0.1:8000${path}`);
+            return res.data;
+        } catch (err) {
+            console.error('Error fetching items: ', err);
+            throw err;
+        }
+    };
+
+    useEffect(() => {
+        const fetchHomeData = async () => {
+            try {
+                const user = await fetchData(`/users/${TEST_USER_ID}`);
+                const userClassroom = await fetchData(`/classrooms?user=${TEST_USER_ID}`);
+                const courses = await fetchData(`/courses?strand=${userClassroom[0].strand}`);
+
+                setUserData(user);
+                setUserClassroomData(userClassroom[0]);
+                setCoursesData(courses);
+                setDataLoaded(true);
+            } catch (err) {
+                console.error('Failed to fetch user data: ', err);
+                throw err;
+            }
+        };
+
+        fetchHomeData();
+    }, []);
+
     return (
         <div className="Home">
-            <div className="main-content-container">
-                <TopBar />
-                <MainContent />
-            </div>
-            <div className="profile-content-container">
-                <ProfileContent />
-            </div>
+            { dataLoaded ? (
+                <>
+                    <div className="main-content-container">
+                        <TopBar />
+                        <MainContent 
+                            fetchData={fetchData}
+                            userClassroomData={userClassroomData} 
+                            coursesData={coursesData}
+                        />
+                    </div>
+                    <div className="profile-content-container">
+                        <ProfileContent userData={userData}/>
+                    </div>
+                </>
+            ) : (
+                <span className="loader"></span>
+            )}
         </div>
-    )
+    );
 };
 
 /* MainContent */
-const MainContent = () => (
-    <div className="MainContent">
-        <WelcomeBanner />
-        <div className="courses-section section-container">
-            <div className="section-header">
-                <h4>Courses</h4>
-                <Link to="/courses" className="view-all-btn">
-                    View All <i className="fa-solid fa-angle-right"></i>
-                </Link>
-            </div>
-            <div className="courses-items-container">
-                <div className="course-card">
-                    <div className="title-section">
-                        <h5 className="course-title">Media Information Literacy</h5>
-                        <h6 className="course-strand">CORE</h6>
-                    </div>
-                    <div className="details-section">
-                        <div className="course-files">
-                            <i className="fa-regular fa-folder"></i>
-                            <span>8 Files</span>
-                        </div>  
-                        <div className="course-teacher">
-                            <i className="fa-regular fa-circle-user"></i>
-                            <span>Ms. Angelika</span>
-                        </div>
-                    </div>
+const MainContent = ({ fetchData, userClassroomData, coursesData }) => {
+    const [randCourses, setRandCourses] = useState([]);
+    useEffect(() => {
+        const loadCourses = async () => {
+            const shuffledCourses = [...coursesData].sort(() => Math.random() - 0.5);
+            const randomCourses = shuffledCourses.slice(0, 3);
+            
+            const updatedCourses = await Promise.all(randomCourses.map(async (course) => {
+                const teacher = await fetchData(`/users/${course.assigned}`);
+                course.assigned_teacher = (teacher.sex === 'M' ? `Sir ${teacher.username}` : `Ms. ${teacher.username}`);
+
+                return course;
+            }));
+
+            setRandCourses(updatedCourses);           
+        };  
+
+        loadCourses();
+    }, [coursesData]);
+
+    return (
+        <div className="MainContent">
+            <WelcomeBanner />
+            <div className="courses-section section-container">
+                <div className="section-header">
+                    <h4>Courses</h4>
+                    <Link to="/courses" className="view-all-btn">
+                        View All <i className="fa-solid fa-angle-right"></i>
+                    </Link>
                 </div>
-                <div className="course-card">
-                    <div className="title-section">
-                        <h5 className="course-title">General Chemistry 2</h5>
-                        <h6 className="course-strand">STEM</h6>
-                    </div>
-                    <div className="details-section">
-                        <div className="course-files">
-                            <i className="fa-regular fa-folder"></i>
-                            <span>14 Files</span>
-                        </div>  
-                        <div className="course-teacher">
-                            <i className="fa-regular fa-circle-user"></i>
-                            <span>Ms. Juvie</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="course-card">
-                    <div className="title-section">
-                        <h5 className="course-title">Sacraments</h5>
-                        <h6 className="course-strand">CORE</h6>
-                    </div>
-                    <div className="details-section">
-                        <div className="course-files">
-                            <i className="fa-regular fa-folder"></i>
-                            <span>2 Files</span>
-                        </div>  
-                        <div className="course-teacher">
-                            <i className="fa-regular fa-circle-user"></i>
-                            <span>Ms. Glo</span>
-                        </div>
-                    </div>
+                <div className="courses-items-container">
+                    { randCourses.length === 0 ? (
+                        <span className="loader"></span>
+                    ) : (
+                        randCourses.map((course, index) => (
+                            <div className="course-card" key={index}>
+                                <div className="title-section">
+                                    <h5 className="course-title">{course.name}</h5>
+                                    <h6 className="course-strand">{
+                                        course.is_major ? userClassroomData.strand : 'CORE'
+                                    }</h6>
+                                </div>
+                                <div className="details-section">
+                                    <div className="course-items">
+                                        <i className="fa-regular fa-folder"></i>
+                                        <span>{course.contents_count} Items</span>
+                                    </div>  
+                                    <div className="course-teacher">
+                                        <i className="fa-regular fa-circle-user"></i>
+                                        <span>{course.assigned_teacher}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) }
                 </div>
             </div>
-        </div>
-        <div className="qlinks-section section-container">
-            <h4>Quick Links</h4>
-            <div className="qlinks-items-container">
-                <div className="qlinks-card orange">
-                    <div className="qlinks-text">
-                        <i className="fa-solid fa-clipboard-user"></i>
-                        <span>Attendance</span>
+            <div className="qlinks-section section-container">
+                <h4>Quick Links</h4>
+                <div className="qlinks-items-container">
+                    <div className="qlinks-card orange">
+                        <div className="qlinks-text">
+                            <i className="fa-solid fa-clipboard-user"></i>
+                            <span>Attendance</span>
+                        </div>
                     </div>
-                </div>
-                <div className="qlinks-card red">
-                    <div className="qlinks-text">
-                        <i className="fa-solid fa-bullhorn"></i>
-                        <span>Announcements</span>
+                    <div className="qlinks-card red">
+                        <div className="qlinks-text">
+                            <i className="fa-solid fa-bullhorn"></i>
+                            <span>Announcements</span>
+                        </div>
                     </div>
-                </div>
-                <div className="qlinks-card blue">
-                    <div className="qlinks-text">
-                        <i className="fa-regular fa-clock"></i>
-                        <span>Schedule</span>
+                    <div className="qlinks-card blue">
+                        <div className="qlinks-text">
+                            <i className="fa-regular fa-clock"></i>
+                            <span>Schedule</span>
+                        </div>
                     </div>
-                </div>
-                <div className="qlinks-card purple">
-                    <div className="qlinks-text">
-                        <i className="fa-regular fa-calendar"></i>
-                        <span>School Calendar</span>
+                    <div className="qlinks-card purple">
+                        <div className="qlinks-text">
+                            <i className="fa-regular fa-calendar"></i>
+                            <span>School Calendar</span>
+                        </div>
                     </div>
-                </div>
-                <div className="qlinks-card yellow">
-                    <div className="qlinks-text">
-                        <i className="fa-solid fa-chalkboard"></i>
-                        <span>Classroom</span>
+                    <div className="qlinks-card yellow">
+                        <div className="qlinks-text">
+                            <i className="fa-solid fa-chalkboard"></i>
+                            <span>Classroom</span>
+                        </div>
                     </div>
-                </div>
-                <div className="qlinks-card teal">
-                    <div className="qlinks-text">
-                        <i className="fa-solid fa-school"></i>
-                        <span>School</span>
+                    <div className="qlinks-card teal">
+                        <div className="qlinks-text">
+                            <i className="fa-solid fa-school"></i>
+                            <span>School</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 const WelcomeBanner = () => {
     const handleCheckAttendance = () => {

@@ -17,6 +17,7 @@ const TopBar = () => {
         });
         
         const parts = formattedDate.split(', ')
+
         setDateText(`${parts[1].split(' ')[1]} ${parts[1].split(' ')[0]} ${parts[2]}, ${parts[0]}`);
     }, []);
 
