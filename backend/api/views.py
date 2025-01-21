@@ -1,10 +1,37 @@
 from django.shortcuts import render
 from django.db.models import Count, Q
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.exceptions import ValidationError, NotFound
 from .models import User, Classroom, Content, Course
-from .serializers import UserSerializer, ClassroomSerializer, ContentSerializer, CourseSerializer
 from .constants import STRAND_CHOICES
+from .serializers import (
+    CustomTokenObtainPairSerializer, 
+    UserSerializer, 
+    ClassroomSerializer, 
+    ContentSerializer, 
+    CourseSerializer
+)
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request):
+        try:
+            refresh_token = request.data['refresh_token']
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserViewSet(viewsets.ModelViewSet):

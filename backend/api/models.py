@@ -32,7 +32,7 @@ class User(AbstractUser):
                 self.profile_img.name = 'images/default_f.jpg'
             else:
                 self.profile_img.name = 'images/default.jpg'
-        
+
         super().save(*args, **kwargs)
 
     @property
