@@ -5,7 +5,7 @@ import os
 
 
 class User(AbstractUser):
-    type = models.CharField(max_length=20, choices=USER_TYPES, default='basic')
+    type = models.CharField(max_length=20, choices=USER_TYPES, default='student')
     role = models.CharField(max_length=20, choices=USER_ROLES, default='student')
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, null=True)
     profile_img = models.ImageField(upload_to='profile_imgs/', null=True, blank=True, default=None)

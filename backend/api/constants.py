@@ -1,6 +1,6 @@
 # User Model
 USER_TYPES = [
-    ('basic', 'Basic'),
+    ('student', 'Student'),
     ('admin', 'Admin'),
     ('super_admin', 'Super Admin')
 ]
