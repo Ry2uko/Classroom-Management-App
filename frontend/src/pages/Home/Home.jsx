@@ -20,7 +20,6 @@ const Home = () => {
             return res.data;
         } catch (err) {
             console.error('Error fetching items: ', err);
-            throw err;
         }
     };
 
@@ -37,7 +36,6 @@ const Home = () => {
                 setDataLoaded(true);
             } catch (err) {
                 console.error('Failed to fetch user data: ', err);
-                throw err;
             }
         };
 

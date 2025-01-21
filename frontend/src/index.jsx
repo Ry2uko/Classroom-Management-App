@@ -13,22 +13,25 @@ ReactDOM.createRoot(root).render(
 
 /* TODOs */
 
-/* 21/01/25 */  
-// TODO: Login System
-// TODO: Login View (Desktop and Mobile)
+// LOGIN SYSTEM 😭😭
+
+/* 22/01/25 */
+// TODO: Handling Protective Routes and useNavigate
+// TODO: Handling user session and account type loading
+// TODO: ( Login Test )
+// TODO: Mobile Login View
 
 // TODO: Attendance Model, and Sample Creation, and Loading
 // TODO: View Record, Attendance Status (SVG for the Icon); https://css.gg/
 
-// TODO: Profile View
-
+/* 23/01/25 */
+// TODO: Profile View 
 // TODO: Announcements Model, and Sample Creation, and Loading
 // TODO: Calendar Event, Holiday, ...
-
 // TODO: Settings View
 
+/* 24/01/25 */
 // TODO: Designing Home (Mobile)
-
 
 // TODO: LAYOUT FOR ADMIN VIEW, DESKTOP AND MOBILE
 // TODO: ADMIN VIEW SETUP

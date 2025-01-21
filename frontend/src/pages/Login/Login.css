@@ -148,6 +148,9 @@ body, html, #root {
   flex-direction: column;
 }
 .Login .login-form-container h1 {
+  justify-content: center;
+  align-items: center;
+  display: flex;
   letter-spacing: 1px;
   text-align: center;
   margin-bottom: 1.5rem;
@@ -155,16 +158,36 @@ body, html, #root {
   font-weight: 320;
   font-size: 2.5rem;
 }
+.Login .login-form-container h1 .text-animation {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  overflow: hidden;
+  height: 55px;
+  position: relative;
+}
+.Login .login-form-container h1 .text-animation span {
+  transition: margin 0.4s ease-out;
+}
+.Login .login-form-container h1 .text-animation.student span.student {
+  margin-top: 0;
+}
+.Login .login-form-container h1 .text-animation.admin span.student {
+  margin-top: -55px;
+}
 .Login .login-form-container span.error-text {
   text-align: center;
   margin: 0 auto;
   letter-spacing: 1px;
   margin: 1rem 0 0.5rem 0;
-  visibility: hidden;
   color: #e74545;
+  visibility: hidden;
   font-family: "Open Sans", serif;
   font-weight: 350;
   font-size: 1.15rem;
+}
+.Login .login-form-container span.error-text.visible-error {
+  visibility: visible;
 }
 .Login .login-form-container .type-switch-container .type-switch {
   display: flex;
@@ -206,6 +229,10 @@ body, html, #root {
 .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn.active {
   color: #fff;
   border-color: #239732;
+  font-weight: 450;
+}
+.Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn:hover {
+  font-weight: 450;
 }
 .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn#switch-student {
   border-right-width: 0.75px;
@@ -224,7 +251,7 @@ body, html, #root {
 .Login .login-form-container .login-form .login-btn-container {
   display: flex;
   justify-content: center;
-  margin-top: 2.4rem;
+  margin-top: 2.8rem;
 }
 .Login .login-form-container .login-form .login-btn-container button#login-btn {
   border-radius: 1rem;
@@ -251,6 +278,27 @@ body, html, #root {
 .Login .login-form-container .login-form .text-input-container input:-webkit-autofill {
   -webkit-box-shadow: inset 0 0 0px 9999px white;
 }
+.Login .login-form-container .login-form .text-input-container .input-group {
+  position: relative;
+}
+.Login .login-form-container .login-form .text-input-container .input-group button.show-password-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-size: 1.1rem;
+  padding: 7px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: 0.15s ease-out;
+}
+.Login .login-form-container .login-form .text-input-container .input-group button.show-password-btn:hover i {
+  color: #333;
+}
+.Login .login-form-container .login-form .text-input-container .input-group button.show-password-btn i {
+  color: #555;
+}
 .Login .login-form-container .login-form .text-input-container .form-input {
   padding: 7px 15px;
   width: 320px;
@@ -260,6 +308,11 @@ body, html, #root {
   border-radius: 0.1rem;
   outline: none;
   color: #111;
+  transition: all 0.2s;
   font-family: "Nunito", serif;
   font-size: 0.95rem;
+}
+.Login .login-form-container .login-form .text-input-container .form-input:focus {
+  border-color: #333;
+  color: #000;
 }/*# sourceMappingURL=Login.css.map */

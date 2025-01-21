@@ -1,24 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { useNavigate} from 'react-router-dom';
 import './Login.css';
+import axios from 'axios';
 
 const Login = () => {
-    const [loginText, setLoginText] = useState('Student');
+    const navigate = useNavigate();
+
     const [loginType, setLoginType] = useState('student');
     const [errorMsg, setErrorMsg] = useState('This is a placeholder text');
+    const [visibleError, setVisibleError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleStudentSwitch = () => {
         if (loginType !== 'student') {
-            setLoginText('Student');
             setLoginType('student');
         }
     };
 
     const handleAdminSwitch = () => {
         if (loginType !== 'admin') {            
-            setLoginText('Admin');
             setLoginType('admin');
         }
     };
@@ -31,8 +35,31 @@ const Login = () => {
         setPassword(value)
     }
 
-    const handleLogin = () => {
-        const user = { full_name: fullName, password };
+    const handleShowPassword = (show) => {
+        setShowPassword(show);
+    }
+
+    const handleLogin = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post('http://127.0.0.1:8000/token/', {
+                'full_name': fullName,
+                'password': password,
+                'type': loginType
+            });
+            const { access, refresh } = response.data;
+
+            // Store tokens securely
+            localStorage.setItem('accessToken', access);
+            localStorage.setItem('refreshToken', refresh);
+
+            navigate('/', { replace: true })
+        } catch (error) {
+            setLoading(false);
+            console.error(error);
+            setErrorMsg('Invalid username or password');
+            setVisibleError(true);
+        }
     };
 
     return (
@@ -51,35 +78,63 @@ const Login = () => {
                 </span>
             </div>
             <div className="login-form-section">
-                <div className="login-form-container">
-                    <h1>{loginText} Login</h1>
-                    <div className="type-switch-container">
-                        <div className="type-switch">
-                            <div className={`toggle-indicator ${loginType}`}></div>
-                            <button type="button" className={`toggle-switch-btn ${loginType === 'student' ? 'active' : ''}`} id="switch-student"
-                            onClick={handleStudentSwitch}>
-                                Student
-                            </button>
-                            <button type="button" className={`toggle-switch-btn ${loginType === 'admin' ? 'active' : ''}`} id="switch-admin"
-                            onClick={handleAdminSwitch}>
-                                Admin
-                            </button>
-                        </div>
-                    </div>
-                    <span className="error-text">{errorMsg}</span>
-                    <div className="login-form">
-                        <div className="text-input-container">
-                            <input type="text" placeholder="FULL NAME" className="form-input" 
-                            id="full-name-input" value={fullName} onChange={e => handleFullNameChange(e.target.value)} />
-                            <input type="password" placeholder="PASSWORD" className="form-input" 
-                            id="password-input" value={password} onChange={e => handlePasswordChange(e.target.value)} />
-                        </div>
-                        <div className="login-btn-container">
-                            <button type="button" id="login-btn" onClick={handleLogin}>LOGIN</button>
-                        </div>
-                    </div>
+                {
+                    loading ? (
+                        <span className="loader"></span>
+                    ) : (
+                        <div className="login-form-container">
+                            <h1>
+                                <div className={`text-animation ${loginType}`}>
+                                    <span className="student">Student</span>
+                                    <span className="admin">Admin</span>
+                                </div>
+                                Login
+                            </h1>
+                            <div className="type-switch-container">
+                                <div className="type-switch">
+                                    <div className={`toggle-indicator ${loginType}`}></div>
+                                    <button type="button" className={`toggle-switch-btn ${loginType === 'student' ? 'active' : ''}`} id="switch-student"
+                                    onClick={handleStudentSwitch}>
+                                        Student
+                                    </button>
+                                    <button type="button" className={`toggle-switch-btn ${loginType === 'admin' ? 'active' : ''}`} id="switch-admin"
+                                    onClick={handleAdminSwitch}>
+                                        Admin
+                                    </button>
+                                </div>
+                            </div>
+                            <span className={`error-text ${visibleError ? 'visible-error' : ''}`}>
+                                {errorMsg}
+                            </span>
+                            <div className="login-form">
+                                <div className="text-input-container">
+                                    <input type="text" placeholder="FULL NAME" className="form-input" 
+                                    id="full-name-input" value={fullName} onChange={e => handleFullNameChange(e.target.value)} />
 
-                </div>
+                                    <div className="input-group">
+                                        <input type={showPassword ? "text" : "password"} placeholder="PASSWORD" className="form-input" 
+                                        id="password-input" value={password} onChange={e => handlePasswordChange(e.target.value)} />
+
+                                        { showPassword ? (
+                                            <button type="button" className="show-password-btn"
+                                            onClick={() => handleShowPassword(false)}>
+                                                <i className="fa-solid fa-eye-slash"></i>
+                                            </button>
+                                        ) : (
+                                            <button type="button" className="show-password-btn"
+                                            onClick={() => handleShowPassword(true)}>
+                                                <i className="fa-solid fa-eye"></i>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="login-btn-container">
+                                    <button type="button" id="login-btn" onClick={handleLogin}>LOGIN</button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );
