@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import authenticate
 from .models import User, Classroom, Content, Course
+from .constants import USER_TYPES
 import re
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):   
@@ -43,7 +44,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Check user type if valid
         # Student admins can either log in as a student or an admin
         # While, teachers can only log in as admins
-        if account_type.lower() not in ['student', 'admin']:
+        if account_type.lower() not in [user_type[0] for user_type in USER_TYPES]:
             raise serializers.ValidationError({ 'detail': 'Invalid account type.' })
 
         # Validate full name
@@ -68,25 +69,30 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         if not middle_initial or not last_name:
             raise serializers.ValidationError({ 'detail': 'Invalid full name format.' })
-        
+        print(first_name)
+        print(last_name)
+        print(middle_initial)
+        print(account_type)
+        print(password)
         # Authenticate user by full name
         self.user = authenticate(
             request=self.context.get('request'),
             first_name=first_name,
             middle_initial=middle_initial,
-            type=account_type,
+            account_type=account_type,
             last_name=last_name,
             password=password,
         )
-        print(self.user)
+        print(self.context.get('request'))
         if not self.user:
             raise serializers.ValidationError({
                 'detail': 'Invalid credentials.'
             })
         
+        attrs['username'] = self.user.username
+        attrs['full_name'] = full_name
+        attrs['type'] = self.user.type
         data = super().validate(attrs)
-        data['full_name'] = self.user.full_name
-        data['type'] = self.user.type
 
         return data
 

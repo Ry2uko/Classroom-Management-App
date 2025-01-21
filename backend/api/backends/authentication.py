@@ -5,6 +5,7 @@ from api.models import User
 
 class FullNameAuthBackend(BaseBackend):
     def authenticate(self, request, first_name, middle_initial, last_name, account_type, password):
+        # Query user based on given information
         try:
             user = User.objects.get(
                 first_name=first_name,
@@ -16,18 +17,27 @@ class FullNameAuthBackend(BaseBackend):
             user_account_type = 'student' if user.type == 'student' else 'admin'
             if user.role == 'student':
                 if account_type == 'admin' and user_account_type != 'admin':
-                    # Account type does not match
-
+                    # Student login as admin
                     return None
-                elif user_account_type == 'admin' and account_type == 'student':
-                    # Student admin login as student
-                    user.logged_in_as = 'student'
-                elif user_account_type == 'admin' and account_type == 'admin':
-                    user.logged_in_as = user.account_type
+                elif user_account_type == 'admin':
+                    # Student admin login as
+                    request.session['logged_in_as'] = account_type
             if user.role == 'teacher':
                 if account_type == 'student':
                     return None
-
-
         except User.DoesNotExist:
             return None
+        
+        # Validate password
+        print('HERE')
+        if user and check_password(password, user.password):
+            return user
+        
+        return None
+    
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None
+    

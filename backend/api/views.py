@@ -40,7 +40,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = User.objects.all()
 
-        USER_TYPES = ['basic', 'admin', 'super_admin', '_admin']  # _admin -> either admin or super_admin
+        USER_TYPES = ['student', 'admin', 'super_admin', '_admin']  # _admin -> either admin or super_admin
         user_type = self.request.query_params.get('type', None)
         if user_type is not None:
             if (user_type := user_type.lower()) not in USER_TYPES:

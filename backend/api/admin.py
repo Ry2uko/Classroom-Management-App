@@ -1,5 +1,28 @@
 from django.contrib import admin
 from .models import User, Classroom, Course, File, Content, ContentAttachment
+import random
+import string
+
+
+def generate_unique_password(pin_length=4):
+    """ Generates a unique password with this format: sgat<PIN>. """
+
+    return 'sgat' + ''.join(random.choices(string.digits, k=pin_length))
+
+
+def set_random_password(modeladmin, request, queryset):
+    """ Set random passwords for selected users. """
+
+    for user in queryset:
+        if user.type == 'student':
+            password = generate_unique_password(4)
+        else:
+            password = generate_unique_password(6)
+
+        print(f'{user.full_name}\t\t{password}')
+        user.set_password(password)
+        user.save()
+        modeladmin.message_user(request, f'Password for {user.full_name} set to {password}')
 
 
 @admin.register(User)
@@ -7,6 +30,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'username', 'classroom', 'type', 'role', 'sex')
     list_filter = ('classroom', 'classroom__strand', 'classroom__grade', 'type', 'role', 'sex')
     search_fields = ('username',)
+    actions = (set_random_password,)
 
     def full_name(self, obj):
         return str(obj)

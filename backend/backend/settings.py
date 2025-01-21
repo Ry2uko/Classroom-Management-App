@@ -50,7 +50,7 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    '',
+    'api.backends.authentication.FullNameAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
