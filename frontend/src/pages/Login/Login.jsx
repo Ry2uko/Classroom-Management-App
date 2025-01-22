@@ -4,7 +4,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import './Login.css';
 import axiosInstance from '../../services/axiosInstance';
 
-const Login = ({ }) => {
+const Login = ({ fetchUserSessionData }) => {
     const navigate = useNavigate();
 
     const [loginType, setLoginType] = useState('student');
@@ -53,7 +53,8 @@ const Login = ({ }) => {
             // Store tokens securely
             localStorage.setItem('accessToken', access);
             localStorage.setItem('refreshToken', refresh);
-            
+
+            fetchUserSessionData();
             navigate('/', { replace: true })
         } catch (error) {
             setLoading(false);

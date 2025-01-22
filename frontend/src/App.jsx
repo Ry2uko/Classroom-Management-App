@@ -12,30 +12,43 @@ const App = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
 
-  const handleLogout = () => {  
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+  const handleLogout = async () => {  
+    const refreshToken = localStorage.getItem('refreshToken');
 
-    setUser({});
-    navigate('/login', { replace: true })
+    try {
+      await axiosInstance.post('logout/', { refresh: refreshToken });
+
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      setUser({});
+
+      navigate('/login', { replace: true });
+    } catch (err) {
+      console.error('Error during logout on the server: ', err);
+    }    
   }
 
   const fetchUserSessionData = async () => {
-    if (user?.id) return;
-    setUser({});
+    // Already logged in or no token available
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken || user?.id) return;
     
     try {
       const response = await axiosInstance.get('/');
-      setUser(response.data);
+      setUser(response.data); 
     } catch (err) {
       console.error('Failed to fetch user data', err);
     }
   }
 
+  useEffect(() => {
+    fetchUserSessionData();
+  }, []);
+
   return (
     <div className="App parent-container">
       <Routes>
-      <Route path="login" element={<Login />} />
+        <Route path="login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
         <Route index element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />

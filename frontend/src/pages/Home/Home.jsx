@@ -35,7 +35,9 @@ const Home = ({ user, fetchUserSessionData }) => {
     }, []);
 
     useEffect(() => {
-        fetchData();
+        if (user?.id) {
+            fetchData();
+        }
     }, [user]);
 
     return (

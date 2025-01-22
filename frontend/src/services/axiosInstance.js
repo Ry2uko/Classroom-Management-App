@@ -2,11 +2,8 @@ import axios from 'axios';
 
 const baseURL = 'http://127.0.0.1:8000/';
 
-const axiosInstance =axios.create({
+const axiosInstance = axios.create({
   baseURL, 
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-  },
 });
 
 const refreshTokenInstance = axios.create({
@@ -25,6 +22,17 @@ const processQueue = (error, token=null) => {
   failedQueue = [];
 };
 
+axiosInstance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
+  }
+
+  return config
+}, (error) => {
+  return Promise.reject(error);
+})
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -32,7 +40,8 @@ axiosInstance.interceptors.response.use(
 
     // Handle token expire (401 Unauthorized)
     if (error.response?.status === 401 && !originalRequest._retry) {
-      alert('REFRESHING TOKEN!!');
+      originalRequest._retry = true;
+
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -44,7 +53,6 @@ axiosInstance.interceptors.response.use(
         .catch((err) => Promise.reject(err));
       }
 
-      originalRequest._retry = true;
       isRefreshing = true;
 
       try {
@@ -65,6 +73,9 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (err) {
         processQueue(err, null);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Count, Q
+from django.contrib.auth import logout
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -27,7 +28,7 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
-            refresh_token = request.data['refresh_token']
+            refresh_token = request.data['refresh']
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
@@ -38,6 +39,7 @@ class LogoutView(APIView):
 class UserSessionView(APIView):
     def get(self, request):
         user = request.user
+        print('SESSION:', user)
         logged_in_as = request.session.get('logged_in_as', user.type)
 
         return Response({
