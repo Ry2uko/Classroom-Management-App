@@ -1,46 +1,42 @@
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
-import axios from 'axios';
+import { 
+    fetchHomeData,
+    fetchUserData
+} from '../../services/homeService';
 import './Home.css'
 
-/* TEST DATA */
-const TEST_USER_ID = 11
-
-const Home = () => {
-    const [userData, setUserData] = useState({});
+const Home = ({ user, fetchUserSessionData }) => {
     const [userClassroomData, setUserClassroomData] = useState({});
     const [coursesData, setCoursesData] = useState([]);
     const [attendanceData, setAttendanceData] = useState({});
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    const fetchData = async (path) => {
+    const fetchData = async () => {
+        if (!user) return;
+
         try {
-            const res = await axios.get(`http://127.0.0.1:8000${path}`);
-            return res.data;
+            const { 
+                userClassroom,
+                courses
+             } = await fetchHomeData(user.id);
+
+             setUserClassroomData(userClassroom);
+             setCoursesData(courses);
+             setDataLoaded(true);
         } catch (err) {
-            console.error('Error fetching items: ', err);
+            console.error('Failed to fetch home data', err);
         }
     };
 
     useEffect(() => {
-        const fetchHomeData = async () => {
-            try {
-                const user = await fetchData(`/users/${TEST_USER_ID}`);
-                const userClassroom = await fetchData(`/classrooms?user=${TEST_USER_ID}`);
-                const courses = await fetchData(`/courses?strand=${userClassroom[0].strand}`);
-
-                setUserData(user);
-                setUserClassroomData(userClassroom[0]);
-                setCoursesData(courses);
-                setDataLoaded(true);
-            } catch (err) {
-                console.error('Failed to fetch user data: ', err);
-            }
-        };
-
-        fetchHomeData();
+        fetchUserSessionData();
     }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, [user]);
 
     return (
         <div className="Home">
@@ -49,13 +45,13 @@ const Home = () => {
                     <div className="main-content-container">
                         <TopBar />
                         <MainContent 
-                            fetchData={fetchData}
+                            user={user}
                             userClassroomData={userClassroomData} 
                             coursesData={coursesData}
                         />
                     </div>
                     <div className="profile-content-container">
-                        <ProfileContent userData={userData}/>
+                        <ProfileContent user={user}/>
                     </div>
                 </>
             ) : (
@@ -66,29 +62,30 @@ const Home = () => {
 };
 
 /* MainContent */
-const MainContent = ({ fetchData, userClassroomData, coursesData }) => {
+const MainContent = ({ user, userClassroomData, coursesData }) => {
     const [randCourses, setRandCourses] = useState([]);
+
+    const loadCourses = async () => {
+        const shuffledCourses = [...coursesData].sort(() => Math.random() - 0.5);
+        const randomCourses = shuffledCourses.slice(0, 3);
+        
+        const updatedCourses = await Promise.all(randomCourses.map(async (course) => {
+            const teacher = await fetchUserData(course.assigned);
+            course.assigned_teacher = (teacher.sex === 'M' ? `Sir ${teacher.username}` : `Ms. ${teacher.username}`);
+
+            return course;
+        }));
+
+        setRandCourses(updatedCourses);           
+    };  
+
     useEffect(() => {
-        const loadCourses = async () => {
-            const shuffledCourses = [...coursesData].sort(() => Math.random() - 0.5);
-            const randomCourses = shuffledCourses.slice(0, 3);
-            
-            const updatedCourses = await Promise.all(randomCourses.map(async (course) => {
-                const teacher = await fetchData(`/users/${course.assigned}`);
-                course.assigned_teacher = (teacher.sex === 'M' ? `Sir ${teacher.username}` : `Ms. ${teacher.username}`);
-
-                return course;
-            }));
-
-            setRandCourses(updatedCourses);           
-        };  
-
         loadCourses();
     }, [coursesData]);
 
     return (
         <div className="MainContent">
-            <WelcomeBanner />
+            <WelcomeBanner user={user}/>
             <div className="courses-section section-container">
                 <div className="section-header">
                     <h4>Courses</h4>
@@ -168,7 +165,7 @@ const MainContent = ({ fetchData, userClassroomData, coursesData }) => {
     );
 };
 
-const WelcomeBanner = () => {
+const WelcomeBanner = ({ user }) => {
     const handleCheckAttendance = () => {
         return;
     };
@@ -176,7 +173,7 @@ const WelcomeBanner = () => {
     return (
         <div className="WelcomeBanner">
             <div className="banner-section-left">
-                <h2 className="greetings">Good morning, Gab!</h2>
+                <h2 className="greetings">Good morning, {user.username}!</h2>
                 <div className="attendance-status-text-container">
                     <p className="attendance-status-text">You are marked as <span className="attendance-highlight">Present</span></p>
                     <button type="button" className="check-attendance-btn" onClick={handleCheckAttendance}>
@@ -298,15 +295,21 @@ const Calendar = () => {
     )
 }
 
-const ProfileContent = () => (
+// Map role value to title format
+const roleTitle = {
+    'student': 'Student',
+    'teacher': 'Teacher',
+};
+
+const ProfileContent = ({ user }) => (
     <div className="ProfileContent">
         <div className="profile-section-container">
             <div className="user-icon-container">
-                <img src="https://scontent.fmnl13-1.fna.fbcdn.net/v/t39.30808-6/473190674_28325036933778915_7586882973598117196_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEGJ0_LxzR6B7bs1dERydsxt4kriRD8e1a3iSuJEPx7Vqsea81XdgisO-nvS9NYNsrxcLCi-oYCSSVybxj6tot-&_nc_ohc=xTxOibda9YgQ7kNvgFlq_Gl&_nc_zt=23&_nc_ht=scontent.fmnl13-1.fna&_nc_gid=AxZ96xtkAWMVTKREtjw478m&oh=00_AYBiTkvuUovtkDx-AN0j5CQzXsWiTv29iS7yUaoplP2Y7g&oe=678ED8CB" alt="user-icon" className="user-icon" />
+                <img src={`${process.env.REACT_APP_API_URL}${user.profile_img}`} alt="user-icon" className="user-icon" />
             </div>
             <div className="user-detail-container">
-                <h3 className="user-name">Gabriel M. Fradejas</h3>
-                <h5 className="user-role">Student</h5>
+                <h3 className="user-name">{user.full_name}</h3>
+                <h5 className="user-role">{roleTitle[user.role]}</h5>
             </div>
             <div className="user-profile-btn-container">
                 <Link to="/profile" className="user-profile-btn">

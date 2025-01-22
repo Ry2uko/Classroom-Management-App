@@ -29,7 +29,6 @@ class FullNameAuthBackend(BaseBackend):
             return None
         
         # Validate password
-        print('HERE')
         if user and check_password(password, user.password):
             return user
         

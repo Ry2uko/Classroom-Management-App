@@ -24,6 +24,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
+
     def post(self, request):
         try:
             refresh_token = request.data['refresh_token']
@@ -32,6 +33,26 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserSessionView(APIView):
+    def get(self, request):
+        user = request.user
+        logged_in_as = request.session.get('logged_in_as', user.type)
+
+        return Response({
+            'id': user.id,
+            'username': user.username,
+            'full_name': user.full_name,
+            'first_name': user.first_name,
+            'middle_initial': user.middle_initial,
+            'last_name': user.last_name,
+            'profile_img': user.profile_img.url if user.profile_img else None,
+            'classroom_id': user.classroom.id if user.classroom else None,  
+            'type': user.type,
+            'role': user.role,
+            'logged_in_as': logged_in_as
+        })
 
 
 class UserViewSet(viewsets.ModelViewSet):

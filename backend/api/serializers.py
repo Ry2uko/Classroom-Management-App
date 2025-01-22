@@ -69,11 +69,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         if not middle_initial or not last_name:
             raise serializers.ValidationError({ 'detail': 'Invalid full name format.' })
-        print(first_name)
-        print(last_name)
-        print(middle_initial)
-        print(account_type)
-        print(password)
+
         # Authenticate user by full name
         self.user = authenticate(
             request=self.context.get('request'),
@@ -83,7 +79,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             last_name=last_name,
             password=password,
         )
-        print(self.context.get('request'))
+        
         if not self.user:
             raise serializers.ValidationError({
                 'detail': 'Invalid credentials.'

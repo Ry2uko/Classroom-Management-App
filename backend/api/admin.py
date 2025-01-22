@@ -19,7 +19,7 @@ def set_random_password(modeladmin, request, queryset):
         else:
             password = generate_unique_password(6)
 
-        print(f'{user.full_name}\t\t{password}')
+        print(f'{user.full_name}\t{password}')
         user.set_password(password)
         user.save()
         modeladmin.message_user(request, f'Password for {user.full_name} set to {password}')

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import './Login.css';
-import axios from 'axios';
+import axiosInstance from '../../services/axiosInstance';
 
-const Login = () => {
+const Login = ({ }) => {
     const navigate = useNavigate();
 
     const [loginType, setLoginType] = useState('student');
@@ -42,17 +42,18 @@ const Login = () => {
     const handleLogin = async () => {
         try {
             setLoading(true);
-            const response = await axios.post('http://127.0.0.1:8000/token/', {
+            const response = await axiosInstance.post('token/',{
                 'full_name': fullName,
                 'password': password,
-                'type': loginType
+                'type': loginType,
             });
+
             const { access, refresh } = response.data;
 
             // Store tokens securely
             localStorage.setItem('accessToken', access);
             localStorage.setItem('refreshToken', refresh);
-
+            
             navigate('/', { replace: true })
         } catch (error) {
             setLoading(false);
@@ -61,6 +62,11 @@ const Login = () => {
             setVisibleError(true);
         }
     };
+
+    const isAuthenticated = !!localStorage.getItem('accessToken');
+    if (isAuthenticated) {
+        return <Navigate to="/" replace/>
+    }
 
     return (
         <div className="Login">

@@ -16,8 +16,7 @@ ReactDOM.createRoot(root).render(
 // LOGIN SYSTEM 😭😭
 
 /* 22/01/25 */
-// TODO: Handling Protective Routes and useNavigate
-// TODO: Handling user session and account type loading
+// TODO: User session not refreshing on login
 // TODO: ( Login Test )
 // TODO: Mobile Login View
 
