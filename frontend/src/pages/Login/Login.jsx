@@ -73,10 +73,18 @@ const Login = ({ fetchUserSessionData }) => {
         <div className="Login">
             <div className="banner-section">
                 <img src="/images/banner-img.jpg" alt="Banner" className="banner-img" />
-                <img src="/images/sga_logo.png" alt="School Logo" className="school-logo" />
-                <span className="tagline">
-                    "Where Gospel-Inspired Leaders are Born"
-                </span>
+                <div className="banner-display">
+                    <img src="/images/sga_logo.png" alt="School Logo" className="school-logo" />
+                    <span className="tagline">
+                        "Where Gospel-Inspired Leaders are Born"
+                    </span>
+                </div>
+                <div className="banner-display-mobile">
+                    <img src="/images/sga_logo.png" alt="School Logo" className="school-logo" />
+                    <span className="school-name">
+                        San Guillermo Academy
+                    </span>
+                </div>
                 <div className="overlay"></div>
                 <span className="footer-text">
                     <Link to="/about">

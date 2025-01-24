@@ -92,11 +92,49 @@ body, html, #root {
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
+  /* Start of Mobile View */
 }
 .Login .banner-section {
+  overflow: hidden;
   position: relative;
-  width: 500px;
+  max-width: 600px;
   height: 100%;
+}
+.Login .banner-section .banner-display {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.Login .banner-section .banner-display img.school-logo {
+  filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3));
+  -webkit-filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3));
+  width: 280px;
+  margin-bottom: 20px;
+  height: 280px;
+  pointer-events: none;
+  user-select: none;
+}
+.Login .banner-section .banner-display span.tagline {
+  text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  letter-spacing: 3px;
+  text-align: center;
+  width: 500px;
+  color: rgba(255, 255, 255, 0.9294117647);
+  pointer-events: none;
+  user-select: none;
+  font-family: "EB Garamond", serif;
+  font-size: 2.3rem;
+  font-weight: 400;
+}
+.Login .banner-section .banner-display-mobile {
+  display: none;
 }
 .Login .banner-section img.banner-img {
   z-index: 0;
@@ -108,49 +146,19 @@ body, html, #root {
   pointer-events: none;
   user-select: none;
 }
-.Login .banner-section img.school-logo {
-  filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3));
-  -webkit-filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3));
-  z-index: 2;
-  width: 240px;
-  height: 240px;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-}
-.Login .banner-section span.tagline {
-  text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  letter-spacing: 3px;
-  z-index: 2;
-  text-align: center;
-  width: 400px;
-  color: rgba(255, 255, 255, 0.8431372549);
-  pointer-events: none;
-  user-select: none;
-  top: 66%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "EB Garamond", serif;
-  font-size: 1.95rem;
-  font-weight: 400;
-}
 .Login .banner-section span.footer-text {
   z-index: 2;
   position: absolute;
-  bottom: 20px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
 }
 .Login .banner-section span.footer-text a {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.8274509804);
+  color: rgba(255, 255, 255, 0.862745098);
   letter-spacing: 0px;
   font-family: "Merriweather Sans", serif;
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 300;
 }
 .Login .banner-section .overlay {
@@ -168,10 +176,12 @@ body, html, #root {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .Login .login-form-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .Login .login-form-container h1 {
   justify-content: center;
@@ -179,17 +189,19 @@ body, html, #root {
   display: flex;
   letter-spacing: 1px;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  height: 65px;
+  overflow: hidden;
   font-family: "Open Sans", serif;
   font-weight: 320;
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 .Login .login-form-container h1 .text-animation {
   display: flex;
   flex-direction: column;
-  margin-right: 15px;
+  margin-right: 18px;
   overflow: hidden;
-  height: 55px;
+  height: 100%;
   position: relative;
 }
 .Login .login-form-container h1 .text-animation span {
@@ -199,7 +211,7 @@ body, html, #root {
   margin-top: 0;
 }
 .Login .login-form-container h1 .text-animation.admin span.student {
-  margin-top: -55px;
+  margin-top: -65px;
 }
 .Login .login-form-container span.error-text {
   text-align: center;
@@ -220,7 +232,7 @@ body, html, #root {
   position: relative;
 }
 .Login .login-form-container .type-switch-container .type-switch .toggle-indicator {
-  width: 160px;
+  width: 180px;
   height: 100%;
   position: absolute;
   top: 0;
@@ -234,23 +246,23 @@ body, html, #root {
   border-bottom-left-radius: 2rem;
 }
 .Login .login-form-container .type-switch-container .type-switch .toggle-indicator.admin {
-  transform: translate(160px);
+  transform: translate(180px);
   border-left-width: 0;
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
 }
 .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn {
   z-index: 2;
-  width: 160px;
+  width: 180px;
   background-color: rgba(0, 0, 0, 0);
   color: #222;
   border: 1.5px solid #555;
   cursor: pointer;
-  padding: 4.5px 0;
+  padding: 6px 0;
   transition: 0.25s ease-out;
   font-family: "Open Sans", serif;
   font-weight: 350;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn.active {
   color: #fff;
@@ -271,33 +283,37 @@ body, html, #root {
   border-bottom-right-radius: 2rem;
 }
 .Login .login-form-container .login-form {
+  width: 380px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .Login .login-form-container .login-form .login-btn-container {
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 2.8rem;
+  margin-top: 3rem;
 }
 .Login .login-form-container .login-form .login-btn-container button#login-btn {
   border-radius: 1rem;
   border: none;
   background-color: #239732;
   color: #fff;
-  padding: 9px 0;
+  padding: 11px 60px;
   text-align: center;
-  width: 150px;
   letter-spacing: 2px;
   transition: 0.1s ease-out;
   cursor: pointer;
   font-family: "Merriweather Sans", serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 400;
 }
 .Login .login-form-container .login-form .login-btn-container button#login-btn:hover {
   background-color: #239031;
 }
 .Login .login-form-container .login-form .text-input-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -313,7 +329,7 @@ body, html, #root {
   right: 10px;
   background-color: rgba(0, 0, 0, 0);
   border: none;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   padding: 7px;
   transform: translateY(-50%);
   cursor: pointer;
@@ -326,8 +342,8 @@ body, html, #root {
   color: #555;
 }
 .Login .login-form-container .login-form .text-input-container .form-input {
-  padding: 7px 15px;
-  width: 320px;
+  padding: 10px 15px;
+  width: 100%;
   border: 2px solid #cbcbcb;
   margin: 12px 0;
   letter-spacing: 1px;
@@ -336,9 +352,210 @@ body, html, #root {
   color: #111;
   transition: all 0.2s;
   font-family: "Nunito", serif;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
 }
 .Login .login-form-container .login-form .text-input-container .form-input:focus {
   border-color: #333;
   color: #000;
+}
+@media (max-width: 1536px) {
+  .Login .banner-section {
+    max-width: 39%;
+  }
+  .Login .banner-section .banner-display img.school-logo {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 12px;
+  }
+  .Login .banner-section .banner-display span.tagline {
+    width: 400px;
+    font-size: 1.95rem;
+  }
+  .Login .banner-section span.footer-text {
+    bottom: 20px;
+  }
+  .Login .banner-section span.footer-text a {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 1280px) {
+  .Login .banner-section .banner-display img.school-logo {
+    width: 220px;
+    height: 220px;
+  }
+  .Login .banner-section .banner-display span.tagline {
+    font-size: 1.8rem;
+  }
+  .Login .login-form-container h1 {
+    height: 55px;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+  }
+  .Login .login-form-container h1 .text-animation {
+    margin-right: 15px;
+  }
+  .Login .login-form-container h1 .text-animation.admin span.student {
+    margin-top: -55px;
+  }
+  .Login .type-switch-container .type-switch .toggle-indicator {
+    width: 160px;
+  }
+  .Login .type-switch-container .type-switch .toggle-indicator.admin {
+    transform: translate(160px);
+  }
+  .Login .type-switch-container .type-switch button.toggle-switch-btn {
+    width: 160px;
+    padding: 4.5px;
+    font-size: 1.2rem;
+  }
+  .Login .login-form {
+    width: 330px;
+  }
+  .Login .login-form .login-btn-container {
+    margin-top: 2.8rem;
+  }
+  .Login .login-form .login-btn-container button#login-btn {
+    padding: 9px 50px;
+    font-size: 1rem;
+  }
+  .Login .login-form .text-input-container .input-group button.show-password-btn {
+    font-size: 1.1rem;
+  }
+  .Login .login-form .text-input-container .form-input {
+    padding: 7px 15px;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 1024px) {
+  .Login .banner-section {
+    max-width: 360px;
+  }
+  .Login .banner-section .banner-display img.school-logo {
+    width: 200px;
+    height: 200px;
+  }
+  .Login .banner-section .banner-display span.tagline {
+    font-size: 1.6rem;
+  }
+}
+@media (max-width: 768px) {
+  .Login {
+    justify-content: center;
+    align-items: center;
+  }
+  .Login .banner-section {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+  }
+  .Login .banner-section .banner-display {
+    display: none;
+  }
+  .Login .banner-section .banner-display-mobile {
+    display: flex;
+    z-index: 99;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .Login .banner-section .banner-display-mobile img.school-logo {
+    filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3));
+    -webkit-filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3));
+    width: 70px;
+    height: 70px;
+    pointer-events: none;
+    user-select: none;
+    margin-right: 8px;
+  }
+  .Login .banner-section .banner-display-mobile span.school-name {
+    text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9294117647);
+    pointer-events: none;
+    white-space: nowrap;
+    user-select: none;
+    font-family: "EB Garamond", serif;
+    font-size: 1.45rem;
+    font-weight: 420;
+  }
+  .Login .login-form-section {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #fff;
+    border-radius: 0.6rem;
+    padding: 80px 40px;
+    min-width: 420px;
+    width: 60%;
+    height: 75%;
+    min-height: 420px;
+    max-height: 600px;
+    position: absolute;
+    z-index: 99;
+    align-items: flex-start;
+  }
+  .Login .login-form-container {
+    width: 90%;
+    height: 100%;
+  }
+  .Login .login-form-container h1 {
+    font-size: 2.3rem;
+    height: 50px;
+    margin-bottom: 1.3rem;
+  }
+  .Login .login-form-container h1 .text-animation {
+    margin-right: 10px;
+  }
+  .Login .login-form-container h1 .text-animation.admin span.student {
+    margin-top: -50px;
+  }
+  .Login .login-form-container span.error-text {
+    font-size: 1.1rem;
+    margin: 2rem 0 0rem 0;
+  }
+  .Login .login-form-container .type-switch-container {
+    display: flex;
+    justify-content: center;
+  }
+  .Login .login-form-container .type-switch-container .type-switch .toggle-indicator {
+    width: 150px;
+    transition: 0.3s ease-out;
+  }
+  .Login .login-form-container .type-switch-container .type-switch .toggle-indicator.admin {
+    transform: translate(150px);
+  }
+  .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn {
+    width: 150px;
+    font-size: 1.1rem;
+  }
+  .Login .login-form-container .login-form {
+    flex: 1;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .Login .login-form-container .login-form .text-input-container .form-input {
+    padding: 9px 15px;
+    font-size: 1rem;
+  }
+  .Login .login-form-container .login-form .login-btn-container {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+  .Login .login-form-container .login-form .login-btn-container button#login-btn {
+    padding: 10px 50px;
+  }
+}
+@media (max-width: 475px) {
+  .Login .login-form-section {
+    width: 88%;
+    min-width: 0px;
+    padding: 60px 40px;
+  }
+  .Login .login-form-section .login-form-container {
+    width: 100%;
+  }
+  .Login .login-form-section .login-form-container .login-form .login-btn-container {
+    margin-top: 2.4rem;
+  }
 }/*# sourceMappingURL=Login.css.map */
