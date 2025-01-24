@@ -15,11 +15,7 @@ ReactDOM.createRoot(root).render(
 
 // LOGIN SYSTEM 😭😭
 
-/* 22/01/25 */
-// TODO: User session not refreshing on login
-// TODO: ( Login Test )
-// TODO: Mobile Login View
-
+/* 25/01/25 */
 // TODO: Attendance Model, and Sample Creation, and Loading
 // TODO: View Record, Attendance Status (SVG for the Icon); https://css.gg/
 

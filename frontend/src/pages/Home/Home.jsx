@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import { 
@@ -12,6 +12,8 @@ const Home = ({ user, fetchUserSessionData }) => {
     const [coursesData, setCoursesData] = useState([]);
     const [attendanceData, setAttendanceData] = useState({});
     const [dataLoaded, setDataLoaded] = useState(false);
+
+    const { fresh } = useLocation();
 
     const fetchData = async () => {
         if (!user) return;

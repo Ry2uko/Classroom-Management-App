@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import Navigation from './components/Navigation/Navigation';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Home from './pages/Home/Home';
@@ -41,8 +42,25 @@ const App = () => {
     }
   }
 
+  const hasTokenExpired = (token) => {
+    try {
+      const { exp } = jwtDecode(token);
+      const currTime = Math.floor(Date.now() / 1000);
+      return exp < currTime;
+    } catch (err) {
+      return true;
+    }
+  };
+
   useEffect(() => {
-    fetchUserSessionData();
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken || hasTokenExpired(accessToken)) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      navigate('/login', { replace: true });
+    } else {
+      fetchUserSessionData();
+    }
   }, []);
 
   return (

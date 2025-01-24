@@ -55,7 +55,12 @@ const Login = ({ fetchUserSessionData }) => {
             localStorage.setItem('refreshToken', refresh);
 
             fetchUserSessionData();
-            navigate('/', { replace: true })
+            navigate('/', { 
+                replace: true, 
+                state: {
+                    fresh :true,
+                },
+             })
         } catch (error) {
             setLoading(false);
             console.error(error);
