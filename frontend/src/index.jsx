@@ -23,7 +23,7 @@ ReactDOM.createRoot(root).render(
 // TODO: Profile View 
 // TODO: Announcements Model, and Sample Creation, and Loading
 // TODO: Calendar Event, Holiday, ...
-// TODO: Settings View
+// TODO: Settings View    
 
 /* 24/01/25 */
 // TODO: Designing Home (Mobile)
