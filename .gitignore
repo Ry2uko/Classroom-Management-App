@@ -1,4 +1,5 @@
 .env
+.vscode
 credentials.json
 drive.py
 sheets.py
