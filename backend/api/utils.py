@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.oauth2 import service_account
 from datetime import datetime
-from constants import SHEET_HEADER_VALUES  # TODO: Update this to .constants after debug
+from .constants import SHEET_HEADER_VALUES
 import pytz
 
 
@@ -355,18 +355,4 @@ def mark_student_attendance(service, spreadsheet_id, sheet_name, attendance_data
     ).execute()
 
     print(f"Attendance updated for '{attendance_data['student_name']}'.")
-
-
-if __name__ == '__main__':
-    service_account = ServiceAccount('../../credentials.json')
-
-    spreadsheet_id = '1yocykOf9GLsmcPXqN7J1YaSXRO8xgkOs7PjH_wwM6qg'
-    classroom_name_full='12-STEM Our Lady of the Most Holy Rosary'
-
-    print(get_classroom_attendance(
-        service_account.sheets_service,
-        spreadsheet_id,
-        classroom_name_full
-    ))
-
 
