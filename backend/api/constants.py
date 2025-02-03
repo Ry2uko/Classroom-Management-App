@@ -1,3 +1,16 @@
+# Google API
+SHEET_HEADER_VALUES = [
+    'Date',
+    'Student ID',
+    'Student Name',
+    'Classroom ID',
+    'Classroom',
+    'Attendance Status',
+    'Late Time',
+    'Marked By',
+    'Marker ID',
+]
+
 # User Model
 USER_TYPES = [
     ('student', 'Student'),

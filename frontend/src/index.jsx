@@ -13,13 +13,17 @@ ReactDOM.createRoot(root).render(
 
 /* TODOs */
 
-// LOGIN SYSTEM 😭😭
+// Attendance System
+// TODO: Attendance API (Via Google Sheets API)
 
-/* 25/01/25 */
-// TODO: Attendance Model, and Sample Creation, and Loading
+/*
+Get student(s) attendance
+Get classroom attendance
+Mark attendance  
+*/
+
 // TODO: View Record, Attendance Status (SVG for the Icon); https://css.gg/
 
-/* 23/01/25 */
 // TODO: Profile View 
 // TODO: Announcements Model, and Sample Creation, and Loading
 // TODO: Calendar Event, Holiday, ...
