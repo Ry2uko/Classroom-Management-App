@@ -7,6 +7,7 @@ from googleapiclient.http import MediaFileUpload
 from google.oauth2 import service_account
 from datetime import datetime
 from constants import SHEET_HEADER_VALUES  # TODO: Update this to .constants after debug
+import pytz
 
 
 class ServiceAccount():
@@ -27,7 +28,7 @@ class ServiceAccount():
         self.drive_service = build('drive', 'v3', credentials=credentials)
 
 
-def get_spread_range(n, n_y=1):
+def get_spread_range(n, n_y='1'):
     """ Helper function for create_classroom for converting spreadsheet range. """
 
     # Convert a number to a capitalized letter like Excel columns (1 → A, 26 → Z, 27 → AA)
@@ -249,26 +250,85 @@ def delete_file(service, file_id):
 
 # Sheets V4
 
-def get_student_attendance(service, spreadsheet_id, sheet_name, student_id, start_date=datetime.now(), end_date=datetime.now()):
+def parse_date(date_input):
+    """ Helper function for converting date input to a datetime object. """
+    if date_input is None:
+        return None
+    
+    if isinstance(date_input, datetime):
+        return date_input.replace(tzinfo=pytz.UTC)
+
+    try: 
+        return datetime.strptime(date_input, '%Y-%m-%d').replace(tzinfo=pytz.UTC)
+    except ValueError:
+        raise ValueError(f"Invalid date format: {date_input}.")
+
+
+def get_classroom_attendance(service, spreadsheet_id, sheet_name, start_date=None, end_date=None):
+    """ Get all students' attendance details of a classroom given date range. """
+
+    try:
+        start_date = parse_date(start_date)
+        end_date = parse_date(end_date)
+
+        if start_date and end_date and start_date > end_date:
+            raise ValueError(f'Invalid data range: start date cannot be later than end date.')
+
+        range_name = f"'{sheet_name}'!{get_spread_range(len(SHEET_HEADER_VALUES), '')}"
+        result = service.spreadsheets().values().get(
+            spreadsheetId=spreadsheet_id,
+            range=range_name,
+        ).execute()
+
+        rows = result.get('values', [])[1:]  # Ignore header row
+        if not rows:
+            print(f"Error fetching attendance: No attendance data found for classroom '{sheet_name}'.")
+            return []
+
+        filtered_rows = []
+        for row in rows:
+            try: 
+                record_date = parse_date(row[0])
+
+                """
+                Date Filtering:
+                - No start date & No end date → Returns all records
+                - Start date only → Returns all records from that date onward
+                - End date only → Returns all records up to that date
+                - Both start & end → Returns records within that range
+                """
+
+                if (
+                    (not start_date and not end_date) or
+                    (start_date and end_date and start_date <= record_date <= end_date) or
+                    (start_date and not end_date and start_date <= record_date) or
+                    (not start_date and end_date and record_date <= end_date)
+                ):
+                    row[1] = int(row[1])  # student_id
+                    row[3] = int(row[3])  # classroom_id
+                    row[8] = int(row[8])  # marker_id
+                    filtered_rows.append(row)
+            except Exception as e:
+                print(f'Skipping row due to error: {e}')
+
+        return filtered_rows
+
+    except Exception as e:
+        print(f'Error fetching attendance: {e}')
+        return []
+
+
+def get_student_attendance(service, spreadsheet_id, sheet_name, student_id, start_date=None, end_date=None):
     """ Get student attendance details given date range. """
     
-    try:
-        pass
-    except Exception as e:
-        pass
-
-
-def get_classroom_attendance(service, classroom_id, start_date=datetime.now(), end_date=datetime.now()):
-    """ Get all students' attendance details of a classroom given date range. """
-    pass
+    rows = get_classroom_attendance(service, spreadsheet_id, sheet_name, start_date, end_date)
+    return [row for row in rows if row[1] == student_id]
 
 
 def mark_student_attendance(service, spreadsheet_id, sheet_name, attendance_data):
     """ Mark student attendance on current day (or custom). """
 
-    attendance_values = list(attendance_data.values())
-    range_name = f"'{sheet_name}'!{get_spread_range(len(attendance_values), 2)}"
-
+    range_name = f"'{sheet_name}'!{get_spread_range(len(SHEET_HEADER_VALUES), '2')}"
     values = [  # Preseve order
         [
             attendance_data['date'],
@@ -302,91 +362,11 @@ if __name__ == '__main__':
 
     spreadsheet_id = '1yocykOf9GLsmcPXqN7J1YaSXRO8xgkOs7PjH_wwM6qg'
     classroom_name_full='12-STEM Our Lady of the Most Holy Rosary'
-    classroom_id = 1
-    classroom_name='12-STEM'
-    attendance_datas = [
-        {
-            'date': '2025-01-16',
-            'student_id': '16',
-            'student_name': 'Christian Joseph G. Agustin',
-            'attendance_status': 'P',
-            'late_time': '',
-            'marked_by': 'Livana',
-            'marker_id': '19',
-        },
-        {
-            'date': '2025-01-17',
-            'student_id': '16',
-            'student_name': 'Christian Joseph G. Agustin',
-            'attendance_status': 'L',
-            'late_time': '7:12 AM',
-            'marked_by': 'Livana',
-            'marker_id': '19',
-        },
-        {
-            'date': '2025-01-17',
-            'student_id': '17',
-            'student_name': 'Andrei V. Petate',
-            'attendance_status': 'P',
-            'late_time': '',
-            'marked_by': 'Livana',
-            'marker_id': '19',
-        },
-        {
-            'date': '2025-01-18',
-            'student_id': '16',
-            'student_name': 'Christian Joseph G. Agustin',
-            'attendance_status': 'P',
-            'late_time': '',
-            'marked_by': 'Sir Joseph',
-            'marker_id': '12',
-        },
-        {
-            'date': '2025-01-18',
-            'student_id': '17',
-            'student_name': 'Andrei V. Petate',
-            'attendance_status': 'L',
-            'late_time': '7:35 AM',
-            'marked_by': 'Sir Joseph',
-            'marker_id': '12',
-        },
-        {
-            'date': '2025-01-18',
-            'student_id': '18',
-            'student_name': 'Gabriel M. Fradejas',
-            'attendance_status': 'P',
-            'late_time': '',
-            'marked_by': 'Sir Joseph',
-            'marker_id': '12',
-        },
-        {
-            'date': '2025-01-18',
-            'student_id': '19',
-            'student_name': 'Livana Jenell C. Rivera',
-            'attendance_status': 'A',
-            'late_time': '',
-            'marked_by': 'Sir Joseph',
-            'marker_id': '12',
-        },
-        {
-            'date': '2025-01-18',
-            'student_id': '20',
-            'student_name': 'Airish Anne P. Cabrera',
-            'attendance_status': 'E',
-            'late_time': '',
-            'marked_by': 'Sir Joseph',
-            'marker_id': '12',
-        },
-    ]
 
-    for attendance_data in attendance_datas:
-        attendance_data['classroom_id'] = classroom_id
-        attendance_data['classroom_name'] = classroom_name
+    print(get_classroom_attendance(
+        service_account.sheets_service,
+        spreadsheet_id,
+        classroom_name_full
+    ))
 
-        mark_student_attendance(
-            service_account.sheets_service,
-            spreadsheet_id,
-            classroom_name_full,
-            attendance_data
-        )
 
