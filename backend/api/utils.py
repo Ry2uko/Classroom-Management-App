@@ -76,6 +76,31 @@ def create_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
 
         results_data['classroom_folder_id'] = folder['id']
         print(f'Folder for classroom {classroom_name_full} successfully created.')
+
+        # Create grade level folder if it doesn't exist
+        grade_level = int(classroom_name_full.split('-')[0])
+        results = drive_service.files().list(
+            q=f"name='Grade {grade_level}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
+                and '{root_folder_id}' in parents",
+            fields="files(id, name)"
+        ).execute()
+        folders = results.get('files', [])
+        if not folders:
+            file_metadata = {
+                'name': f'Grade {grade_level}',
+                'mimeType': 'application/vnd.google-apps.folder',
+                'parents': [ root_folder_id ],
+            }
+
+            folder = drive_service.files().create(
+                body=file_metadata,
+                fields='id, webViewLink'     
+            ).execute()   
+            results_data['grade_folder_id'] = folder['id']
+            print(f'Folder for grade {grade_level} successfully created.')
+        else:
+            results_data['grade_folder_id'] = folders[0]['id']
+         
     except Exception as e:
         print(f'Error creating folder: {e}')
         return {}

@@ -34,6 +34,7 @@ STRAND_CHOICES = [  # Senior High (Grades 11 & 12)
     ('STEM', 'STEM'),
     ('ABM', 'ABM'),
     ('HUMSS', 'HUMSS'),
+    ('GAS', 'GAS'), # REMOVE THIS AFTER DEBUG
 ]  
 
 # Content Model
