@@ -187,7 +187,7 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
 
         if not folders:
             print(f"Error deleting folder: folder '{classroom_name_full}' not found.")
-            return 
+            return False
 
         for folder in folders:
             drive_service.files().delete(
@@ -197,10 +197,10 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
             print(f"Deleted folder '{classroom_name_full}'.")
     except Exception as e:
         print(f'Error deleting folder: {e}')
-        return 
+        return False
 
     if classroom_name_full.split()[0].lower() == 'grade':
-        return
+        return False
 
     # Delete classroom attendance sheet
     try:
@@ -217,7 +217,7 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
 
         if sheet_id is None:
             print(f"Error deleting sheet: sheet '{classroom_name_full}' not found.")
-            return 
+            return False
         
         batch_update_request = {
             'requests': [{
@@ -232,9 +232,10 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
         ).execute()
 
         print(f"Deleted sheet '{classroom_name_full}'. ");
+        return True
     except Exception as e:
         print(f'Error deleting sheet: {e}')
-        return 
+        return False
 
 
 # Drive V3

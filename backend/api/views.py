@@ -24,6 +24,7 @@ from .utils import (
     mark_student_attendance,
 )
 from pathlib import Path
+from functools import wraps
 import environ
 import datetime
 
@@ -40,6 +41,20 @@ def load_session_env(request):
     request.session['credentials_path'] = str(credentials_path)
     request.session['root_folder_id'] = root_drive_folder_id
     request.session['spreadsheet_id'] = attendance_spreadsheet_id
+
+
+def check_session_credentials(func):
+    @wraps(func)
+    def wrapper(self, request, *args, **kwargs):
+        if 'credentials_path' not in request.session:
+            return Response(
+                { 'error': 'Session environment variables not loaded. Please refresh your token.' },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return func(self, request, *args, **kwargs)
+
+    return wrapper
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -191,13 +206,8 @@ class ClassroomViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    @check_session_credentials
     def create(self, request):
-        if 'credentials_path' not in request.session:
-            return Response(
-                { 'error': 'Session environment variables not loaded. Please refresh your token.' },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        
         # Duplicate classroom name
         classroom_name = request.data.get('name', None)
         if Classroom.objects.filter(name=classroom_name).exists():
@@ -234,11 +244,11 @@ class ClassroomViewSet(viewsets.ModelViewSet):
             classroom = serializer.save()
 
             # Create classroom Drive folder and spreadsheet
-            service_account = ServiceAccount(request.session.get('credentials_path',''))
+            service_account = ServiceAccount(request.session.get('credentials_path', ''))
             root_folder_id = request.session.get('root_folder_id', '')
             spreadsheet_id = request.session.get('spreadsheet_id', '')
             
-            results = create_classroom(
+            result = create_classroom(
                 str(classroom),
                 service_account.drive_service,
                 root_folder_id,
@@ -246,15 +256,72 @@ class ClassroomViewSet(viewsets.ModelViewSet):
                 spreadsheet_id
             )
 
-            classroom.grade_folder_id = results['grade_folder_id']
-            classroom.classroom_folder_id = results['classroom_folder_id']
-            classroom.sheet_id = results['sheet_id']
+            if not result:
+                return Response(
+                    { 'error': f'Something went wrong. Unable to create classroom.' },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            
+            classroom.grade_folder_id = result['grade_folder_id']
+            classroom.classroom_folder_id = result['classroom_folder_id']
+            classroom.sheet_id = result['sheet_id']
             classroom.save()
 
             serializer = self.get_serializer(classroom)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @check_session_credentials
+    def destroy(self, request, pk=None):
+        try:
+           classroom = Classroom.objects.get(
+               pk=pk
+           )
+        except Classroom.DoesNotExist:
+           return Response(
+                { 'error': 'Classroom with that id does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Delete classroom Drive folder and spreadsheet        
+        service_account = ServiceAccount(request.session.get('credentials_path', ''))
+        root_folder_id = request.session.get('root_folder_id', '')
+        spreadsheet_id = request.session.get('spreadsheet_id', '')
+
+        result = delete_classroom(
+            str(classroom),
+            service_account.drive_service,
+            root_folder_id,
+            service_account.sheets_service,
+            spreadsheet_id         
+        )
+        
+        if not result:
+            return Response(
+                { 'error': f'Something went wrong. Unable to delete classroom.' },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        # Delete classroom grade folder if last
+        if Classroom.objects.filter(grade=classroom.grade).count() == 1:
+            result = delete_classroom(
+                f"Grade {classroom.grade}",
+                service_account.drive_service,
+                root_folder_id
+            )
+
+            if not result:
+                return Response(
+                    { 'error': f'Something went wrong. Unable to delete grade classroom.' },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+        serializer = self.get_serializer(classroom)
+        classroom.delete()
+        serializer.data['id'] = classroom.id
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ContentViewSet(viewsets.ModelViewSet):
@@ -263,13 +330,9 @@ class ContentViewSet(viewsets.ModelViewSet):
 
 
 class AttendanceView(APIView):
+
+    @check_session_credentials
     def get(self, request):
-        if 'credentials_path' not in request.session:
-            return Response(
-                { 'error': 'Session environment variables not loaded. Please refresh your token.' },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-    
         service_account = ServiceAccount(request.session.get('credentials_path', ''))
         spreadsheet_id = request.session.get('spreadsheet_id', '')
         sheet_name = ''
@@ -352,16 +415,10 @@ class AttendanceView(APIView):
             result['attendance'] = formatted_attendance
 
         return Response(result, status=status.HTTP_200_OK)
-        
-
+    
+    @check_session_credentials
     def post(self, request):
         # Validations
-        if 'credentials_path' not in request.session:
-            return Response(
-                { 'error': 'Session environment variables not loaded. Please refresh your token.' },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        
         attendance_data = {
             'late_time': '',
         }
@@ -404,15 +461,36 @@ class AttendanceView(APIView):
             )
 
         # Arrange attendance data
-        student = User.objects.get(
-            id=attendance_data['student_id']
-        )
-        student_marker = User.objects.get(
-            id=attendance_data['marker_id']
-        )
-        classroom = Classroom.objects.get(
-            id=attendance_data['classroom_id']
-        )
+        try:
+            student = User.objects.get(
+                id=attendance_data['student_id']
+            )
+        except User.DoesNotExist:
+            return Response(
+                { 'error': 'Student with that id (student_id) does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            student_marker = User.objects.get(
+                id=attendance_data['marker_id']
+            )
+        except User.DoesNotExist:
+            return Response(
+                { 'error': 'Student with that id (marker_id) does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+        try:
+            classroom = Classroom.objects.get(
+                id=attendance_data['classroom_id']
+            )
+        except Classroom.DoesNotExist:
+            return Response(
+                { 'error': 'Classroom with that id does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         service_account = ServiceAccount(request.session.get('credentials_path', ''))
         spreadsheet_id = request.session.get('spreadsheet_id', '')
