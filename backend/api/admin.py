@@ -1,13 +1,6 @@
 from django.contrib import admin
 from .models import User, Classroom, Course, File, Content, ContentAttachment
-import random
-import string
-
-
-def generate_unique_password(pin_length=4):
-    """ Generates a unique password with this format: sgat<PIN>. """
-
-    return 'sgat' + ''.join(random.choices(string.digits, k=pin_length))
+from .utils import generate_unique_password
 
 
 def set_random_password(modeladmin, request, queryset):

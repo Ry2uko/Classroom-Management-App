@@ -15,7 +15,9 @@ class User(AbstractUser):
     )
 
     def save(self, *args, **kwargs):
-        if self.profile_img:
+
+        # Handle profile image
+        if self.profile_img and not self.profile_img.name.startswith('images/default'):
             # Save to classroom folder (classroom id) or faculty folder
             if self.role == 'teacher':
                 folder = 'faculty'
@@ -51,14 +53,15 @@ class Classroom(models.Model):
     name = models.CharField(max_length=255)
     strand = models.CharField(max_length=255, null=True, blank=True)
     grade = models.IntegerField()
-    drive_folder_id = models.CharField(max_length=255, blank=True, default='')
+    grade_folder_id = models.CharField(max_length=255, blank=True, default='')
+    classroom_folder_id = models.CharField(max_length=255, blank=True, default='')
     sheet_id = models.CharField(max_length=255, blank=True, default='')
     class_adviser = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name='advising_class'
     )
 
     def __str__(self):
-        return f'{self.grade}-{self.strand}: {self.name}'  # Ex: 12-STEM: Our Lady of the Most Holy Rosary
+        return f'{self.grade}-{self.strand} {self.name}'  # Ex: 12-STEM: Our Lady of the Most Holy Rosary
 
 
 class Course(models.Model):

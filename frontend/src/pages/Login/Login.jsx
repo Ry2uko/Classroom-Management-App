@@ -39,6 +39,12 @@ const Login = ({ fetchUserSessionData }) => {
         setShowPassword(show);
     }
 
+    const handleInputKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    }
+
     const handleLogin = async () => {
         try {
             setLoading(true);
@@ -129,11 +135,13 @@ const Login = ({ fetchUserSessionData }) => {
                             <div className="login-form">
                                 <div className="text-input-container">
                                     <input type="text" placeholder="FULL NAME" className="form-input" 
-                                    id="full-name-input" value={fullName} onChange={e => handleFullNameChange(e.target.value)} />
+                                    id="full-name-input" value={fullName} onChange={e => handleFullNameChange(e.target.value)} 
+                                    onKeyDown={handleInputKeyDown} />
 
                                     <div className="input-group">
                                         <input type={showPassword ? "text" : "password"} placeholder="PASSWORD" className="form-input" 
-                                        id="password-input" value={password} onChange={e => handlePasswordChange(e.target.value)} />
+                                        id="password-input" value={password} onChange={e => handlePasswordChange(e.target.value)} 
+                                        onKeyDown={handleInputKeyDown} />
 
                                         { showPassword ? (
                                             <button type="button" className="show-password-btn"

@@ -1,3 +1,23 @@
+# Google API
+SHEET_HEADER_VALUES = [
+    'Date',
+    'Student ID',
+    'Student Name',
+    'Classroom ID',
+    'Classroom',
+    'Attendance Status',
+    'Late Time',
+    'Marked By',
+    'Marker ID',
+]
+
+ATTENDANCE_STATUS_VALUES = [
+    'P',  # Present
+    'L',  # Late (w/ late time)
+    'A',  # Absent
+    'E',  # Excused (Absent v2)
+]
+
 # User Model
 USER_TYPES = [
     ('student', 'Student'),
@@ -21,6 +41,7 @@ STRAND_CHOICES = [  # Senior High (Grades 11 & 12)
     ('STEM', 'STEM'),
     ('ABM', 'ABM'),
     ('HUMSS', 'HUMSS'),
+    ('GAS', 'GAS'), # REMOVE AFTER DEBUG
 ]  
 
 # Content Model
