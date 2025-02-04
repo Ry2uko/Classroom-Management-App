@@ -15,7 +15,9 @@ class User(AbstractUser):
     )
 
     def save(self, *args, **kwargs):
-        if self.profile_img:
+
+        # Handle profile image
+        if self.profile_img and not self.profile_img.name.startswith('images/default'):
             # Save to classroom folder (classroom id) or faculty folder
             if self.role == 'teacher':
                 folder = 'faculty'

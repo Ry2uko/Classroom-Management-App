@@ -8,7 +8,18 @@ from google.oauth2 import service_account
 from datetime import datetime
 from .constants import SHEET_HEADER_VALUES
 import pytz
+import random
+import string
 
+# General Utilities
+
+def generate_unique_password(pin_length=4):
+    """ Generates a unique password with this format: sgat<PIN>. """
+
+    return 'sgat' + ''.join(random.choices(string.digits, k=pin_length))
+
+
+# Service Account
 
 class ServiceAccount():
     """ Service account for Google API Client. """
@@ -347,37 +358,44 @@ def get_student_attendance(service, spreadsheet_id, sheet_name, student_id, star
     """ Get student attendance details given date range. """
     
     rows = get_classroom_attendance(service, spreadsheet_id, sheet_name, start_date, end_date)
-    return [row for row in rows if row[1] == student_id]
+    return [row for row in rows if int(row[1]) == int(student_id)]
 
 
 def mark_student_attendance(service, spreadsheet_id, sheet_name, attendance_data):
     """ Mark student attendance on current day (or custom). """
 
-    range_name = f"'{sheet_name}'!{get_spread_range(len(SHEET_HEADER_VALUES), '2')}"
-    values = [  # Preseve order
-        [
-            attendance_data['date'],
-            int(attendance_data['student_id']),
-            attendance_data['student_name'],
-            int(attendance_data['classroom_id']),
-            attendance_data['classroom_name'],
-            attendance_data['attendance_status'],
-            attendance_data['late_time'],
-            attendance_data['marked_by'],
-            int(attendance_data['marker_id']),
-        ],
-    ]
-    body = {
-        'values': values,
-    }
+    try:
+        range_name = f"'{sheet_name}'!{get_spread_range(len(SHEET_HEADER_VALUES), '2')}"
+        values = [  # Preseve order
+            [
+                attendance_data['date'],
+                int(attendance_data['student_id']),
+                attendance_data['student_name'],
+                int(attendance_data['classroom_id']),
+                attendance_data['classroom'],
+                attendance_data['attendance_status'],
+                attendance_data['late_time'],
+                attendance_data['marked_by'],
+                int(attendance_data['marker_id']),
+            ],
+        ]
+        body = {
+            'values': values,
+        }
 
-    service.spreadsheets().values().append(
-        spreadsheetId=spreadsheet_id,
-        range=range_name,
-        valueInputOption='RAW',
-        insertDataOption='INSERT_ROWS',
-        body=body,
-    ).execute()
+        service.spreadsheets().values().append(
+            spreadsheetId=spreadsheet_id,
+            range=range_name,
+            valueInputOption='RAW',
+            insertDataOption='INSERT_ROWS',
+            body=body,
+        ).execute()
 
-    print(f"Attendance updated for '{attendance_data['student_name']}'.")
+        print(f"Attendance updated for '{attendance_data['student_name']}'.")
+        return True
+    
+    except Exception as e:
+        print(f'Error marking attendance: {e}')
+    
+    return False
 

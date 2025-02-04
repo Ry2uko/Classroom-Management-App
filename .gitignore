@@ -4,3 +4,4 @@ credentials.json
 drive.py
 sheets.py
 */__pycache__/*
+*/passwords/*
