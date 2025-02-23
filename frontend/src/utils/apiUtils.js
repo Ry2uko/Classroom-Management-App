@@ -10,4 +10,15 @@ const fetchData = async (path) => {
   }
 };
 
+const fetchUserData = async (userId) => {
+  try {
+    const userData = await fetchData(`users/${userId}`);
+    return userData;    
+  } catch (err) {
+    console.error('Error fetching user data: ', err);
+    throw err;
+  }
+}
+
 export default fetchData;
+export { fetchUserData };

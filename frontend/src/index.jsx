@@ -14,14 +14,7 @@ ReactDOM.createRoot(root).render(
 /* TODOs */
 
 // Attendance System
-// TODO: Attendance API (Via Google Sheets API)
-
-/*
-Get student(s) attendance
-Get classroom attendance
-Mark attendance  
-*/
-
+// TODO: Attendance History
 // TODO: View Record, Attendance Status (SVG for the Icon); https://css.gg/
 
 // TODO: Profile View 

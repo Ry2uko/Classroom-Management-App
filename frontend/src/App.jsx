@@ -6,6 +6,7 @@ import Navigation from './components/Navigation/Navigation';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
+import Attendance from './pages/Attendance/Attendance';
 import axiosInstance from './services/axiosInstance'; 
 import './App.css';
 
@@ -30,6 +31,8 @@ const App = () => {
   }
 
   const fetchUserSessionData = async () => {
+    /* Loads user data from session */
+
     // Already logged in or no token available
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken || user?.id) return;
@@ -73,6 +76,12 @@ const App = () => {
             <Home user={user} fetchUserSessionData={fetchUserSessionData} />
           </ProtectedRoute>
         } />        
+        <Route path="attendance" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />
+          </ProtectedRoute>
+        } />
         <Route path="*" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />

@@ -1,11 +1,9 @@
 import { Link, useLocation } from 'react-router';
 import { useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
-import { 
-    fetchHomeData,
-    fetchUserData
-} from '../../services/homeService';
-import './Home.css'
+import {  fetchHomeData } from '../../services/homeService';
+import { fetchUserData } from '../../utils/apiUtils';
+import './Home.css';   
 
 const Home = ({ user, fetchUserSessionData }) => {
     const [userClassroomData, setUserClassroomData] = useState({});
@@ -16,8 +14,6 @@ const Home = ({ user, fetchUserSessionData }) => {
     const { fresh } = useLocation();
 
     const fetchData = async () => {
-        if (!user) return;
-
         try {
             const { 
                 userClassroom,
@@ -32,14 +28,14 @@ const Home = ({ user, fetchUserSessionData }) => {
         }
     };
 
-    useEffect(() => {
+    useEffect(() => { 
+        // Fetch on home page render
         fetchUserSessionData();
     }, []);
 
     useEffect(() => {
-        if (user?.id) {
-            fetchData();
-        }
+        // Fetch on home page render and updates with user session
+        if (user?.id) fetchData();
     }, [user]);
 
     return (
@@ -127,41 +123,41 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
             <div className="qlinks-section section-container">
                 <h4>Quick Links</h4>
                 <div className="qlinks-items-container">
-                    <div className="qlinks-card orange">
-                        <div className="qlinks-text">
-                            <i className="fa-solid fa-clipboard-user"></i>
-                            <span>Attendance</span>
-                        </div>
-                    </div>
                     <div className="qlinks-card red">
-                        <div className="qlinks-text">
+                        <Link to="/" className="qlinks-text">
                             <i className="fa-solid fa-bullhorn"></i>
                             <span>Announcements</span>
-                        </div>
+                        </Link>
                     </div>
                     <div className="qlinks-card blue">
-                        <div className="qlinks-text">
+                        <Link to="/" className="qlinks-text">
                             <i className="fa-regular fa-clock"></i>
                             <span>Schedule</span>
-                        </div>
+                        </Link>
                     </div>
-                    <div className="qlinks-card purple">
-                        <div className="qlinks-text">
+                    <div className="qlinks-card orange">
+                        <Link to="/calendar" className="qlinks-text">
                             <i className="fa-regular fa-calendar"></i>
                             <span>School Calendar</span>
-                        </div>
+                        </Link>
+                    </div>
+                    <div className="qlinks-card purple">
+                        <Link to="/" className="qlinks-text">
+                            <i class="fa-solid fa-lines-leaning"></i>
+                            <span>Courses</span>
+                        </Link>
                     </div>
                     <div className="qlinks-card yellow">
-                        <div className="qlinks-text">
+                        <Link to="/" className="qlinks-text">
                             <i className="fa-solid fa-chalkboard"></i>
                             <span>Classroom</span>
-                        </div>
+                        </Link>
                     </div>
                     <div className="qlinks-card teal">
-                        <div className="qlinks-text">
+                        <Link to="/" className="qlinks-text">
                             <i className="fa-solid fa-school"></i>
                             <span>School</span>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -170,19 +166,15 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
 };
 
 const WelcomeBanner = ({ user }) => {
-    const handleCheckAttendance = () => {
-        return;
-    };
-
     return (
         <div className="WelcomeBanner">
             <div className="banner-section-left">
                 <h2 className="greetings">Good morning, {user.username}!</h2>
                 <div className="attendance-status-text-container">
                     <p className="attendance-status-text">You are marked as <span className="attendance-highlight">Present</span></p>
-                    <button type="button" className="check-attendance-btn" onClick={handleCheckAttendance}>
+                    <Link to="/attendance" className="check-attendance-btn">
                         Check Attendance
-                    </button>
+                    </Link>
                 </div>
             </div>
             <div className="banner-section-right">
