@@ -18,6 +18,8 @@ from .utils import (
     generate_unique_password,
     ServiceAccount,
     create_classroom,
+    create_course,
+    delete_course,
     delete_classroom,
     get_classroom_attendance,
     get_student_attendance,
@@ -32,6 +34,7 @@ base_dir = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
 environ.Env.read_env(env_file= base_dir / '.env')
 
+# Helper Functions
 
 def load_session_env(request):
     credentials_path = base_dir / env('CREDENTIALS_PATH', default='credentials.json')
@@ -56,6 +59,8 @@ def check_session_credentials(func):
 
     return wrapper
 
+
+# Authentication Views
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -90,6 +95,8 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+# Session API
+
 class UserSessionView(APIView):
     def get(self, request):
         user = request.user
@@ -109,6 +116,8 @@ class UserSessionView(APIView):
             'logged_in_as': logged_in_as
         })
 
+
+# User API
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
@@ -160,6 +169,8 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Course API
+
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -188,6 +199,144 @@ class CourseViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    @check_session_credentials
+    def create(self, request):
+        # Duplicate course name
+        course_name = request.data.get('name', None)
+        if Course.objects.filter(name=course_name).exists():
+            return Response(
+                { 'error': 'Course with same name already exists.' },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Invalid grade level
+        grade_level = request.data.get('grade_level', None)
+        if not isinstance(grade_level, int) or not (0 <= grade_level <= 12):
+            return Response(
+                { 'error': 'Invalid grade level. Grade level must be between 1-12.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Assign default user
+        data = request.data.copy()
+        if 'assigned' not in data or not data['assigned']:
+            data['assigned'] = request.user.id
+        
+        serializer = self.get_serializer(data=data)
+        if serializer.is_valid():
+            course = serializer.save()
+
+            # Create course Drive folder
+            service_account = ServiceAccount(request.session.get('credentials_path', ''))
+            root_folder_id = request.session.get('root_folder_id', '')
+
+            if course.is_major:
+                classroom = course.classroom
+                if not classroom:
+                    return Response(
+                        { 'error': 'Classroom is required to create a course.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                classroom_folder_id = classroom.classroom_folder_id
+                if not classroom_folder_id:
+                    return Response(
+                        { 'error': 'Classroom does not have a Google drive folder. '},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            else:
+                # Create a grade folder classroom, if it already exists get that id instead
+                results = service_account.drive_service.files().list(
+                    q=f"name='Grade {course.grade_level}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
+                    and '{root_folder_id}' in parents",
+                    fields="files(id, name)"                    
+                ).execute()
+                folders = results.get('files', [])
+
+                if not folders:
+                    file_metadata = {
+                        'name': f'Grade {course.grade_level}',
+                        'mimeType': 'application/vnd.google-apps.folder',
+                        'parents': [ root_folder_id ],
+                    }
+
+                    folder = service_account.drive_service.files().create(
+                        body=file_metadata,
+                        fields='id, webViewLink',
+                    ).execute()
+                    classroom_folder_id = folder['id']
+                    print(f'Folder for grade {course.grade_level} successfully created.')
+                else:
+                    classroom_folder_id = folders[0]['id']
+
+            result = create_course(
+                str(course),
+                service_account.drive_service,
+                classroom_folder_id
+            )
+
+            if not result:
+                return Response(
+                    { 'error': f'Something went wrong. Unable to create course.' },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+            course.course_folder_id = result['course_folder_id']
+            course.save()
+
+            serializer = self.get_serializer(course)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+    @check_session_credentials
+    def destroy(self, request, pk=None):
+        try:
+            course = Course.objects.get(
+                pk=pk
+            )
+        except Course.DoesNotExist:
+            return Response(
+                { 'error': 'Course with that id does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        service_account = ServiceAccount(request.session.get('credentials_path', ''))
+
+        if course.is_major:
+            classroom_folder_id = course.classroom.classroom_folder_id
+        else:
+            classroom_folder_id = Classroom.objects.filter(
+                grade=course.grade_level
+            ).first().grade_folder_id
+
+
+        if not classroom_folder_id:
+            return Response(
+                { 'error': 'Classroom does not have a Google drive folder. '},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        result = delete_course(
+            str(course),
+            service_account.drive_service,
+            classroom_folder_id
+        )
+
+        if not result:
+            return Response(
+                { 'error': f'Something went wrong. Unable to delete course.' },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        serializer = self.get_serializer(course)
+        course.delete()
+        serializer.data['id'] = course.id
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# Classroom API
 
 class ClassroomViewSet(viewsets.ModelViewSet):
     queryset = Classroom.objects.all()
@@ -217,7 +366,7 @@ class ClassroomViewSet(viewsets.ModelViewSet):
             )
 
         # Invalid grade level
-        grade_level = request.data.get('grade', None)
+        grade_level = request.data.get('grade_level', None)
         if not isinstance(grade_level, int) or not (0 <= grade_level <= 12):
             return Response(
                 { 'error': 'Invalid grade level. Grade level must be between 1-12.' },
@@ -324,15 +473,21 @@ class ClassroomViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# Content API
+
 class ContentViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
 
 
+# Attendance API
+
 class AttendanceView(APIView):
 
     @check_session_credentials
     def get(self, request):
+        """ Get classroom or student attendance. """
+
         service_account = ServiceAccount(request.session.get('credentials_path', ''))
         spreadsheet_id = request.session.get('spreadsheet_id', '')
         sheet_name = ''
@@ -418,15 +573,12 @@ class AttendanceView(APIView):
     
     @check_session_credentials
     def post(self, request):
+        """ Mark student attendance. """
+
         # Validations
-        attendance_data = {
-            'late_time': '',
-        }
+        attendance_data = { 'late_time': '', }
 
-        # Default Values
-        attendance_data['late_time'] = ''
         attendance_data['date'] = datetime.date.today().strftime('%Y-%m-%d')
-
         required_data_values = [
             'student_id', 'classroom_id', 'attendance_status', 'marker_id'
         ]
@@ -434,6 +586,7 @@ class AttendanceView(APIView):
         for required_data_value in required_data_values:
             data_value = request.data.get(required_data_value, None)
 
+            # Late attendance status and late time
             if required_data_value == 'attendance_status' and data_value == 'L':
                 if not (late_time := request.data.get('late_time', None)):
                     return Response(
@@ -443,6 +596,7 @@ class AttendanceView(APIView):
                 else:
                     attendance_data['late_time'] = late_time
 
+            # Missing attendance data
             if not data_value:
                 return Response(
                     { 'error': f'Missing attendance data: {required_data_value}' },

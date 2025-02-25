@@ -69,6 +69,7 @@ class Course(models.Model):
     description = models.TextField(null=True, blank=True, default='')
     is_major = models.BooleanField(default=False)
     grade_level = models.IntegerField()  # For core subjects
+    course_folder_id = models.CharField(max_length=255, blank=True, default='') 
     assigned = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_courses'
     )

@@ -119,7 +119,7 @@ class ContentSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    contents_count = serializers.IntegerField()
+    contents_count = serializers.IntegerField(read_only=True)
     
     class Meta:
         model = Course

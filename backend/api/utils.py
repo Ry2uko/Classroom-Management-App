@@ -68,12 +68,13 @@ def create_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
                 and '{root_folder_id}' in parents",
             fields="files(id, name)"
         ).execute()
+
         folders = results.get('files', [])
         if folders:
-            print('Error creating folder: folder already exists.')
+            print('Error creating folder: classroom folder already exists.')
             return {}
 
-        # Create
+        # Create folder
         file_metadata = {
             'name': classroom_name_full,
             'mimeType': 'application/vnd.google-apps.folder',
@@ -194,7 +195,8 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
                 fileId=folder['id']
             ).execute()
 
-            print(f"Deleted folder '{classroom_name_full}'.")
+            print(f"Deleted course folder '{classroom_name_full}'.")
+
     except Exception as e:
         print(f'Error deleting folder: {e}')
         return False
@@ -235,6 +237,73 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
         return True
     except Exception as e:
         print(f'Error deleting sheet: {e}')
+        return False
+
+
+def create_course(course_name, drive_service, classroom_folder_id):
+    """ Create folder inside Google Drive classroom folder. """
+
+    results_data = {}
+    
+    try:
+        results = drive_service.files().list(
+            q=f"name='{course_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
+                and '{classroom_folder_id}' in parents",
+            fields='files(id, name)',
+        ).execute()
+
+        folders = results.get('files', [])
+        if folders:
+            print('Error creating folder: course folder already exists.')
+            return {}
+
+        # Create folder
+        file_metadata = {
+            'name': course_name,
+            'mimeType': 'application/vnd.google-apps.folder',
+            'parents': [ classroom_folder_id ],
+        }
+
+        folder = drive_service.files().create(
+            body=file_metadata,
+            fields='id, webViewLink'
+        ).execute()
+
+        results_data['course_folder_id'] = folder['id']
+        print(f'Folder for course {course_name} successfully created.')
+
+    except Exception as e:
+        print(f'Error creating folder: {e}')
+        return {}
+
+    return results_data
+
+
+def delete_course(course_name, drive_service, classroom_folder_id):
+    """ Delete course folder. """
+
+    try:
+        results = drive_service.files().list(
+            q=f"name='{course_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
+                and '{classroom_folder_id}' in parents",
+            fields="files(id, name)",
+        ).execute()
+
+        folders = results.get('files', [])
+        if not folders:
+            print(f'Error deleting course: course folder not found.')
+            return False
+
+        for folder in folders:
+            drive_service.files().delete(
+                fileId=folder['id'],
+            ).execute()
+            print(f"Delete folder '{course_name}'.")
+
+        return True
+
+    except Exception as e:
+        print(f'Error deleting course folder: {e}')
         return False
 
 
