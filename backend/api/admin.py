@@ -21,7 +21,7 @@ def set_random_password(modeladmin, request, queryset):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'username', 'classroom', 'type', 'role', 'sex')
-    list_filter = ('classroom', 'classroom__strand', 'classroom__grade', 'type', 'role', 'sex')
+    list_filter = ('classroom', 'classroom__strand', 'classroom__grade_level', 'type', 'role', 'sex')
     search_fields = ('username',)
     actions = (set_random_password,)
 
@@ -31,8 +31,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Classroom)
 class ClassroomAdmin(admin.ModelAdmin):
-    list_display = ('classroom', 'grade', 'strand', 'class_adviser')
-    list_filter = ('grade', 'strand')
+    list_display = ('classroom', 'grade_level', 'strand', 'class_adviser')
+    list_filter = ('grade_level', 'strand')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'class_adviser':

@@ -52,7 +52,7 @@ class User(AbstractUser):
 class Classroom(models.Model):
     name = models.CharField(max_length=255)
     strand = models.CharField(max_length=255, null=True, blank=True)
-    grade = models.IntegerField()
+    grade_level = models.IntegerField()
     grade_folder_id = models.CharField(max_length=255, blank=True, default='')
     classroom_folder_id = models.CharField(max_length=255, blank=True, default='')
     sheet_id = models.CharField(max_length=255, blank=True, default='')
@@ -61,7 +61,7 @@ class Classroom(models.Model):
     )
 
     def __str__(self):
-        return f'{self.grade}-{self.strand} {self.name}'  # Ex: 12-STEM: Our Lady of the Most Holy Rosary
+        return f'{self.grade_level}-{self.strand} {self.name}'  # Ex: 12-STEM: Our Lady of the Most Holy Rosary
 
 
 class Course(models.Model):

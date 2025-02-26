@@ -17,6 +17,7 @@ from .serializers import (
 from .utils import (
     generate_unique_password,
     ServiceAccount,
+    create_folder,
     create_classroom,
     create_course,
     delete_course,
@@ -246,35 +247,22 @@ class CourseViewSet(viewsets.ModelViewSet):
                     )
             else:
                 # Create a grade folder classroom, if it already exists get that id instead
-                results = service_account.drive_service.files().list(
-                    q=f"name='Grade {course.grade_level}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
-                    and '{root_folder_id}' in parents",
-                    fields="files(id, name)"                    
-                ).execute()
-                folders = results.get('files', [])
+                grade_level_name = f'Grade {course.grade_level}'
+                grade_folder_results = create_folder(grade_level_name, service_account.drive_service, root_folder_id)
 
-                if not folders:
-                    file_metadata = {
-                        'name': f'Grade {course.grade_level}',
-                        'mimeType': 'application/vnd.google-apps.folder',
-                        'parents': [ root_folder_id ],
-                    }
+                if 'error' in grade_folder_results and grade_folder_results['error'] != 'folder already exists':
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to create course.' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
 
-                    folder = service_account.drive_service.files().create(
-                        body=file_metadata,
-                        fields='id, webViewLink',
-                    ).execute()
-                    classroom_folder_id = folder['id']
-                    print(f'Folder for grade {course.grade_level} successfully created.')
-                else:
-                    classroom_folder_id = folders[0]['id']
+                classroom_folder_id = grade_folder_results['folder_id']
 
             result = create_course(
                 str(course),
                 service_account.drive_service,
                 classroom_folder_id
             )
-
             if not result:
                 return Response(
                     { 'error': f'Something went wrong. Unable to create course.' },
@@ -307,7 +295,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             classroom_folder_id = course.classroom.classroom_folder_id
         else:
             classroom_folder_id = Classroom.objects.filter(
-                grade=course.grade_level
+                grade_level=course.grade_level
             ).first().grade_folder_id
 
 
@@ -381,7 +369,7 @@ class ClassroomViewSet(viewsets.ModelViewSet):
                 { 'error': 'Invalid strand or strand does not exist.' },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        elif Classroom.objects.filter(grade=grade_level, strand=classroom_strand.upper()).exists():
+        elif Classroom.objects.filter(grade_level=grade_level, strand=classroom_strand.upper()).exists():
             return Response(
                 { 'error': 'Classrooms per grade level should have a unique strand.' },
                 status=status.HTTP_400_BAD_REQUEST
@@ -453,9 +441,9 @@ class ClassroomViewSet(viewsets.ModelViewSet):
             )
 
         # Delete classroom grade folder if last
-        if Classroom.objects.filter(grade=classroom.grade).count() == 1:
+        if Classroom.objects.filter(grade_level=classroom.grade_level).count() == 1:
             result = delete_classroom(
-                f"Grade {classroom.grade}",
+                f"Grade {classroom.grade_level}",
                 service_account.drive_service,
                 root_folder_id
             )
@@ -666,7 +654,7 @@ class AttendanceView(APIView):
             )
 
         attendance_data['student_name'] = student.full_name
-        attendance_data['classroom'] = f'{classroom.grade}-{classroom.strand}'
+        attendance_data['classroom'] = f'{classroom.grade_level}-{classroom.strand}'
         att_prefix = ''
         if student_marker.role == 'teacher':
             if student_marker.sex == 'M':

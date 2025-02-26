@@ -19,7 +19,7 @@ def generate_unique_password(pin_length=4):
     return 'sgat' + ''.join(random.choices(string.digits, k=pin_length))
 
 
-# Service Account
+# Service Account (Helper Functions)
 
 class ServiceAccount():
     """ Service account for Google API Client. """
@@ -52,160 +52,51 @@ def get_spread_range(n, n_y='1'):
     return f'A{n_y}:{n_end_range}{n_y}'
 
 
-def create_classroom(classroom_name_full, drive_service, root_folder_id, sheets_service=None, spreadsheet_id=None):
-    """ Set up classroom Google Drive folder and Google Docs sheet. """
-
-    # Hint (App Admin Setup): First set up a Google Cloud service account and Google Account for school use
-    # Then, share folder and sheet with the service account. Save folder id and sheet id into the .env file:
+def create_sheet(sheet_name, sheets_service, spreadsheet_id):
+    """ Helper function for creating a sheet in the provided spreadsheet. """
 
     results_data = {}
 
-    # Create folder
-    try: 
-        # Check if folder exists (strand)
-        results = drive_service.files().list(
-            q=f"name='{classroom_name_full}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
-                and '{root_folder_id}' in parents",
-            fields="files(id, name)"
-        ).execute()
-
-        folders = results.get('files', [])
-        if folders:
-            print('Error creating folder: classroom folder already exists.')
-            return {}
-
-        # Create folder
-        file_metadata = {
-            'name': classroom_name_full,
-            'mimeType': 'application/vnd.google-apps.folder',
-            'parents': [ root_folder_id ],
-        }
-
-        folder = drive_service.files().create(
-           body=file_metadata,
-           fields='id, webViewLink'     
-        ).execute()
-
-        results_data['classroom_folder_id'] = folder['id']
-        print(f'Folder for classroom {classroom_name_full} successfully created.')
-
-        # Create grade level folder if it doesn't exist
-        grade_level = int(classroom_name_full.split('-')[0])
-        results = drive_service.files().list(
-            q=f"name='Grade {grade_level}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
-                and '{root_folder_id}' in parents",
-            fields="files(id, name)"
-        ).execute()
-        folders = results.get('files', [])
-        if not folders:
-            file_metadata = {
-                'name': f'Grade {grade_level}',
-                'mimeType': 'application/vnd.google-apps.folder',
-                'parents': [ root_folder_id ],
-            }
-
-            folder = drive_service.files().create(
-                body=file_metadata,
-                fields='id, webViewLink'     
-            ).execute()   
-            results_data['grade_folder_id'] = folder['id']
-            print(f'Folder for grade {grade_level} successfully created.')
-        else:
-            results_data['grade_folder_id'] = folders[0]['id']
-         
-    except Exception as e:
-        print(f'Error creating folder: {e}')
-        return {}
-
-    if classroom_name_full.split()[0].lower() == 'grade':
-        return results_data
-
-    # Create sheet and format
-    try: 
+    try:
         # Check if sheet exists
         results = sheets_service.spreadsheets().get(
             spreadsheetId=spreadsheet_id
         ).execute()
+
         sheets = results.get('sheets', [])
         for sheet in sheets:
-            if sheet['properties']['title'] == classroom_name_full:
-                print(f'Error creating sheet: sheet already exists.')
-                return {}
-        
-        # Create
+            if sheet['properties']['title'] == sheet_name:
+                return { 'error': 'sheet already exists' }
+
+        # Create sheet
         requests = [{
             'addSheet': {
                 'properties': {
-                    'title': classroom_name_full,
+                    'title': sheet_name,
                 },
-            }
+            },
         }]
-        batch_update_request = {
-            'requests': requests,
-        }
+
+        batch_update_request = { 'requests': requests }
         sheet = sheets_service.spreadsheets().batchUpdate(
             spreadsheetId=spreadsheet_id,
             body=batch_update_request,
         ).execute()
-        results_data['sheet_id'] = str(sheet['replies'][0]['addSheet']['properties']['sheetId'])
+        
+        print(f"Sheet '{sheet_name}' successfully created.")
+        results_data['sheet_id']= str(sheet['replies'][0]['addSheet']['properties']['sheetId'])
 
-        # Create header row
-        header_values = [
-            SHEET_HEADER_VALUES
-        ]
-
-        range_name = f"'{classroom_name_full}'!{get_spread_range(len(SHEET_HEADER_VALUES))}"
-        body = {
-            'values': header_values
-        }
-
-        sheets_service.spreadsheets().values().update(
-            spreadsheetId=spreadsheet_id,
-            range=range_name,
-            valueInputOption='RAW',
-            body=body,
-        ).execute()
-
-        print(f'Sheet for classroom {classroom_name_full} successfully created.')
     except Exception as e:
-        print(f'Error creating sheet: {e}')
-        return {}
+        return { 'error': str(e) }
 
     return results_data
 
 
-def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_service=None, spreadsheet_id=None):
-    """ Delete classroom folders and spreadsheets from Drive and Docs (Sheets). """
-    
-    # Delete classroom folder
+def delete_sheet(sheet_name, sheets_service, spreadsheet_id):
+    results_data = { 'success': True }
+
     try:
-        results = drive_service.files().list(
-            q=f"name='{classroom_name_full}' and mimeType='application/vnd.google-apps.folder' \
-                and trashed=false and '{root_folder_id}' in parents",
-            fields="files(id, name)",
-        ).execute()
-        folders = results.get('files', [])
-
-        if not folders:
-            print(f"Error deleting folder: folder '{classroom_name_full}' not found.")
-            return False
-
-        for folder in folders:
-            drive_service.files().delete(
-                fileId=folder['id']
-            ).execute()
-
-            print(f"Deleted course folder '{classroom_name_full}'.")
-
-    except Exception as e:
-        print(f'Error deleting folder: {e}')
-        return False
-
-    if classroom_name_full.split()[0].lower() == 'grade':
-        return False
-
-    # Delete classroom attendance sheet
-    try:
+        # Fetch sheet id (if it exists)
         results = sheets_service.spreadsheets().get(
             spreadsheetId=spreadsheet_id,
         ).execute()
@@ -213,14 +104,13 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
 
         sheet_id = None
         for sheet in sheets:
-            if sheet['properties']['title'] == classroom_name_full:
+            if sheet['properties']['title'] == sheet_name:
                 sheet_id = sheet['properties']['sheetId']
                 break
-
         if sheet_id is None:
-            print(f"Error deleting sheet: sheet '{classroom_name_full}' not found.")
-            return False
+            return { 'error': 'sheet not found' }
         
+        # Delete sheet
         batch_update_request = {
             'requests': [{
                 'deleteSheet': {
@@ -233,35 +123,39 @@ def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_
             body=batch_update_request,
         ).execute()
 
-        print(f"Deleted sheet '{classroom_name_full}'. ");
-        return True
+        print(f"Sheet '{sheet_name}' successfully deleted.")
+        
     except Exception as e:
-        print(f'Error deleting sheet: {e}')
-        return False
+        return { 'error': str(e) }
+    
+    return results_data
 
 
-def create_course(course_name, drive_service, classroom_folder_id):
-    """ Create folder inside Google Drive classroom folder. """
+def create_folder(folder_name, drive_service, parent_folder_id):
+    """ Helper function for creating a folder in the provided parent folder. """
 
     results_data = {}
-    
+
     try:
+        # Check if folder exists
         results = drive_service.files().list(
-            q=f"name='{course_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
-                and '{classroom_folder_id}' in parents",
-            fields='files(id, name)',
+            q=f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
+            and '{parent_folder_id}' in parents",
+            fields="files(id, name)",
         ).execute()
 
         folders = results.get('files', [])
         if folders:
-            print('Error creating folder: course folder already exists.')
-            return {}
-
+            return { 
+                'error': 'folder already exists',
+                'folder_id': folders[0]['id'],
+            }
+        
         # Create folder
         file_metadata = {
-            'name': course_name,
+            'name': folder_name,
             'mimeType': 'application/vnd.google-apps.folder',
-            'parents': [ classroom_folder_id ],
+            'parents': [ parent_folder_id ],
         }
 
         folder = drive_service.files().create(
@@ -269,12 +163,122 @@ def create_course(course_name, drive_service, classroom_folder_id):
             fields='id, webViewLink'
         ).execute()
 
-        results_data['course_folder_id'] = folder['id']
-        print(f'Folder for course {course_name} successfully created.')
+        results_data['folder_id'] = folder['id']
+        results_data['folder_webViewLink'] = folder['webViewLink']
+        print(f"Folder '{folder_name}' successfully created.")
 
     except Exception as e:
-        print(f'Error creating folder: {e}')
+        return { 'error': str(e) }
+
+    return results_data
+
+
+def delete_folder(folder_name, drive_service, parent_folder_id):
+    """ Helper function for deletign a folder in teh provided parent folder. """
+
+    results_data = { 'success': True }
+
+    try:
+        # Check if folder exists
+        results = drive_service.files().list(
+            q=f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder' \
+                and trashed=false and '{parent_folder_id}' in parents",
+            fields="files(id, name)",
+        ).execute()
+        folders = results.get('files', [])
+
+        if not folders:
+            return { 'error': 'folder not found' }
+
+        for folder in folders:
+            drive_service.files().delete(
+                fileId=folder['id']
+            ).execute()
+
+        print(f"Folder '{folder_name}' successfully deleted.")
+
+    except Exception as e:
+        return { 'error': str(e) }  
+
+    return results_data
+
+
+# Service Account
+
+def create_classroom(classroom_name_full, drive_service, root_folder_id, sheets_service, spreadsheet_id):
+    """ Set up classroom Google Drive folder and Google Docs sheet. """
+
+    results_data = {}
+
+    # Create classroom folder
+    results = create_folder(classroom_name_full, drive_service, root_folder_id)
+    if 'error' in results:
+        print(f'Error creating folder: {results['error']}.')
         return {}
+
+    # Create grade level folder if it doesn't exist
+    grade_level = int(classroom_name_full.split('-')[0])
+    grade_folder_name = f'Grade {grade_level}'
+    grade_folder_results = create_folder(grade_folder_name, drive_service, root_folder_id)
+    if 'error' in grade_folder_results and grade_folder_results['error'] != 'folder already exists':
+        print(f'Error creating folder: {grade_folder_results['error']}.')
+        return {}   
+
+    # Create classroom sheet
+    sheets_result = create_sheet(classroom_name_full, sheets_service, spreadsheet_id)
+    if 'error' in sheets_result:
+        print(f'Error creating sheet: {sheets_result['error']}')
+        return {}
+
+    # Create header row
+    header_values = [ SHEET_HEADER_VALUES ]
+    range_name = f"'{classroom_name_full}'!{get_spread_range(len(SHEET_HEADER_VALUES))}"
+    body = { 'values': header_values }
+
+    sheets_service.spreadsheets().values().update(
+        spreadsheetId=spreadsheet_id,
+        range=range_name,
+        valueInputOption='RAW',
+        body=body,
+    ).execute()
+
+
+    results_data['classroom_folder_id'] = results['folder_id']
+    results_data['grade_folder_id'] = grade_folder_results['folder_id']
+    results_data['sheet_id'] = sheets_result['sheet_id']
+
+    return results_data
+
+
+def delete_classroom(classroom_name_full, drive_service, root_folder_id, sheets_service=None, spreadsheet_id=None):
+    """ Delete classroom folders and spreadsheets from Drive and Docs (Sheets). """
+    
+    # Delete classroom folder
+    results = delete_folder(classroom_name_full, drive_service, root_folder_id)
+    if 'error' in results:
+        print(f"Error deleting folder: {results['error']}.")
+        return False
+
+    if classroom_name_full.split()[0].lower() != 'grade':
+        # Delete classroom attendance sheet
+        delete_sheet(classroom_name_full, sheets_service, spreadsheet_id)
+    
+    return True
+
+
+def create_course(course_name, drive_service, classroom_folder_id):
+    """ Create folder inside Google Drive classroom folder. """
+
+    results_data = {}
+    
+    # Create course folder
+    results = create_folder(course_name, drive_service, classroom_folder_id)
+    if 'error' in results:
+        print(f"Error creating folder: {results['error']}.")
+        return {}
+
+    results_data['course_folder_id'] = results['folder_id']
+    print(f'Folder for course {course_name} successfully created.')
 
     return results_data
 
@@ -282,29 +286,15 @@ def create_course(course_name, drive_service, classroom_folder_id):
 def delete_course(course_name, drive_service, classroom_folder_id):
     """ Delete course folder. """
 
-    try:
-        results = drive_service.files().list(
-            q=f"name='{course_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
-                and '{classroom_folder_id}' in parents",
-            fields="files(id, name)",
-        ).execute()
-
-        folders = results.get('files', [])
-        if not folders:
-            print(f'Error deleting course: course folder not found.')
-            return False
-
-        for folder in folders:
-            drive_service.files().delete(
-                fileId=folder['id'],
-            ).execute()
-            print(f"Delete folder '{course_name}'.")
-
-        return True
-
-    except Exception as e:
-        print(f'Error deleting course folder: {e}')
+    # Delete classroom folder
+    results = delete_folder(course_name, drive_service, classroom_folder_id)
+    if 'error' in results:
+        print(f"Error deleting folder: {results['error']}.")
         return False
+
+
+    print(f"Folder '{course_name}' successfully deleted.")
+    return True
 
 
 # Drive V3
