@@ -123,41 +123,45 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
             <div className="qlinks-section section-container">
                 <h4>Quick Links</h4>
                 <div className="qlinks-items-container">
-                    <div className="qlinks-card red">
-                        <Link to="/" className="qlinks-text">
-                            <i className="fa-solid fa-bullhorn"></i>
-                            <span>Announcements</span>
-                        </Link>
+                    <div className="qlinks-row">
+                        <div className="qlinks-card red">
+                            <Link to="/" className="qlinks-text">
+                                <i className="fa-solid fa-bullhorn"></i>
+                                <span>Announcements</span>
+                            </Link>
+                        </div>
+                        <div className="qlinks-card blue">
+                            <Link to="/" className="qlinks-text">
+                                <i className="fa-regular fa-clock"></i>
+                                <span>Schedule</span>
+                            </Link>
+                        </div>
+                        <div className="qlinks-card orange">
+                            <Link to="/calendar" className="qlinks-text">
+                                <i className="fa-regular fa-calendar"></i>
+                                <span>School Calendar</span>
+                            </Link>
+                        </div>
                     </div>
-                    <div className="qlinks-card blue">
-                        <Link to="/" className="qlinks-text">
-                            <i className="fa-regular fa-clock"></i>
-                            <span>Schedule</span>
-                        </Link>
-                    </div>
-                    <div className="qlinks-card orange">
-                        <Link to="/calendar" className="qlinks-text">
-                            <i className="fa-regular fa-calendar"></i>
-                            <span>School Calendar</span>
-                        </Link>
-                    </div>
-                    <div className="qlinks-card purple">
-                        <Link to="/" className="qlinks-text">
-                            <i class="fa-solid fa-lines-leaning"></i>
-                            <span>Courses</span>
-                        </Link>
-                    </div>
-                    <div className="qlinks-card yellow">
-                        <Link to="/" className="qlinks-text">
-                            <i className="fa-solid fa-chalkboard"></i>
-                            <span>Classroom</span>
-                        </Link>
-                    </div>
-                    <div className="qlinks-card teal">
-                        <Link to="/" className="qlinks-text">
-                            <i className="fa-solid fa-school"></i>
-                            <span>School</span>
-                        </Link>
+                    <div className="qlinks-row">
+                        <div className="qlinks-card purple">
+                            <Link to="/" className="qlinks-text">
+                                <i className="fa-solid fa-lines-leaning"></i>
+                                <span>Coursera</span>
+                            </Link>
+                        </div>
+                        <div className="qlinks-card yellow">
+                            <Link to="/" className="qlinks-text">
+                                <i className="fa-solid fa-chalkboard"></i>
+                                <span>Classroom</span>
+                            </Link>
+                        </div>
+                        <div className="qlinks-card teal">
+                            <Link to="/" className="qlinks-text">
+                                <i className="fa-solid fa-school"></i>
+                                <span>School</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

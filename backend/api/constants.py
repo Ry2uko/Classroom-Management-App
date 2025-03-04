@@ -51,29 +51,15 @@ CONTENT_TYPES = [
     ('mixed', 'Mixed'),
 ]
 
+CONTENT_CATEGORIES = [
+    ('announcement', 'Announcement'),
+    ('course', 'Course Material'),
+    ('classroom', 'Classroom Material'),
+    ('school', 'School Material'),
+]
+
 VISIBILITY_CHOICES = [
-    ('school', 'School'),
-    ('classroom', 'Classroom'),
-]
-
-# File Model
-FILE_TYPES = [
-    ('pdf', 'PDF Document'),
-    ('docx', 'Word Document'),
-    ('pptx', 'Powerpoint Presentation'),
-    ('xlsx', 'Excel Spreadsheet'),
-    ('jpg', 'JPEG Image'),
-    ('png', 'PNG Image'),
-    ('mp4', 'MP4 Video'),
-    ('other', 'Other File Type'),
-]
-
-MIME_TYPES = [
-    ('application/pdf', 'PDF Document'),
-    ('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Word Document'),
-    ('application/vnd.openxmlformats-officedocument.presentationml.presentation', 'PowerPoint Presentation'),
-    ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Excel Spreadsheet'),
-    ('image/jpeg', 'JPEG Image'),
-    ('image/png', 'PNG Image'),
-    ('video/mp4', 'MP4 Video'),
+    ('school', 'School'),       # All classrooms
+    ('classroom', 'Classroom'), # One classroom only (General Classroom Annnouncement)
+    ('course', 'Course'),       # Course-Specific
 ]

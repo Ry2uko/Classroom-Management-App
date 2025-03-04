@@ -81,33 +81,13 @@ class Course(models.Model):
         return self.name
     
 
-class Content(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField(null=True, blank=True, default='')
-    content_type = models.CharField(max_length=20, choices=CONTENT_TYPES, default='text')
-    visibility = models.CharField(max_length=20, choices=VISIBILITY_CHOICES, default='classroom')
-    course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name='contents'
-    )
-    classroom = models.ForeignKey(
-        Classroom, on_delete=models.CASCADE, related_name='contents'
-    )
-    created_by = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='created_contents'
-    )
-    created_on = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
-
-
 class File(models.Model):
     file_name = models.CharField(max_length=255)
     drive_web_link = models.TextField(blank=True, null=True, default='') 
     drive_id = models.CharField(max_length=255)
-    file_type = models.CharField(max_length=20, choices=FILE_TYPES)
+    file_type = models.CharField(max_length=20)
     file_size = models.BigIntegerField(null=True, blank=True)
-    mime_type = models.CharField(max_length=255, choices=MIME_TYPES, null=True)
+    mime_type = models.CharField(max_length=255, null=True)
     uploaded_on = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(
         User, on_delete=models.SET_NULL, related_name='uploaded_files', null=True
@@ -115,6 +95,31 @@ class File(models.Model):
 
     def __str__(self):
         return self.file_name
+
+
+class Content(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField(null=True, blank=True, default='')
+    content_category = models.CharField(max_length=20, choices=CONTENT_CATEGORIES, default='other')
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPES, default='text')
+    content_folder_id = models.CharField(max_length=255, blank=True, default='')
+    visibility = models.CharField(max_length=20, choices=VISIBILITY_CHOICES, default='classroom')
+    is_archived = models.BooleanField(default=False)
+    archived_at = models.DateTimeField(null=True, blank=True)
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name='contents', null=True, blank=True
+    )
+    classroom = models.ForeignKey(
+        Classroom, on_delete=models.CASCADE, related_name='contents', null=True, blank=True
+    )
+    grade_level = models.IntegerField(null=True, blank=True)  # For core subjects
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name='created_contents'
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 
 class ContentAttachment(models.Model):

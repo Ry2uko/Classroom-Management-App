@@ -93,7 +93,7 @@ body, html, #root {
   flex-direction: column;
   color: #fff;
   height: 100%;
-  width: 250px;
+  min-width: 200px;
 }
 .Navigation .logo-container {
   padding: 2rem 1rem 0 1rem;
@@ -115,6 +115,7 @@ body, html, #root {
   font-weight: 700;
 }
 .Navigation .navbar-menu {
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -131,6 +132,7 @@ body, html, #root {
   opacity: 1 !important;
 }
 .Navigation .navbar-menu .navbar-item {
+  width: 100%;
   padding: 15px 0;
 }
 .Navigation .navbar-menu .navbar-item a, .Navigation .navbar-menu .navbar-item button#signout-btn {

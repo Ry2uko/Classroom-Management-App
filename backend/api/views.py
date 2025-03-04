@@ -5,8 +5,12 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.exceptions import ValidationError, NotFound
-from .models import User, Classroom, Content, Course
-from .constants import STRAND_CHOICES, ATTENDANCE_STATUS_VALUES
+from .models import User, Classroom, Content, Course, File, ContentAttachment
+from .constants import (
+    STRAND_CHOICES, 
+    ATTENDANCE_STATUS_VALUES, 
+    VISIBILITY_CHOICES,
+)
 from .serializers import (
     CustomTokenObtainPairSerializer, 
     UserSerializer, 
@@ -18,6 +22,8 @@ from .utils import (
     generate_unique_password,
     ServiceAccount,
     create_folder,
+    rename_folder,
+    rename_sheet,
     create_classroom,
     create_course,
     delete_course,
@@ -25,11 +31,14 @@ from .utils import (
     get_classroom_attendance,
     get_student_attendance,
     mark_student_attendance,
+    upload_file,
+    delete_file,
 )
 from pathlib import Path
 from functools import wraps
 import environ
 import datetime
+import os
 
 base_dir = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
@@ -48,6 +57,8 @@ def load_session_env(request):
 
 
 def check_session_credentials(func):
+    """ Always used before using Google Drive/Sheets API. """
+
     @wraps(func)
     def wrapper(self, request, *args, **kwargs):
         if 'credentials_path' not in request.session:
@@ -278,11 +289,48 @@ class CourseViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     @check_session_credentials
+    def update(self, request, pk=None):
+        try:
+            course = Course.objects.get(pk=pk)
+        except Exception as e:
+            return Response(
+                { 'error': 'Course with that id does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        new_name = request.data.get('name', None)
+        if new_name and new_name != course.name:
+            service_account = ServiceAccount(request.session.get('credentials_path', ''))
+            result = rename_folder(
+                course.course_folder_id,
+                service_account.drive_service,
+                new_name,
+            )
+
+            if 'error' in result:
+                return Response(
+                    { 'error': f'Something went wrong. Unable to rename course: {result["error"]}' },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            
+            course.name = new_name
+            updated = True
+        
+        new_description = request.data.get('description', None)
+        if new_description is not None and new_description != course.description:
+            course.description = new_description
+            updated = True
+
+        if updated:
+            course.save()
+
+        serializer = self.get_serializer(course)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @check_session_credentials
     def destroy(self, request, pk=None):
         try:
-            course = Course.objects.get(
-                pk=pk
-            )
+            course = Course.objects.get(pk=pk)
         except Course.DoesNotExist:
             return Response(
                 { 'error': 'Course with that id does not exist.' },
@@ -410,6 +458,52 @@ class ClassroomViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @check_session_credentials
+    def update(self, request, pk=None):
+        try:
+            classroom = Classroom.objects.get(
+                pk=pk
+            )
+        except Classroom.DoesNotExist:
+            return Response(
+                { 'error': 'Classroom with that id does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        service_account = ServiceAccount(request.session.get('credentials_path', ''))
+        spreadsheet_id = request.session.get('spreadsheet_id', '')
+
+        new_name = request.data.get('name', None)
+        if new_name and new_name != classroom.name:
+            result = rename_folder(
+                classroom.classroom_folder_id,
+                service_account.drive_service,
+                f"{str(classroom).split()[0]} {new_name}",
+            )
+            if 'error' in result:
+                return Response(
+                    { 'error': f'Something went wrong. Unable to rename classroom: {result["error"]}' },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+            sheets_result = rename_sheet(
+                classroom.sheet_id,
+                service_account.sheets_service,
+                spreadsheet_id,
+                f"{str(classroom).split()[0]} {new_name}"
+            )
+            if 'error' in sheets_result:
+                return Response(
+                    { 'error': f'Something went wrong. Unable to rename classroom sheet: {sheets_result["error"]}' },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+
+            classroom.name = new_name
+            classroom.save()
+
+        serializer = self.get_serializer(classroom)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @check_session_credentials
     def destroy(self, request, pk=None):
         try:
            classroom = Classroom.objects.get(
@@ -467,6 +561,315 @@ class ContentViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
 
+    @check_session_credentials
+    def create(self, request):
+        service_account = ServiceAccount(request.session.get('credentials_path', ''))
+        root_folder_id = request.session.get('root_folder_id', '')
+        request_data = request.data.copy()
+
+        if 'created_by' not in request_data:
+            request_data['created_by'] = request.user.id
+
+        content_category = request_data.get('content_category', None)
+        if content_category and content_category == 'course':
+            course_id = request_data.get('course', None)
+            if not course_id:
+                return Response(
+                    { 'error': 'Course is required to create a course content.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            classroom = request_data.get('classroom', None)
+            if not classroom:
+                course = Course.objects.get(pk=course_id)
+                request_data['classroom'] = course.classroom.id
+
+            folder_id = course.course_folder_id
+            request_data['visibility'] = 'course'
+            request_data['grade_level'] = course.classroom.grade_level
+
+        elif content_category and content_category == 'school':
+            # Check if 'School Materials' folder exists
+            results = service_account.drive_service.files().list(
+                q=f"name='School Materials' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                    and '{root_folder_id}' in parents",
+                fields="files(id, name)"
+            ).execute()
+
+            folders = results.get('files', [])
+            if not folders:
+                cm_folder_results = create_folder('School Materials', service_account.drive_service, root_folder_id)
+
+                if 'error' in cm_folder_results:
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to create school materials folder.' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                folder_id = cm_folder_results['folder_id']
+            else:
+                folder_id = folders[0]['id']
+
+            request_data['visibility'] = 'school'
+        
+        elif content_category and content_category == 'classroom':
+            grade_level = request.data.get('grade_level', None)
+
+            if not grade_level:
+                # Handle major subjects
+                classroom_id = request_data.get('classroom', None)
+                if not classroom_id:
+                    return Response(
+                        { 'error': 'Classroom is required to create a classroom content.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                try:
+                    classroom = Classroom.objects.get(pk=classroom_id)
+                except Classroom.DoesNotExist:
+                    return Response(
+                        { 'error': 'Classroom with that id does not exist.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                request_data['grade_level'] = classroom.grade_level
+                parent_folder_id = classroom.classroom_folder_id
+            else:
+                # Handle core subjects
+                results = service_account.drive_service.files().list(
+                    q=f"name='Grade {grade_level}' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                        and '{root_folder_id}' in parents",
+                    fields="files(id, name)"
+                ).execute()
+
+                folders = results.get('files', [])
+                if not folders:
+                    grade_folder_results = create_folder(f'Grade {grade_level}', service_account.drive_service, root_folder_id)
+
+                    if 'error' in grade_folder_results:
+                        return Response(
+                            { 'error': f'Something went wrong. Unable to create grade folder.' },
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                        )
+                    
+                    parent_folder_id = grade_folder_results['folder_id']
+                else:
+                    parent_folder_id = folders[0]['id']
+                
+                request_data['grade_level'] = int(grade_level)
+
+            # Check if 'Classroom Materials' folder exists
+            results = service_account.drive_service.files().list(
+                q=f"name='Classroom Materials' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                    and '{parent_folder_id}' in parents",
+                fields="files(id, name)"
+            ).execute()
+
+            folders = results.get('files', [])  
+            if folders:
+                # Check for course named 'Classroom Materials' (special case)
+                try:
+                    course = Course.objects.get(name='Classroom Materials', classroom=classroom)
+
+                    cm_folder_results = create_folder('Classroom Materials', service_account.drive_service, parent_folder_id, allow_duplicate=True)
+
+                    if 'error' in cm_folder_results:
+                        return Response(
+                            { 'error': f'Something went wrong. Unable to create classroom materials folder.' },
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                        )
+                    
+                    folder_id = cm_folder_results['folder_id']
+                except Course.DoesNotExist:
+                    folder_id = folders[0]['id']
+            else:
+                cm_folder_results = create_folder('Classroom Materials', service_account.drive_service, parent_folder_id, allow_duplicate=True)
+
+                if 'error' in cm_folder_results:
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to create classroom materials folder.' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                folder_id = cm_folder_results['folder_id']
+
+            request_data['visibility'] = 'classroom'
+                    
+        elif content_category and content_category == 'announcement':
+            content_visibility = request.data.get('visibility', None)
+            if not content_visibility:
+                return Response(
+                    { 'error': 'Visibility is required for announcement content.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            elif content_visibility.lower() not in [vc[0] for vc in VISIBILITY_CHOICES]:
+                return Response(
+                    { 'error': 'Invalid content visibility.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                ) 
+            
+            # Check if 'Announcements Media' folder exists
+
+            if content_visibility == 'course':
+                course_id = request_data.get('course', None)
+                if not course_id:
+                    return Response(
+                        { 'error': 'Course is required to create a course content.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                try:
+                    course = Course.objects.get(pk=course_id)
+                    
+                except Course.DoesNotExist:
+                    return Response(
+                        { 'error': 'Course with that id does not exist.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )   
+                
+                request_data['classroom'] = course.classroom.id
+                request_data['grade_level'] = course.classroom.grade_level
+                parent_folder_id = course.course_folder_id
+
+            elif content_visibility == 'classroom':
+                classroom_id = request_data.get('classroom', None)
+                if not classroom_id:
+                    return Response(
+                        { 'error': 'Classroom is required to create a classroom content.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )     
+            
+                try:
+                    classroom = Classroom.objects.get(pk=classroom_id)
+                except Classroom.DoesNotExist:
+                    return Response(
+                        { 'error': 'Classroom with that id does not exist.' },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                
+                request_data['grade_level'] = classroom.grade_level
+                parent_folder_id = classroom.classroom_folder_id
+
+            else: 
+                parent_folder_id = root_folder_id
+
+
+            results = service_account.drive_service.files().list(
+                q=f"name='Announcements Media' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                    and '{parent_folder_id}' in parents",
+                fields="files(id, name)"
+            ).execute()
+
+            folders = results.get('files', [])
+            if not folders:
+                cm_folder_results = create_folder('Announcements Media', service_account.drive_service, parent_folder_id)
+
+                if 'error' in cm_folder_results:
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to create announcements media folder.' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                folder_id = cm_folder_results['folder_id']
+            else:
+                folder_id = folders[0]['id']   
+
+        serializer = self.get_serializer(data=request_data)
+        if serializer.is_valid():
+            content = serializer.save()
+
+            # Handle file upload
+            uploaded_files = request.FILES.getlist('file')
+            if uploaded_files:
+                content_results = create_folder(content.title, service_account.drive_service, folder_id, allow_duplicate=True)
+
+                if 'error' in content_results:
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to create content folder.' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                content.content_folder_id = content_results['folder_id']
+                content.save()
+
+                for uploaded_file in uploaded_files:
+                    file_results = upload_file(
+                        service_account.drive_service,
+                        uploaded_file,
+                        uploaded_file.name,
+                        uploaded_file.content_type,
+                        content.content_folder_id
+                    )
+
+                    if 'error' in file_results:
+                        return Response(
+                            { 'error': f'Something went wrong. Unable to upload file.' },
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                        )
+                    
+                    # Create file model
+                    file = File.objects.create(
+                        file_name=os.path.splitext(uploaded_file.name)[0],
+                        drive_id=file_results['file_id'],
+                        drive_web_link=file_results['webViewLink'],
+                        file_type=os.path.splitext(uploaded_file.name)[1][1:].lower(),
+                        file_size=uploaded_file.size,
+                        mime_type=uploaded_file.content_type,
+                        uploaded_by_id=content.created_by.id
+                    )
+
+                    # Attach file to content via ContentAttachment
+                    ContentAttachment.objects.create(
+                        content=content,
+                        file=file
+                    )
+
+                    serializer = self.get_serializer(content)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # TODO: destroy method
+    # TODO: update method
+        # - Update content title
+        # - Update content
+        # - Update files (add, remove, update) (NOTE: js add this to isssues for now)
+        # - Archive content
+
+    @check_session_credentials
+    def destroy(self, request, pk=None):
+        try:
+            content = Content.objects.get(pk=pk)
+        except Content.DoesNotExist:
+            return Response(
+                {'error': 'Content with that id does not exist.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        service_account = ServiceAccount(request.session.get('credentials_path', ''))
+
+        # Delete content folder from Google Drive
+        if content.content_folder_id:
+            result = delete_file(service_account.drive_service, content.content_folder_id)
+            if 'error' in result:
+                return Response(
+                    {'error': f'Something went wrong. Unable to delete content folder: {result["error"]}'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+        # Delete associated files
+        for attachment in content.attachments.all():
+            result = delete_file(service_account.drive_service, attachment.file.drive_id)
+            if 'error' in result:
+                return Response(
+                    {'error': f'Something went wrong. Unable to delete file: {result["error"]}'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            attachment.file.delete()
+
+        content.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 # Attendance API
 
@@ -671,7 +1074,6 @@ class AttendanceView(APIView):
             sheet_name,
             attendance_data,
         )
-
 
         if not result:
             return Response(

@@ -21,6 +21,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_USER_MODEL = 'api.User'
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # 100mb max file size
+
 # Application definition
 
 INSTALLED_APPS = [

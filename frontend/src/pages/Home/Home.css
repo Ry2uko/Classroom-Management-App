@@ -95,11 +95,13 @@ body, html, #root {
   border-radius: 2rem;
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 .Home .loader {
   margin-top: 1.5rem;
 }
 .Home .main-content-container {
+  min-width: 780px;
   flex: 1;
   overflow: auto;
 }
@@ -307,16 +309,16 @@ body, html, #root {
 }
 .MainContent .courses-section .courses-items-container {
   display: flex;
-  justify-content: space-between;
   margin-top: 15px;
+  gap: 15px;
 }
 .MainContent .courses-section .courses-items-container .course-card {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: #fff;
   display: flex;
+  width: 33.3333333333%;
+  height: 100%;
   flex-direction: column;
-  width: 220px;
-  height: 160px;
   border-radius: 0.5rem;
   padding: 1rem;
   transition: 0.2s ease-out;
@@ -324,6 +326,9 @@ body, html, #root {
 }
 .MainContent .courses-section .courses-items-container .course-card:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.MainContent .courses-section .courses-items-container .course-card .title-section {
+  margin-bottom: 2rem;
 }
 .MainContent .courses-section .courses-items-container .course-card .title-section h5.course-title {
   text-overflow: ellipsis;
@@ -354,13 +359,15 @@ body, html, #root {
   margin-top: 1rem;
 }
 .MainContent .qlinks-section .qlinks-items-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: space-between;
+  width: 100%;
+}
+.MainContent .qlinks-section .qlinks-items-container .qlinks-row {
+  width: 100%;
+  display: flex;
+  gap: 15px;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card {
-  width: 220px;
-  height: 160px;
+  width: 33.3333333333%;
   margin-top: 1rem;
   background-color: #fff;
   border-radius: 0.5rem;
@@ -376,6 +383,7 @@ body, html, #root {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text {
+  margin: 3.5rem 0;
   color: #000;
   width: 100%;
   height: 100%;

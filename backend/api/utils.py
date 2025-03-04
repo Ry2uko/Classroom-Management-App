@@ -3,13 +3,14 @@
 # NOTE: BASED ON STRAND SYSTEM FOR SENIOR HIGH. REQUIRES FULL APPLICATION ADJUSTMENT IF JHS IS INCLUDED.
 
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaIoBaseUpload
 from google.oauth2 import service_account
 from datetime import datetime
 from .constants import SHEET_HEADER_VALUES
 import pytz
 import random
 import string
+import io
 
 # General Utilities
 
@@ -131,25 +132,26 @@ def delete_sheet(sheet_name, sheets_service, spreadsheet_id):
     return results_data
 
 
-def create_folder(folder_name, drive_service, parent_folder_id):
+def create_folder(folder_name, drive_service, parent_folder_id, allow_duplicate=False):
     """ Helper function for creating a folder in the provided parent folder. """
 
     results_data = {}
 
     try:
-        # Check if folder exists
-        results = drive_service.files().list(
-            q=f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
-            and '{parent_folder_id}' in parents",
-            fields="files(id, name)",
-        ).execute()
+        if not allow_duplicate:
+            # Check if folder exists
+            results = drive_service.files().list(
+                q=f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false \
+                and '{parent_folder_id}' in parents",
+                fields="files(id, name)",
+            ).execute()
 
-        folders = results.get('files', [])
-        if folders:
-            return { 
-                'error': 'folder already exists',
-                'folder_id': folders[0]['id'],
-            }
+            folders = results.get('files', [])
+            if folders:
+                return { 
+                    'error': 'folder already exists',
+                    'folder_id': folders[0]['id'],
+                }
         
         # Create folder
         file_metadata = {
@@ -201,6 +203,62 @@ def delete_folder(folder_name, drive_service, parent_folder_id):
         return { 'error': str(e) }  
 
     return results_data
+
+
+def rename_folder(folder_id, drive_service, new_name):
+    """ Helper function for renaming a folder. """
+
+    try:
+        file_metadata = { 'name': new_name }
+
+        folder = drive_service.files().update(
+            fileId=folder_id,
+            body=file_metadata,
+            fields='id, name, webViewLink'
+        ).execute()
+
+        print(f"Folder renamed to '{new_name}' successfully.")
+
+        return {
+            'folder_id': folder['id'],
+            'folder_name': folder['name'],
+            'folder_webViewLink': folder['webViewLink'],
+        }
+    except Exception as e:
+        return { 'error': str(e) }
+
+
+def rename_sheet(sheet_id, sheets_service, spreadsheet_id, new_name):
+    """ Helper function for renaming a sheet. """
+
+    try:
+        requests = [{
+            'updateSheetProperties': {
+                'properties': {
+                    'sheetId': sheet_id,
+                    'title': new_name
+                },
+                'fields': 'title'
+            }
+        }]
+
+        body = {
+            'requests': requests
+        }
+
+        response = sheets_service.spreadsheets().batchUpdate(
+            spreadsheetId=spreadsheet_id,
+            body=body
+        ).execute()
+
+        print(f"Sheet renamed to '{new_name}' successfully.")
+
+        return {
+            'sheet_id': sheet_id,
+            'sheet_name': new_name
+        }
+    except Exception as e:
+        return {'error': str(e)}
 
 
 # Service Account
@@ -299,7 +357,7 @@ def delete_course(course_name, drive_service, classroom_folder_id):
 
 # Drive V3
 
-def upload_file(service, file_path, file_name, mime_type, folder_id):
+def upload_file(service, file, file_name, mime_type, folder_id):
     """ Upload file to a Google Drive folder given folder id. """
 
     file_metadata = {
@@ -309,24 +367,25 @@ def upload_file(service, file_path, file_name, mime_type, folder_id):
     }
 
     try: 
-        media = MediaFileUpload(file_path, mimetype=mime_type)
+        media = MediaIoBaseUpload(
+            io.BytesIO(file.read()), mimetype=mime_type, resumable=True
+        )
+
         file = service.files().create(
             body=file_metadata,
             media_body=media,
             fields='id, webViewLink, webContentLink'
         ).execute()
     except Exception as e:
-        print(f'Error uploading file: {e}')
-        return {}
+        return { 'error': str(e) }
 
     file_data = {
-        'id': file['id'],
+        'file_id': file['id'],
         'webViewLink': file['webViewLink'],
         'webContentLink': file['webContentLink'],
     }
 
     print(f"File '{file_name}' uploaded successfully to folder '{folder_id}'.")
-    print(file_data)
     return file_data
 
 
@@ -340,8 +399,7 @@ def delete_file(service, file_id):
         print(f"File with ID '{file_id}' deleted successfully.")
 
     except Exception as e:
-        print(f'Error deleting file: {e}')
-        return 
+        return { 'error': str(e) }
 
 
 # Sheets V4
