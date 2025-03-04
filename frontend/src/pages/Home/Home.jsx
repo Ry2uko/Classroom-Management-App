@@ -147,7 +147,7 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
                         <div className="qlinks-card purple">
                             <Link to="/" className="qlinks-text">
                                 <i className="fa-solid fa-lines-leaning"></i>
-                                <span>Coursera</span>
+                                <span>Courses</span>
                             </Link>
                         </div>
                         <div className="qlinks-card yellow">

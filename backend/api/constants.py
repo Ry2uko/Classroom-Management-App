@@ -47,7 +47,7 @@ STRAND_CHOICES = [  # Senior High (Grades 11 & 12)
 # Content Model
 CONTENT_TYPES = [
     ('text', 'Text'),
-    ('file', 'File'),
+    ('file', 'File'),  # Alternative: 'attachment' (File/URL)
     ('mixed', 'Mixed'),
 ]
 
@@ -62,4 +62,12 @@ VISIBILITY_CHOICES = [
     ('school', 'School'),       # All classrooms
     ('classroom', 'Classroom'), # One classroom only (General Classroom Annnouncement)
     ('course', 'Course'),       # Course-Specific
+]
+
+
+# ContentAttachment Model
+
+ATTACHMENT_TYPES = [
+    ('file', 'File'),
+    ('url', 'URL'),
 ]

@@ -778,9 +778,10 @@ class ContentViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             content = serializer.save()
 
-            # Handle file upload
+            
             uploaded_files = request.FILES.getlist('file')
             if uploaded_files:
+                # Handle file attachment
                 content_results = create_folder(content.title, service_account.drive_service, folder_id, allow_duplicate=True)
 
                 if 'error' in content_results:
@@ -824,8 +825,16 @@ class ContentViewSet(viewsets.ModelViewSet):
                         file=file
                     )
 
-                    serializer = self.get_serializer(content)
+            else:
+                url = request_data.get('url', None)
+                if url:
+                    ContentAttachment.objects.create(
+                        content=content,
+                        url=url,
+                        attachment_type='url',
+                    )
 
+            serializer = self.get_serializer(content)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

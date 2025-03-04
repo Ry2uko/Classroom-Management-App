@@ -73,6 +73,6 @@ class ContentAdmin(admin.ModelAdmin):
 
 @admin.register(ContentAttachment)
 class ContentAttachmentAdmin(admin.ModelAdmin):
-    list_display = ('content', 'file')
+    list_display = ('content', 'file', 'url')
     list_filter = ('content__content_type', 'content__visibility', 'content__course', 'content__classroom')
     search_fields = ('content__title',)

@@ -123,9 +123,11 @@ class Content(models.Model):
 
 
 class ContentAttachment(models.Model):
+    attachment_type = models.CharField(max_length=20, choices=ATTACHMENT_TYPES, default='file')
     content = models.ForeignKey(
         Content, on_delete=models.CASCADE, related_name='attachments'
     )
     file = models.ForeignKey(
-        File, on_delete=models.SET_NULL, null=True, related_name='attachments'
+        File, on_delete=models.SET_NULL, null=True, blank=True, related_name='attachments'
     )
+    url = models.URLField(null=True, blank=True)
