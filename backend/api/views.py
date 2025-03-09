@@ -32,7 +32,6 @@ from .utils import (
     get_student_attendance,
     mark_student_attendance,
     upload_file,
-    delete_file,
     delete_folder_by_id,
 )
 from pathlib import Path
