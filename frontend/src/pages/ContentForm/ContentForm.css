@@ -1,0 +1,347 @@
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+}
+
+.parent-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* https://cssloaders.github.io/ */
+.loader2 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: #239732;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: -38px -12px, -14px 0, 14px 0, 38px 0;
+  }
+  33% {
+    box-shadow: -38px 0px, -14px -12px, 14px 0, 38px 0;
+  }
+  66% {
+    box-shadow: -38px 0px, -14px 0, 14px -12px, 38px 0;
+  }
+  100% {
+    box-shadow: -38px 0, -14px 0, 14px 0, 38px -12px;
+  }
+}
+.loader {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.loader, .loader:before, .loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.75s infinite ease-in-out;
+}
+
+.loader {
+  color: #239732;
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+
+.loader:before, .loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+.loader:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+
+.loader:after {
+  left: 3.5em;
+}
+
+@keyframes bblFadInOut {
+  0%, 80%, 100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+.ContentForm {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  border-radius: 2rem;
+  background-color: #e8eaee;
+  justify-content: center;
+}
+.ContentForm .loader {
+  margin-top: 1.5rem;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.main-container .form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  flex: 1;
+}
+.main-container .form-container .header {
+  margin-top: 2rem;
+  width: 80%;
+  max-width: 800px;
+}
+.main-container .form-container .header h1 {
+  font-family: "Nunito", serif;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.main-container .form-container .header h1 .title-icon {
+  margin-right: 12px;
+  padding: 6px 14px;
+  font-size: 1.7rem;
+  border-radius: 50%;
+  color: #239732;
+  background-color: #9ce79c;
+}
+.main-container .form-container .content-form {
+  max-width: 800px;
+  margin: 2rem 0;
+  background-color: #fff;
+  padding: 2rem;
+  width: 80%;
+  border: 2px solid #DADCE0;
+  border-radius: 0.2rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.main-container .form-container .content-form .quill {
+  width: 100%;
+}
+.main-container .form-container .content-form .quill .ql-toolbar {
+  border-color: #b0b0b0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+.main-container .form-container .content-form .quill .ql-container {
+  border-color: #b0b0b0;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.main-container .form-container .content-form .quill .ql-container .ql-editor {
+  min-height: 180px;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+}
+.main-container .form-container .content-form .input-group {
+  height: 50px;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 1.5rem;
+}
+.main-container .form-container .content-form .input-group .input-text {
+  position: absolute;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid #b0b0b0;
+  padding: 0 20px;
+  transition: 0.2s ease;
+  z-index: 99;
+  font-family: "Nunito", serif;
+  font-size: 1.3rem;
+}
+.main-container .form-container .content-form .input-group .input-text:focus {
+  border-color: #282828;
+}
+.main-container .form-container .content-form .input-group .input-text:focus + .input-label, .main-container .form-container .content-form .input-group .input-text.active + .input-label {
+  top: 0;
+  left: -5px;
+  transform: translateY(-50%);
+  z-index: 99;
+  font-size: 1rem;
+  color: #282828;
+}
+.main-container .form-container .content-form .input-group .input-label {
+  background-color: #fff;
+  position: absolute;
+  transition: 0.2s ease;
+  margin: 0 20px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-family: "Nunito", serif;
+  font-size: 1.3rem;
+}
+.main-container .form-container .content-form .btn-group {
+  margin-top: 1rem;
+}
+.main-container .form-container .content-form .btn-group button.form-btn {
+  padding: 3px 15px;
+  background-color: #fff;
+  border-radius: 0.2rem;
+  border: 1px solid #c1c1c1;
+  color: #212121;
+  margin-right: 15px;
+  cursor: pointer;
+  transition: 0.15s;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+}
+.main-container .form-container .content-form .btn-group button.form-btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px;
+  color: #000;
+  border-color: #757575;
+}
+.main-container .form-container .content-form .btn-group button.form-btn i {
+  color: #212121;
+  font-size: 1.1rem;
+  margin-right: 8px;
+}
+.main-container .form-container .content-form .attachments-container {
+  margin-top: 1.5rem;
+}
+.main-container .form-container .content-form .attachments-container .attachment {
+  width: 100%;
+  display: flex;
+  position: relative;
+  margin-bottom: 15px;
+  padding: 5px;
+  align-items: center;
+  border: 1px solid #DADCE0;
+  border-radius: 0.25rem;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-icon {
+  border-radius: 0.3rem;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-icon i {
+  color: #239732;
+  font-size: 1.6rem;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  flex: 1;
+  font-family: "Nunito", serif;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title, .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title {
+  margin-right: 5px;
+  max-width: 75%;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-mimetype {
+  margin-left: 5px;
+  color: #2a2a2a;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
+  max-width: 300px;
+  color: #2a2a2a;
+}
+.main-container .form-container .content-form .attachments-container .attachment button.cancel-attachment {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 15px;
+  cursor: pointer;
+  color: #1d1d1d;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-size: 1.3rem;
+}
+.main-container .sidebar {
+  background-color: #fff;
+  border-radius: 2rem;
+  padding: 2.5rem 1.5rem;
+  width: 30%;
+  min-width: 280px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: "Merriweather Sans", serif;
+}
+.main-container .sidebar .sidebar-form .input-group {
+  margin-bottom: 1.5rem;
+}
+.main-container .sidebar .sidebar-form .input-label {
+  margin-bottom: 8px;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.3rem;
+}
+.main-container .sidebar .sidebar-form .input-select {
+  background-color: #fff;
+  width: 100%;
+  border: 1px solid #a6a6a6;
+  border-radius: 0.25rem;
+  padding: 5px 10px;
+  text-overflow: ellipsis;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+}
+.main-container .sidebar button#create-content {
+  margin-top: auto;
+  background-color: #239732;
+  color: #fff;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 7px 20px;
+  align-self: end;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.2rem;
+}
+.main-container .sidebar button#create-content:hover {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.main-container .sidebar button#create-content i {
+  margin-right: 10px;
+}/*# sourceMappingURL=ContentForm.css.map */

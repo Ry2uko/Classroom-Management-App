@@ -6,6 +6,7 @@ import Navigation from './components/Navigation/Navigation';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
+import ContentForm from './pages/ContentForm/ContentForm';
 import Attendance from './pages/Attendance/Attendance';
 import axiosInstance from './services/axiosInstance'; 
 import './App.css';
@@ -69,14 +70,31 @@ const App = () => {
   return (
     <div className="App parent-container">
       <Routes>
-        <Route path="login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
+        <Route path="/login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
         <Route index element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
             <Home user={user} fetchUserSessionData={fetchUserSessionData} />
           </ProtectedRoute>
-        } />        
-        <Route path="attendance" element={
+        } />     
+
+        {/* Content System */}
+        <Route path="/c/create" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <ContentForm user={user} fetchUserSessionData={fetchUserSessionData} 
+              mode="create"/>
+          </ProtectedRoute>
+        } />
+        <Route path ="/c/:id/edit" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <ContentForm user={user} fetchUserSessionData={fetchUserSessionData} 
+              mode="edit"/>
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/attendance" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
             <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />

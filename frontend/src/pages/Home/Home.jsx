@@ -8,10 +8,7 @@ import './Home.css';
 const Home = ({ user, fetchUserSessionData }) => {
     const [userClassroomData, setUserClassroomData] = useState({});
     const [coursesData, setCoursesData] = useState([]);
-    const [attendanceData, setAttendanceData] = useState({});
     const [dataLoaded, setDataLoaded] = useState(false);
-
-    const { fresh } = useLocation();
 
     const fetchData = async () => {
         try {
@@ -189,7 +186,6 @@ const WelcomeBanner = ({ user }) => {
         </div>
     );
 };
-
 
 /* ProfileContent */
 const Calendar = () => {

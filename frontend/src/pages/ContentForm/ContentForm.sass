@@ -1,0 +1,274 @@
+@import '../../App'
+
+$input-bg: #E2E5E5
+$input-text: #212326
+
+.ContentForm
+    display: flex
+    width: 100%
+    height: 100%
+    overflow: auto
+    border-radius: 2rem
+    background-color: $bg-alt
+    justify-content: center
+
+    .loader
+        margin-top: 1.5rem
+
+.main-container
+    display: flex
+    width: 100%
+    height: 100%
+
+    .form-container
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100%
+        height: 100%
+        overflow-y: auto
+        flex: 1
+
+        .header
+            margin-top: 2rem
+            width: 80%
+            max-width: 800px
+
+            h1
+                font:
+                    family: $ff-nunito
+                    size: 2rem
+                    weight: 500
+
+                .title-icon
+                    margin-right: 12px
+                    padding: 6px 14px
+                    font-size: 1.7rem
+                    border-radius: 50%
+                    color: $theme1
+                    background-color: #9ce79c
+
+        .content-form
+            max-width: 800px
+            margin: 2rem 0
+            background-color: #fff
+            padding: 2rem
+            width: 80%
+            border: 2px solid #DADCE0
+            border-radius: 0.2rem
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+
+            .quill
+                width: 100%
+                $radius: 0.25rem
+
+                .ql-toolbar
+                    border-color: #b0b0b0
+                    border-top-left-radius: $radius
+                    border-top-right-radius: $radius
+                
+                .ql-container
+                    border-color: #b0b0b0
+                    border-bottom-left-radius: $radius
+                    border-bottom-right-radius: $radius
+
+                    .ql-editor
+                        min-height: 180px
+                        font:
+                            family: $ff-nunito
+                            size: 1.2rem
+
+            .input-group
+                height: 50px
+                position: relative
+                width: 100%
+                background-color: #fff
+                margin-bottom: 1.5rem
+
+                .input-text
+                    position: absolute
+                    outline: none
+                    width: 100%
+                    height: 100%
+                    background: transparent
+                    border-radius: 0.25rem
+                    border: 1px solid #b0b0b0
+                    padding: 0 20px
+                    transition: 0.2s ease
+                    z-index: 99
+                    font:
+                        family: $ff-nunito
+                        size: 1.3rem    
+
+                    &:focus 
+                        border-color: #282828
+
+                    &:focus + .input-label, &.active + .input-label
+                        top: 0
+                        left: -5px
+                        transform: translateY(-50%)
+                        z-index: 99
+                        font-size: 1rem
+                        color: #282828
+
+                .input-label
+                    background-color: #fff
+                    position: absolute
+                    transition: 0.2s ease
+                    margin: 0 20px
+                    top: 50%
+                    left: 0
+                    transform: translateY(-50%)
+                    font:
+                        family: $ff-nunito
+                        size: 1.3rem
+            
+            .btn-group
+                margin-top: 1rem
+
+                button.form-btn
+                    padding: 3px 15px
+                    background-color: #fff
+                    border-radius: 0.2rem
+                    border: 1px solid #c1c1c1
+                    color: #212121
+                    margin-right: 15px
+                    cursor: pointer
+                    transition: 0.15s
+                    font:
+                        family: $ff-nunito
+                        size: 1.2rem
+                    
+                    &:hover
+                        box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px
+                        color: #000
+                        border-color: #757575
+
+                    i
+                        color: #212121
+                        font-size: 1.1rem
+                        margin-right: 8px
+
+            .attachments-container
+                margin-top: 1.5rem
+
+                .attachment
+                    width: 100%
+                    display: flex
+                    position: relative
+                    margin-bottom: 15px
+                    padding: 5px
+                    align-items: center
+                    border: 1px solid #DADCE0
+                    border-radius: 0.25rem
+
+                    .attachment-icon
+                        border-radius: 0.3rem
+                        height: 100%
+                        width: 40px
+                        display: flex
+                        justify-content: center
+                        align-items: center
+
+                        i
+                            color: $theme1
+                            font-size: 1.6rem
+
+                    .attachment-main
+                        display: flex
+                        flex-direction: column
+                        margin-left: 10px
+                        flex: 1
+                        font:
+                            family: $ff-nunito
+
+                        .row
+                            display: flex
+                            align-items: center
+                            width: 100%
+
+                            span.attachment-title, span.attachment-content
+                                display: inline-block
+                                white-space: nowrap
+                                overflow: hidden
+                                text-overflow: ellipsis
+
+                            span.attachment-title
+                                margin-right: 5px
+                                max-width: calc(75%)
+
+                            span.attachment-mimetype
+                                margin-left: 5px
+                                color: #2a2a2a
+
+                            span.attachment-content
+                                max-width: 300px
+                                color: #2a2a2a
+
+
+                    button.cancel-attachment
+                        position: absolute
+                        right: 0
+                        top: 50%
+                        transform: translateY(-50%)
+                        margin-right: 15px
+                        cursor: pointer
+                        color: #1d1d1d
+                        background-color: rgba(0,0,0,0)
+                        border: none
+                        font-size: 1.3rem
+
+    .sidebar
+        background-color: #fff
+        border-radius: 2rem
+        padding: 2.5rem 1.5rem
+        width: 30%
+        min-width: 280px
+        max-width: 320px
+        display: flex
+        flex-direction: column
+        height: 100%
+        font:
+            family: $ff-merriweather-sans
+
+
+        .sidebar-form
+            .input-group
+                margin-bottom: 1.5rem
+
+            .input-label
+                margin-bottom: 8px
+                font:
+                    family: $ff-merriweather-sans
+                    size: 1.3rem
+
+            .input-select
+                background-color: #fff
+                width: 100%
+                border: 1px solid #a6a6a6
+                border-radius: 0.25rem
+                padding: 5px 10px
+                text-overflow: ellipsis
+                font:
+                    family: $ff-nunito
+                    size: 1.2rem
+
+        button#create-content
+            margin-top: auto
+            background-color: $theme1
+            color: #fff
+            border: none
+            border-radius: 0.3rem
+            padding: 7px 20px
+            align-self: end
+            cursor: pointer
+            transition: 0.2s 
+            font:
+                family: $ff-merriweather-sans
+                size: 1.2rem
+
+            &:hover
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+
+            i
+                margin-right: 10px
