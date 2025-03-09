@@ -33,12 +33,14 @@ from .utils import (
     mark_student_attendance,
     upload_file,
     delete_file,
+    delete_folder_by_id,
 )
 from pathlib import Path
 from functools import wraps
 import environ
 import datetime
 import os
+import json
 
 base_dir = Path(__file__).resolve().parent.parent.parent
 env = environ.Env()
@@ -180,6 +182,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # update method
 
 # Course API
 
@@ -553,13 +556,17 @@ class ClassroomViewSet(viewsets.ModelViewSet):
         serializer.data['id'] = classroom.id
         
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    
 
 # Content API
 
 class ContentViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
+    
+    def get_queryset(self):
+        queryset = Content.objects.filter(is_archived=False)
+        return queryset
 
     @check_session_credentials
     def create(self, request):
@@ -709,12 +716,11 @@ class ContentViewSet(viewsets.ModelViewSet):
                 ) 
             
             # Check if 'Announcements Media' folder exists
-
             if content_visibility == 'course':
                 course_id = request_data.get('course', None)
                 if not course_id:
                     return Response(
-                        { 'error': 'Course is required to create a course content.' },
+                        { 'error': 'Course is required to create an announcement folder.' },
                         status=status.HTTP_400_BAD_REQUEST
                     )
                 
@@ -777,9 +783,8 @@ class ContentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request_data)
         if serializer.is_valid():
             content = serializer.save()
-
             
-            uploaded_files = request.FILES.getlist('file')
+            uploaded_files = request.FILES.getlist('files')
             if uploaded_files:
                 # Handle file attachment
                 content_results = create_folder(content.title, service_account.drive_service, folder_id, allow_duplicate=True)
@@ -825,26 +830,18 @@ class ContentViewSet(viewsets.ModelViewSet):
                         file=file
                     )
 
-            else:
-                url = request_data.get('url', None)
-                if url:
-                    ContentAttachment.objects.create(
-                        content=content,
-                        url=url,
-                        attachment_type='url',
-                    )
+            urls = json.loads(request_data.get('urls', '[]'))
+            for url in urls:
+                ContentAttachment.objects.create(
+                    content=content,
+                    url=url,
+                    attachment_type='url',
+                )
 
             serializer = self.get_serializer(content)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # TODO: destroy method
-    # TODO: update method
-        # - Update content title
-        # - Update content
-        # - Update files (add, remove, update) (NOTE: js add this to isssues for now)
-        # - Archive content
 
     @check_session_credentials
     def destroy(self, request, pk=None):
@@ -852,33 +849,206 @@ class ContentViewSet(viewsets.ModelViewSet):
             content = Content.objects.get(pk=pk)
         except Content.DoesNotExist:
             return Response(
-                {'error': 'Content with that id does not exist.'},
+                { 'error': 'Content with that id does not exist.' },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         service_account = ServiceAccount(request.session.get('credentials_path', ''))
 
         # Delete content folder from Google Drive
-        if content.content_folder_id:
-            result = delete_file(service_account.drive_service, content.content_folder_id)
-            if 'error' in result:
-                return Response(
-                    {'error': f'Something went wrong. Unable to delete content folder: {result["error"]}'},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
+        result = delete_folder_by_id(content.content_folder_id, service_account.drive_service)
+        if 'error' in result:
+            return Response(
+                { 'error': f'Something went wrong. Unable to delete content folder: {result["error"]}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         # Delete associated files
         for attachment in content.attachments.all():
-            result = delete_file(service_account.drive_service, attachment.file.drive_id)
-            if 'error' in result:
-                return Response(
-                    {'error': f'Something went wrong. Unable to delete file: {result["error"]}'},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
             attachment.file.delete()
 
+        serializer = self.get_serializer(content)
         content.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer.data['id'] = content.id
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @check_session_credentials
+    def update(self, request, pk=None):
+        try:
+            content = Content.objects.get(pk=pk)
+        except Content.DoesNotExist:
+            return Response(
+                { 'error': 'Content with that id does not exist.' },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        service_account = ServiceAccount(request.session.get('credentials_path', ''))
+        root_folder_id = request.session.get('root_folder_id', '')
+        request_data = request.data.copy()
+        print(request_data)
+
+        # Archive content
+        archive = request_data.get('archive', None)
+        if archive is not None:
+            content.is_archived = archive
+            content.save()
+            serializer = self.get_serializer(content)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        # Update content title
+        new_title = request_data.get('title', None)
+        if new_title:
+            if content.content_folder_id:
+                result = rename_folder(
+                    content.content_folder_id,
+                    service_account.drive_service,
+                    new_title
+                )
+
+                if 'error' in result:
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to rename content folder: {result["error"]}' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+
+            content.title = new_title
+        
+        # Update content urls
+        url_content_updated = request_data.get('url_content_updated', None)
+        if url_content_updated: # added or removed urls
+            for attachment in content.attachments.all():
+                if attachment.attachment_type == 'url':
+                    attachment.delete()
+
+            if request_data.get('urls', None) is not None:
+                urls = json.loads(request_data.get('urls', '[]'))
+                for url in urls:
+                    ContentAttachment.objects.create(
+                        content=content,
+                        url=url,
+                        attachment_type='url',
+                    )
+
+        # Update content files
+        file_content_updated = request_data.get('file_content_updated', None)
+        if file_content_updated:  # Added or removed files
+            if content.content_category == 'classroom':
+                parent_folder_id = content.classroom.classroom_folder_id
+
+                results = service_account.drive_service.files().list(
+                    q=f"name='Classroom Materials' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                        and '{parent_folder_id}' in parents",
+                    fields="files(id, name)"
+                ).execute()
+
+                folders = results.get('files', []) 
+                folder_id = folders[0]['id']
+            elif content.content_category == 'course':
+                parent_folder_id = content.course.course_folder_id
+            elif content.content_category == 'school':
+                results = service_account.drive_service.files().list(
+                    q=f"name='School Materials' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                        and '{root_folder_id}' in parents",
+                    fields="files(id, name)"
+                ).execute()
+
+                folders = results.get('files', [])
+                folder_id = folders[0]['id']
+            else:  # Announcemetn
+                if content.visibility == 'course':
+                    parent_folder_id = content.course_folder_id
+                elif content.visibility == 'classroom':
+                    parent_folder_id = content.classroom_folder_id
+                else:
+                    parent_folder_id = root_folder_id
+
+                results = service_account.drive_service.files().list(
+                    q=f"name='Announcements Media' and mimeType='application/vnd.google-apps.folder' and trashed=False \
+                        and '{parent_folder_id}' in parents",
+                    fields="files(id, name)"
+                ).execute()
+
+                folders = results.get('files', [])
+                folder_id = folders[0]['id']
+
+            # Delete content attachments and files
+            service_account = ServiceAccount(request.session.get('credentials_path', ''))
+            result = delete_folder_by_id(content.content_folder_id, service_account.drive_service)
+            
+            for attachment in content.attachments.all():
+                if attachment.attachment_type == 'file':
+                    attachment.file.delete()    
+                    attachment.delete() 
+
+            content.content_folder_id = ''
+            
+            if request_data.get('files', None) is not None:
+                # Create new content folder and content attachments + files
+                content_results = create_folder(content.title, service_account.drive_service, folder_id, allow_duplicate=True)    
+                if 'error' in content_results:
+                    return Response(
+                        { 'error': f'Something went wrong. Unable to create content folder.' },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                content.content_folder_id = content_results['folder_id']
+                uploaded_files = request.FILES.getlist('files')
+
+                for uploaded_file in uploaded_files:
+                    file_results = upload_file(
+                        service_account.drive_service,
+                        uploaded_file,
+                        uploaded_file.name,
+                        uploaded_file.content_type,
+                        content.content_folder_id
+                    )
+
+                    if 'error' in file_results:
+                        return Response(
+                            { 'error': f'Something went wrong. Unable to upload file.' },
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                        )
+                    
+                    # Create file model
+                    file = File.objects.create(
+                        file_name=os.path.splitext(uploaded_file.name)[0],
+                        drive_id=file_results['file_id'],
+                        drive_web_link=file_results['webViewLink'],
+                        file_type=os.path.splitext(uploaded_file.name)[1][1:].lower(),
+                        file_size=uploaded_file.size,
+                        mime_type=uploaded_file.content_type,
+                        uploaded_by_id=content.created_by.id
+                    )
+
+                    # Attach file to content via ContentAttachment
+                    ContentAttachment.objects.create(
+                        content=content,
+                        file=file
+                    )
+
+        # Update content
+        new_content = request_data.get('content', None)
+        if new_content is not None:
+            content.content = new_content 
+
+        # Update content type
+        attached_contents = ContentAttachment.objects.filter(
+            content=content,
+        )
+
+        if attached_contents:
+            if content.content == '':
+                content.content_type = 'attached'
+            else:
+                content.content_type = 'mixed'
+        else:
+            content.content_type = 'text'
+
+        content.save() 
+        serializer = self.get_serializer(content)
+        return Response(self.get_serializer(content).data, status=status.HTTP_200_OK)
+
 
 # Attendance API
 
@@ -1092,3 +1262,4 @@ class AttendanceView(APIView):
             
         return Response(attendance_data, status=status.HTTP_201_CREATED)
     
+    # update API

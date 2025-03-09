@@ -47,7 +47,7 @@ STRAND_CHOICES = [  # Senior High (Grades 11 & 12)
 # Content Model
 CONTENT_TYPES = [
     ('text', 'Text'),
-    ('file', 'File'),  # Alternative: 'attachment' (File/URL)
+    ('attached', 'Attached'),
     ('mixed', 'Mixed'),
 ]
 

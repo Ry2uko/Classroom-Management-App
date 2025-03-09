@@ -175,8 +175,25 @@ def create_folder(folder_name, drive_service, parent_folder_id, allow_duplicate=
     return results_data
 
 
+def delete_folder_by_id(folder_id, drive_service):
+    """ Helper function for deleting a folder by id. """
+
+    results_data = { 'success': True }
+
+    try:
+        drive_service.files().delete(
+            fileId=folder_id
+        ).execute()
+
+        print(f"Folder with ID '{folder_id}' successfully deleted.")
+    except Exception as e:
+        return { 'error': str(e) }
+
+    return results_data
+
+
 def delete_folder(folder_name, drive_service, parent_folder_id):
-    """ Helper function for deletign a folder in teh provided parent folder. """
+    """ Helper function for deleting a folder in the provided parent folder (by name). """
 
     results_data = { 'success': True }
 
