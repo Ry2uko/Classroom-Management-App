@@ -182,7 +182,21 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # update method
+    # TODO: Update this
+    def update(self, request):
+        user = request.user
+        request_data = request.data.copy()
+
+        # Update profile image 
+
+        # Transfer classroom (for students)
+
+        serializer = self.get_serializer(user, data=request_data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Course API
 
@@ -301,6 +315,25 @@ class CourseViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         
+        new_assigned = request.data.get('assigned', None)
+        if new_assigned and new_assigned != course.assigned.id:
+            # Check if new assigned is a teacher
+            try:
+                assigned = User.objects.get(id=new_assigned)
+            except User.DoesNotExist:
+                return Response(
+                    { 'error': 'User with that id does not exist.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            if assigned.role != 'teacher':
+                return Response(
+                    { 'error': 'User must be a teacher to be assigned to a course.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            course.assigned = assigned
+
         new_name = request.data.get('name', None)
         if new_name and new_name != course.name:
             service_account = ServiceAccount(request.session.get('credentials_path', ''))
@@ -317,16 +350,12 @@ class CourseViewSet(viewsets.ModelViewSet):
                 )
             
             course.name = new_name
-            updated = True
         
         new_description = request.data.get('description', None)
         if new_description is not None and new_description != course.description:
             course.description = new_description
-            updated = True
 
-        if updated:
-            course.save()
-
+        course.save()
         serializer = self.get_serializer(course)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -463,9 +492,7 @@ class ClassroomViewSet(viewsets.ModelViewSet):
     @check_session_credentials
     def update(self, request, pk=None):
         try:
-            classroom = Classroom.objects.get(
-                pk=pk
-            )
+            classroom = Classroom.objects.get(pk=pk)
         except Classroom.DoesNotExist:
             return Response(
                 { 'error': 'Classroom with that id does not exist.' },
@@ -501,8 +528,27 @@ class ClassroomViewSet(viewsets.ModelViewSet):
                 )
 
             classroom.name = new_name
-            classroom.save()
 
+        new_adviser = request.data.get('class_adviser', None)
+        if new_adviser and new_adviser != classroom.class_adviser:
+            # Check if new adviser is a teacher
+            try:
+                adviser = User.objects.get(id=new_adviser)
+            except User.DoesNotExist:
+                return Response(
+                    { 'error': 'User with that id does not exist.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if adviser.role != 'teacher':
+                return Response(
+                    { 'error': 'User must be a teacher to be a class adviser.' },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            classroom.class_adviser = new_adviser
+
+        classroom.save()
         serializer = self.get_serializer(classroom)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -1036,7 +1082,6 @@ class ContentViewSet(viewsets.ModelViewSet):
         attached_contents = ContentAttachment.objects.filter(
             content=content,
         )
-
         if attached_contents:
             if content.content == '':
                 content.content_type = 'attached'
@@ -1262,4 +1307,4 @@ class AttendanceView(APIView):
             
         return Response(attendance_data, status=status.HTTP_201_CREATED)
     
-    # update API
+    # For PUT and DELETE methods: Update sheets (for now)
