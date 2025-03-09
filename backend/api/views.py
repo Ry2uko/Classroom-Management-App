@@ -39,6 +39,7 @@ from functools import wraps
 import environ
 import datetime
 import os
+import re
 import json
 
 base_dir = Path(__file__).resolve().parent.parent.parent
@@ -73,6 +74,29 @@ def check_session_credentials(func):
     return wrapper
 
 
+def parse_full_name(fl_name):
+    splitted = fl_name.title().split()
+    middle_initial_regex = r'^[A-Z]\.?$';
+    first_name = []
+    last_name = []
+    middle_initial = ''
+    
+    for name in splitted:
+        if (matched := re.match(middle_initial_regex, name)):
+            middle_initial = matched[0][0]
+            continue
+
+        if not middle_initial:
+            first_name.append(name)
+        else:
+            last_name.append(name)
+        
+    first_name = ' '.join(first_name)
+    last_name = ' '.join(last_name)
+    
+    return (first_name, middle_initial, last_name)
+     
+
 # Authentication Views
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -83,7 +107,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         if 'service_account' not in request.session:
             load_session_env(request)
-        
+
         return response
 
 
@@ -113,7 +137,6 @@ class LogoutView(APIView):
 class UserSessionView(APIView):
     def get(self, request):
         user = request.user
-        logged_in_as = request.session.get('logged_in_as', user.type)
 
         return Response({
             'id': user.id,
@@ -125,8 +148,7 @@ class UserSessionView(APIView):
             'profile_img': user.profile_img.url if user.profile_img else None,
             'classroom_id': user.classroom.id if user.classroom else None,  
             'type': user.type,
-            'role': user.role,
-            'logged_in_as': logged_in_as
+            'role': user.role
         })
 
 
@@ -137,7 +159,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = User.objects.all()
-
+        
         USER_TYPES = ['student', 'admin', 'super_admin', '_admin']  # _admin -> either admin or super_admin
         user_type = self.request.query_params.get('type', None)
         if user_type is not None:
@@ -207,7 +229,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         queryset = Course.objects.all().annotate(
             contents_count=Count('contents')
         )
-        
+
         strand = self.request.query_params.get('strand', None)
         if strand is not None:
             strand_choices = [strand_choice[0] for strand_choice in STRAND_CHOICES]
@@ -412,6 +434,7 @@ class ClassroomViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Classroom.objects.all()
         user_id = self.request.query_params.get('user', None)
+        print(self.request.session.items())
         if user_id is not None:
             try:
                 user = User.objects.get(id=user_id)

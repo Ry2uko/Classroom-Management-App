@@ -12,19 +12,13 @@ class FullNameAuthBackend(BaseBackend):
                 middle_initial=middle_initial,
                 last_name=last_name,
             )   
-
+            
             # 'admin' account type accounts for both 'admin' and 'super_admin' for this context
-            user_account_type = 'student' if user.type == 'student' else 'admin'
-            if user.role == 'student':
-                if account_type == 'admin' and user_account_type != 'admin':
-                    # Student login as admin
-                    return None
-                elif user_account_type == 'admin':
-                    # Student admin login as
-                    request.session['logged_in_as'] = account_type
-            if user.role == 'teacher':
-                if account_type == 'student':
-                    return None
+            if user.role == 'student' and account_type == 'admin' and user.type == 'student':
+                return None
+            elif user.role == 'teacher' and account_type == 'student':
+                return None
+
         except User.DoesNotExist:
             return None
         

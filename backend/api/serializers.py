@@ -79,7 +79,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             last_name=last_name,
             password=password,
         )
-        
+
         if not self.user:
             raise serializers.ValidationError({
                 'detail': 'Invalid credentials.'

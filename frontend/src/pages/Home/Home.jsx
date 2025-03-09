@@ -33,6 +33,7 @@ const Home = ({ user, fetchUserSessionData }) => {
     useEffect(() => {
         // Fetch on home page render and updates with user session
         if (user?.id) fetchData();
+        console.log(user);
     }, [user]);
 
     return (

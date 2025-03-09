@@ -23,6 +23,12 @@ const Navigation = ({ handleLogout }) => {
                         </NavLink>
                     </div>
                     <div className="navbar-item">
+                        <NavLink to="/dashboard" end>
+                            <i className="fa-solid fa-gears"></i>
+                            <span>Dashboard</span>
+                        </NavLink>
+                    </div>
+                    <div className="navbar-item">
                         <NavLink to="/courses">
                             <i className="fa-solid fa-book-open"></i>
                             <span>Courses</span>

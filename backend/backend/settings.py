@@ -43,6 +43,10 @@ CORS_ALLOWED_ORIGINS = [
 
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db' 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

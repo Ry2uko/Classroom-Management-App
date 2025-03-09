@@ -24,6 +24,7 @@ const processQueue = (error, token=null) => {
 
 axiosInstance.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem('accessToken');
+
   if (accessToken) {
     config.headers['Authorization'] = `Bearer ${accessToken}`;
   }

@@ -61,10 +61,11 @@ const Login = ({ fetchUserSessionData }) => {
             localStorage.setItem('refreshToken', refresh);
 
             fetchUserSessionData();
+            
             navigate('/', { 
                 replace: true, 
                 state: {
-                    fresh :true,
+                    loginType: loginType,
                 },
              })
         } catch (error) {

@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import User, Classroom, Course, File, Content, ContentAttachment
 from .utils import generate_unique_password
 
-
 def set_random_password(modeladmin, request, queryset):
     """ Set random passwords for selected users. """
 
