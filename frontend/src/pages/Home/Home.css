@@ -88,7 +88,7 @@ body, html, #root {
     box-shadow: 0 2.5em 0 0;
   }
 }
-.Home {
+.Home.default {
   display: flex;
   background-color: #e8eaee;
   justify-content: center;
@@ -97,15 +97,28 @@ body, html, #root {
   height: 100%;
   overflow: auto;
 }
-.Home .loader {
+.Home.default .loader {
   margin-top: 1.5rem;
 }
-.Home .main-content-container {
+
+.Home.student-view {
+  display: flex;
+  background-color: #e8eaee;
+  justify-content: center;
+  border-radius: 2rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.Home.student-view .loader {
+  margin-top: 1.5rem;
+}
+.Home.student-view .main-content-container {
   min-width: 780px;
   flex: 1;
   overflow: auto;
 }
-.Home .profile-content-container .ProfileContent {
+.Home.student-view .profile-content-container .ProfileContent {
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -114,94 +127,94 @@ body, html, #root {
   height: 100%;
   border-radius: 2rem;
 }
-.Home .profile-content-container .ProfileContent .profile-section-container {
+.Home.student-view .profile-content-container .ProfileContent .profile-section-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1.5rem 0;
 }
-.Home .profile-content-container .ProfileContent .profile-section-container .user-icon-container {
+.Home.student-view .profile-content-container .ProfileContent .profile-section-container .user-icon-container {
   width: 120px;
   height: 120px;
 }
-.Home .profile-content-container .ProfileContent .profile-section-container .user-icon-container img.user-icon {
+.Home.student-view .profile-content-container .ProfileContent .profile-section-container .user-icon-container img.user-icon {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-.Home .profile-content-container .ProfileContent .calendar-section-container {
+.Home.student-view .profile-content-container .ProfileContent .calendar-section-container {
   display: flex;
   justify-content: center;
   margin: 15px 0;
   max-height: 240px;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container {
   padding: 0 1rem;
   margin-top: 10px;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container h6 {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container h6 {
   font-family: "Merriweather Sans", serif;
   font-weight: 400;
   font-size: 1.1rem;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container {
   margin-top: 5px;
   display: flex;
   flex-direction: column;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item {
   cursor: pointer;
   display: flex;
   padding: 10px 5px;
   transition: 0.1s ease-out;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item:hover {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item:hover {
   background-color: #C5E4C9;
   border-radius: 0.3rem;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container {
   background-color: #C5E4C9;
   color: #167f24;
   border-radius: 0.4rem;
   padding: 10px 15px;
   font-size: 1.2rem;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container {
   display: flex;
   flex-direction: column;
   margin-left: 12px;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container .reminder-title {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container .reminder-title {
   font-family: "Merriweather Sans", serif;
   font-size: 1.1rem;
   font-weight: 400;
 }
-.Home .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container .reminder-date {
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .text-container .reminder-date {
   margin-top: 3px;
   font-family: "Merriweather Sans", serif;
   font-weight: 300;
   font-size: 0.9rem;
 }
-.Home .profile-content-container .ProfileContent .user-detail-container {
+.Home.student-view .profile-content-container .ProfileContent .user-detail-container {
   margin-top: 12px;
   text-align: center;
 }
-.Home .profile-content-container .ProfileContent .user-detail-container h3.user-name {
+.Home.student-view .profile-content-container .ProfileContent .user-detail-container h3.user-name {
   margin: 0;
   font-family: "Merriweather Sans", serif;
   font-weight: 800;
   font-size: 1.3rem;
 }
-.Home .profile-content-container .ProfileContent .user-detail-container h5.user-role {
+.Home.student-view .profile-content-container .ProfileContent .user-detail-container h5.user-role {
   margin: 0;
   font-family: "Nunito", serif;
   font-weight: 600;
   font-size: 1.1rem;
 }
-.Home .profile-content-container .ProfileContent .user-profile-btn-container {
+.Home.student-view .profile-content-container .ProfileContent .user-profile-btn-container {
   margin-top: 15px;
 }
-.Home .profile-content-container .ProfileContent .user-profile-btn-container .user-profile-btn {
+.Home.student-view .profile-content-container .ProfileContent .user-profile-btn-container .user-profile-btn {
   padding: 6px 30px;
   border-radius: 1rem;
   text-decoration: none;
@@ -209,6 +222,233 @@ body, html, #root {
   background-color: #239732;
   font-family: "Roboto", serif;
   font-size: 1.1rem;
+}
+.Home.student-view .MainContent {
+  padding: 0.5rem 2rem;
+}
+.Home.student-view .MainContent .section-container {
+  padding: 1rem 0;
+}
+.Home.student-view .MainContent .section-container h4 {
+  color: #424242;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.Home.student-view .MainContent .section-container .section-header {
+  display: flex;
+  align-items: center;
+}
+.Home.student-view .MainContent .section-container .section-header .view-all-btn {
+  margin-left: auto;
+  text-decoration: none;
+  color: #424242;
+  padding: 4px 15px;
+  background-color: rgba(0, 0, 0, 0.1176470588);
+  border-radius: 1rem;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+.Home.student-view .MainContent .courses-section {
+  margin-top: 1rem;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container {
+  display: flex;
+  margin-top: 15px;
+  gap: 15px;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #fff;
+  display: flex;
+  width: 33.3333333333%;
+  height: 100%;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card .title-section {
+  margin-bottom: 2rem;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card .title-section h5.course-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #167f24;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card .title-section h6.course-strand {
+  font-family: "Nunito", serif;
+  font-size: 0.9rem;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card .details-section {
+  margin-top: auto;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 300;
+  font-size: 1rem;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card .details-section i {
+  margin-right: 10px;
+}
+.Home.student-view .MainContent .courses-section .courses-items-container .course-card .details-section .course-items {
+  padding: 5px 0;
+}
+.Home.student-view .MainContent .qlinks-section {
+  margin-top: 1rem;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container {
+  width: 100%;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-row {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card {
+  width: 33.3333333333%;
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text {
+  margin: 3.5rem 0;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.2rem;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text i {
+  font-size: 1.7rem;
+  margin-bottom: 12px;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue {
+  border-color: #007BFF;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue i {
+  color: #007BFF;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover {
+  background-color: #007BFF;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover .qlinks-text {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover .qlinks-text i {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red {
+  border-color: #DC3545;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red i {
+  color: #DC3545;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover {
+  background-color: #DC3545;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover .qlinks-text {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover .qlinks-text i {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange {
+  border-color: #FD7E14;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange i {
+  color: #FD7E14;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover {
+  background-color: #FD7E14;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover .qlinks-text {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover .qlinks-text i {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple {
+  border-color: #6F42C1;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple i {
+  color: #6F42C1;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover {
+  background-color: #6F42C1;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover .qlinks-text {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover .qlinks-text i {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow {
+  border-color: #FFC107;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow i {
+  color: #FFC107;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover {
+  background-color: #FFC107;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover .qlinks-text {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover .qlinks-text i {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal {
+  border-color: #20C997;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal i {
+  color: #20C997;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover {
+  background-color: #20C997;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover .qlinks-text {
+  color: #fff;
+}
+.Home.student-view .MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover .qlinks-text i {
+  color: #fff;
+}
+
+.Home.admin-view .dblock.semi-full {
+  width: 800px;
+}
+.Home.admin-view .Calendar .calendar-day.today {
+  background-color: #006fe6 !important;
+}
+.Home.admin-view .WelcomeBanner h2.greetings {
+  color: #006fe6 !important;
+}
+.Home.admin-view .WelcomeBanner a.check-attendance-btn {
+  background-color: #006fe6 !important;
 }
 
 .Calendar {
@@ -277,221 +517,7 @@ body, html, #root {
   border-radius: 0.3rem;
 }
 
-.MainContent {
-  padding: 0.5rem 2rem;
-}
-.MainContent .section-container {
-  padding: 1rem 0;
-}
-.MainContent .section-container h4 {
-  color: #424242;
-  font-family: "Merriweather Sans", serif;
-  font-weight: 500;
-  font-size: 1.2rem;
-}
-.MainContent .section-container .section-header {
-  display: flex;
-  align-items: center;
-}
-.MainContent .section-container .section-header .view-all-btn {
-  margin-left: auto;
-  text-decoration: none;
-  color: #424242;
-  padding: 4px 15px;
-  background-color: rgba(0, 0, 0, 0.1176470588);
-  border-radius: 1rem;
-  font-family: "Merriweather Sans", serif;
-  font-weight: 400;
-  font-size: 0.9rem;
-}
-.MainContent .courses-section {
-  margin-top: 1rem;
-}
-.MainContent .courses-section .courses-items-container {
-  display: flex;
-  margin-top: 15px;
-  gap: 15px;
-}
-.MainContent .courses-section .courses-items-container .course-card {
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background-color: #fff;
-  display: flex;
-  width: 33.3333333333%;
-  height: 100%;
-  flex-direction: column;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  transition: 0.2s ease-out;
-  cursor: pointer;
-}
-.MainContent .courses-section .courses-items-container .course-card:hover {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.MainContent .courses-section .courses-items-container .course-card .title-section {
-  margin-bottom: 2rem;
-}
-.MainContent .courses-section .courses-items-container .course-card .title-section h5.course-title {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  color: #167f24;
-  font-family: "Merriweather Sans", serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-.MainContent .courses-section .courses-items-container .course-card .title-section h6.course-strand {
-  font-family: "Nunito", serif;
-  font-size: 0.9rem;
-}
-.MainContent .courses-section .courses-items-container .course-card .details-section {
-  margin-top: auto;
-  font-family: "Merriweather Sans", serif;
-  font-weight: 300;
-  font-size: 1rem;
-}
-.MainContent .courses-section .courses-items-container .course-card .details-section i {
-  margin-right: 10px;
-}
-.MainContent .courses-section .courses-items-container .course-card .details-section .course-items {
-  padding: 5px 0;
-}
-.MainContent .qlinks-section {
-  margin-top: 1rem;
-}
-.MainContent .qlinks-section .qlinks-items-container {
-  width: 100%;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-row {
-  width: 100%;
-  display: flex;
-  gap: 15px;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card {
-  width: 33.3333333333%;
-  margin-top: 1rem;
-  background-color: #fff;
-  border-radius: 0.5rem;
-  border-bottom-width: 4px;
-  border-bottom-style: solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: 0.2s ease-out;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card:hover {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text {
-  margin: 3.5rem 0;
-  color: #000;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  font-weight: 400;
-  font-family: "Merriweather Sans", serif;
-  font-size: 1.2rem;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card .qlinks-text i {
-  font-size: 1.7rem;
-  margin-bottom: 12px;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue {
-  border-color: #007BFF;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue i {
-  color: #007BFF;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover {
-  background-color: #007BFF;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover .qlinks-text {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.blue:hover .qlinks-text i {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red {
-  border-color: #DC3545;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red i {
-  color: #DC3545;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover {
-  background-color: #DC3545;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover .qlinks-text {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.red:hover .qlinks-text i {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange {
-  border-color: #FD7E14;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange i {
-  color: #FD7E14;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover {
-  background-color: #FD7E14;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover .qlinks-text {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.orange:hover .qlinks-text i {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple {
-  border-color: #6F42C1;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple i {
-  color: #6F42C1;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover {
-  background-color: #6F42C1;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover .qlinks-text {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.purple:hover .qlinks-text i {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow {
-  border-color: #FFC107;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow i {
-  color: #FFC107;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover {
-  background-color: #FFC107;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover .qlinks-text {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.yellow:hover .qlinks-text i {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal {
-  border-color: #20C997;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal i {
-  color: #20C997;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover {
-  background-color: #20C997;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover .qlinks-text {
-  color: #fff;
-}
-.MainContent .qlinks-section .qlinks-items-container .qlinks-card.teal:hover .qlinks-text i {
-  color: #fff;
-}
-.MainContent .WelcomeBanner {
+.WelcomeBanner {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
   background-color: #fff;
@@ -501,7 +527,7 @@ body, html, #root {
   padding: 10px;
   position: relative;
 }
-.MainContent .WelcomeBanner .banner-section-left {
+.WelcomeBanner .banner-section-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -509,23 +535,23 @@ body, html, #root {
   height: 100%;
   flex: 1;
 }
-.MainContent .WelcomeBanner .banner-section-left h2.greetings {
+.WelcomeBanner .banner-section-left h2.greetings {
   z-index: 1;
   color: #167f24;
   font-family: "Merriweather Sans", serif;
   font-size: 1.8rem;
   font-weight: 800;
 }
-.MainContent .WelcomeBanner .banner-section-left .attendance-status-text-container {
+.WelcomeBanner .banner-section-left .attendance-status-text-container {
   margin-top: 15px;
 }
-.MainContent .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text {
+.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text {
   color: #464646;
   font-family: "Merriweather Sans", serif;
   font-size: 1rem;
   font-weight: 400;
 }
-.MainContent .WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn {
+.WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn {
   text-decoration: none;
   display: inline-block;
   margin-top: 20px;
@@ -539,14 +565,14 @@ body, html, #root {
   font-size: 1rem;
   font-weight: 400;
 }
-.MainContent .WelcomeBanner .banner-section-right {
+.WelcomeBanner .banner-section-right {
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
   width: 40%;
 }
-.MainContent .WelcomeBanner .banner-section-right .banner-hero-container img.banner-hero {
+.WelcomeBanner .banner-section-right .banner-hero-container img.banner-hero {
   pointer-events: none;
   user-select: none;
   z-index: 0;

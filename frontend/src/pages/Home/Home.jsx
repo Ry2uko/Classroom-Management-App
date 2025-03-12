@@ -1,11 +1,26 @@
-import { Link, useLocation } from 'react-router';
+import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
+import DonutChart from '../../components/DonutChart/DonutChart';
 import {  fetchHomeData } from '../../services/homeService';
 import { fetchUserData } from '../../utils/apiUtils';
 import './Home.css';   
 
 const Home = ({ user, fetchUserSessionData }) => {
+    const loginType = localStorage.getItem('_loginType');
+
+    return (
+        <>
+            { loginType === 'student' ? (
+                <StudentHome user={user} fetchUserSessionData={fetchUserSessionData} />
+            ) : (
+                <AdminHome user={user} fetchUserSessionData={fetchUserSessionData} />
+            )}
+        </>
+    );
+};
+
+const StudentHome = ({ user, fetchUserSessionData }) => {
     const [userClassroomData, setUserClassroomData] = useState({});
     const [coursesData, setCoursesData] = useState([]);
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -37,7 +52,7 @@ const Home = ({ user, fetchUserSessionData }) => {
     }, [user]);
 
     return (
-        <div className="Home">
+        <div className="Home student-view">
             { dataLoaded ? (
                 <>
                     <div className="main-content-container">
@@ -57,7 +72,151 @@ const Home = ({ user, fetchUserSessionData }) => {
             )}
         </div>
     );
-};
+}
+
+const AdminHome = ({ user, fetchUserSessionData, loginType }) => {
+    const [dataLoaded, setDataLoaded] = useState(true);
+
+    const attendanceData = [
+        { label: 'Present', value: 28 },
+        { label: 'Late', value: 8 },
+        { label: 'Absent', value: 2 },
+        { label: 'Excused', value: 1 },
+        { label: 'Not Marked', value: 5 },
+    ];
+
+    return (
+        <div className="Home admin-view">
+            { dataLoaded ? (
+                <>
+                    <div className="main-container">
+                        <div className="row">
+                            {/* <TopBar loginType={loginType} /> */}
+                        </div>
+                        <div className="row">
+                            <div className="dblock semi-full banner">
+                                <WelcomeBanner user={user} banner="admin" />
+                            </div>
+                             <div className="dblock calendar">
+                                <Calendar />
+                             </div>
+                        </div>
+                        <div className="row">
+                            <div className="dblock full classroom"></div>
+                        </div>
+                        <div className="row">
+                            <div className="dblock students"></div>
+                            <div className="dblock attendance">
+                                <DonutChart data={attendanceData} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="dblock announcements"></div>
+                            <div className="dblock courses"></div>
+                        </div>
+                        <div className="row">
+                            <div className="qlinks-section">
+                                <h4>Quick Links</h4>
+                                <div className="qlinks-items-container qlinks-grid">
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-lines-leaning"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Courses</h6>
+                                                <span>Manage and organize course materials</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-school"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>School</h6>
+                                                <span>View and update school-related information</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-bullhorn"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Announcements</h6>
+                                                <span>Post and manage announcements</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-clock"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Schedule</h6>
+                                                <span>Access and modify class schedules</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-calendar"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Calendar</h6>
+                                                <span>View important school events and deadlines</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-bullhorn"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Create Announcement</h6>
+                                                <span>Publish an announcement</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-lines-leaning"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Create Course</h6>
+                                                <span>Add a new course</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="qlinks-card">
+                                        <Link to="/" className="qlinks-text">
+                                            <div className="icon-container">
+                                                <i className="fa-solid fa-user-plus"></i>
+                                            </div>
+                                            <div className="text-container">
+                                                <h6>Add Student</h6>
+                                                <span>Add a new student or teacher</span>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <div className="loader"></div>
+            )}
+        </div>
+    );
+}
 
 /* MainContent */
 const MainContent = ({ user, userClassroomData, coursesData }) => {
@@ -167,7 +326,7 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
     );
 };
 
-const WelcomeBanner = ({ user }) => {
+const WelcomeBanner = ({ user, banner='student' }) => {
     return (
         <div className="WelcomeBanner">
             <div className="banner-section-left">
@@ -181,7 +340,7 @@ const WelcomeBanner = ({ user }) => {
             </div>
             <div className="banner-section-right">
                 <div className="banner-hero-container">
-                    <img src="/images/banner-hero.png" alt="banner-hero" className="banner-hero" />
+                    <img src={`/images/banner-hero${banner === 'admin' ? '-admin' : ''}.png`} alt="banner-hero" className="banner-hero" />
                 </div>
             </div>
         </div>

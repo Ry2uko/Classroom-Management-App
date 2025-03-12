@@ -60,6 +60,13 @@ class Classroom(models.Model):
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name='advising_class'
     )
 
+    # Because of specific context in SGA, as of 2025, grade levels share a single classroom
+    # For the core subjects. SGA CMA was designed following the regular classroom system, where each
+    # strand has a separate classroom of its own, but for making things convenient, we, the developers
+    # slightly modified the design to follow the SGA classroom system. Additionally, this app is only for 
+    # senior high (for now), so to avoid breaking stuff.
+    senior_high = models.BooleanField(default=True)
+
     def __str__(self):
         return f'{self.grade_level}-{self.strand} {self.name}'  # Ex: 12-STEM: Our Lady of the Most Holy Rosary
 

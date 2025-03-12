@@ -14,6 +14,7 @@ import './App.css';
 const App = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [loginType, setLoginType] = useState('student');
 
   const handleLogout = async () => {  
     const refreshToken = localStorage.getItem('refreshToken');
@@ -25,6 +26,7 @@ const App = () => {
       localStorage.removeItem('refreshToken');
       setUser({});
 
+      localStorage.removeItem('_loginType');
       navigate('/login', { replace: true });
     } catch (err) {
       console.error('Error during logout on the server: ', err);
@@ -41,6 +43,9 @@ const App = () => {
     try {
       const response = await axiosInstance.get('/');
       setUser(response.data); 
+      if (!localStorage.getItem('_loginType')) {
+        localStorage.setItem('_loginType', response.data.type);
+      }
     } catch (err) {
       console.error('Failed to fetch user data', err);
     }
@@ -83,14 +88,14 @@ const App = () => {
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
             <ContentForm user={user} fetchUserSessionData={fetchUserSessionData} 
-              mode="create"/>
+              mode="create" />
           </ProtectedRoute>
         } />
         <Route path ="/c/:id/edit" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
             <ContentForm user={user} fetchUserSessionData={fetchUserSessionData} 
-              mode="edit"/>
+              mode="edit" />
           </ProtectedRoute>
         } />
         

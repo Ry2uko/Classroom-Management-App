@@ -88,6 +88,10 @@ body, html, #root {
     box-shadow: 0 2.5em 0 0;
   }
 }
+.Navigation.admin .navbar-menu a.active, .Navigation.admin .navbar-menu button#signout-btn.active {
+  color: #006fe6 !important;
+}
+
 .Navigation {
   display: flex;
   flex-direction: column;

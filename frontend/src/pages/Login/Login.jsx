@@ -62,12 +62,10 @@ const Login = ({ fetchUserSessionData }) => {
 
             fetchUserSessionData();
             
+            localStorage.setItem('_loginType', loginType);
             navigate('/', { 
                 replace: true, 
-                state: {
-                    loginType: loginType,
-                },
-             })
+             });
         } catch (error) {
             setLoading(false);
             console.error(error);

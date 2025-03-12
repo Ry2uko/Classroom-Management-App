@@ -2,9 +2,11 @@ import { NavLink, Link } from 'react-router';
 import './Navigation.css';
 
 const Navigation = ({ handleLogout }) => {
+    const loginType = localStorage.getItem('_loginType');
+
     return (
         <>
-            <div className="Navigation desktop-view">
+            <div className={`Navigation desktop-view ${loginType !== 'student' ? 'admin' : ''}`}>
                 <div className="logo-container">
                     <div className="logo-title">
                         <Link to="/">
@@ -20,12 +22,6 @@ const Navigation = ({ handleLogout }) => {
                         <NavLink to="/" end>
                             <i className="fa-solid fa-house-user"></i>
                             <span>Home</span>
-                        </NavLink>
-                    </div>
-                    <div className="navbar-item">
-                        <NavLink to="/dashboard" end>
-                            <i className="fa-solid fa-gears"></i>
-                            <span>Dashboard</span>
                         </NavLink>
                     </div>
                     <div className="navbar-item">
