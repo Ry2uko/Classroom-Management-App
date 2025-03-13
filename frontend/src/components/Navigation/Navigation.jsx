@@ -1,8 +1,9 @@
 import { NavLink, Link } from 'react-router';
+import { useContext } from 'react';
 import './Navigation.css';
 
 const Navigation = ({ handleLogout }) => {
-    const loginType = localStorage.getItem('_loginType');
+    const { loginType } = useContext();
 
     return (
         <>

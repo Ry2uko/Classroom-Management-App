@@ -173,6 +173,10 @@ body, html, #root {
   border-radius: 0.3rem;
 }
 .Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container {
+  display: flex;
+  align-items: center;
+}
+.Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container i {
   background-color: #C5E4C9;
   color: #167f24;
   border-radius: 0.4rem;
@@ -545,11 +549,17 @@ body, html, #root {
 .WelcomeBanner .banner-section-left .attendance-status-text-container {
   margin-top: 15px;
 }
+.WelcomeBanner .banner-section-left .attendance-status-text-container .row {
+  width: 100%;
+}
 .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text {
   color: #464646;
   font-family: "Merriweather Sans", serif;
   font-size: 1rem;
   font-weight: 400;
+}
+.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .attendance-highlight {
+  font-weight: 500;
 }
 .WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn {
   text-decoration: none;

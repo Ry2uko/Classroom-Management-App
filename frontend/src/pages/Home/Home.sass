@@ -85,11 +85,16 @@
                         border-radius: 0.3rem
 
                     .icon-container
-                        background-color: $theme1-transparent2
-                        color: $theme1-text
-                        border-radius: 0.4rem
-                        padding: 10px 15px
-                        font-size: 1.2rem
+                        display: flex
+                        align-items: center
+
+                        i
+                            background-color: $theme1-transparent2
+                            color: $theme1-text
+                            border-radius: 0.4rem
+                            padding: 10px 15px
+                            font-size: 1.2rem
+
 
                     .text-container
                         display: flex
@@ -472,6 +477,9 @@
 
         .attendance-status-text-container
             margin-top: 15px
+            
+            .row
+                width: 100%
 
             .attendance-status-text
                 color: #464646
@@ -479,6 +487,9 @@
                     family: $ff-merriweather-sans
                     size: 1rem
                     weight: 400
+
+                .attendance-highlight
+                    font-weight: 500
 
             a.check-attendance-btn
                 text-decoration: none

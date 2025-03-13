@@ -6,9 +6,7 @@ import {  fetchHomeData } from '../../services/homeService';
 import { fetchUserData } from '../../utils/apiUtils';
 import './Home.css';   
 
-const Home = ({ user, fetchUserSessionData }) => {
-    const loginType = localStorage.getItem('_loginType');
-
+const Home = ({ user, fetchUserSessionData, loginType }) => {
     return (
         <>
             { loginType === 'student' ? (
@@ -327,15 +325,25 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
 };
 
 const WelcomeBanner = ({ user, banner='student' }) => {
+
+    const switchView = (view='student') => {
+        
+    };
+
     return (
         <div className="WelcomeBanner">
             <div className="banner-section-left">
                 <h2 className="greetings">Good morning, {user.username}!</h2>
                 <div className="attendance-status-text-container">
                     <p className="attendance-status-text">You are marked as <span className="attendance-highlight">Present</span></p>
-                    <Link to="/attendance" className="check-attendance-btn">
-                        Check Attendance
-                    </Link>
+                    <div className="row">
+                        <Link to="/attendance" className="check-attendance-btn">
+                            Check Attendance
+                        </Link>
+                        <button type="button" className="switch-admin-view" onClick={switchView('admin')}>
+                            Switch to admin view <i className="fa-solid fa-angle-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="banner-section-right">

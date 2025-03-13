@@ -501,7 +501,7 @@ def mark_student_attendance(service, spreadsheet_id, sheet_name, attendance_data
 
     try:
         range_name = f"'{sheet_name}'!{get_spread_range(len(SHEET_HEADER_VALUES), '2')}"
-        values = [  # Preseve order
+        values = [  # Preserve order
             [
                 attendance_data['date'],
                 int(attendance_data['student_id']),
