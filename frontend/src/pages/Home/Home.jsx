@@ -1,24 +1,27 @@
 import { Link } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import TopBar from '../../components/TopBar/TopBar';
 import DonutChart from '../../components/DonutChart/DonutChart';
 import {  fetchHomeData } from '../../services/homeService';
 import { fetchUserData } from '../../utils/apiUtils';
+import { LoginContext } from '../../contexts/LoginContext';
 import './Home.css';   
 
-const Home = ({ user, fetchUserSessionData, loginType }) => {
+const Home = ({ user, fetchUserSessionData  }) => {
+    const loginCtx = useContext(LoginContext);
+
     return (
         <>
-            { loginType === 'student' ? (
-                <StudentHome user={user} fetchUserSessionData={fetchUserSessionData} />
+            { loginCtx.loginType === 'student' ? (
+                <StudentHome user={user} fetchUserSessionData={fetchUserSessionData} loginCtx={loginCtx} />
             ) : (
-                <AdminHome user={user} fetchUserSessionData={fetchUserSessionData} />
+                <AdminHome user={user} fetchUserSessionData={fetchUserSessionData} loginCtx={loginCtx} />
             )}
         </>
     );
 };
 
-const StudentHome = ({ user, fetchUserSessionData }) => {
+const StudentHome = ({ user, fetchUserSessionData, loginCtx }) => {
     const [userClassroomData, setUserClassroomData] = useState({});
     const [coursesData, setCoursesData] = useState([]);
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -72,7 +75,8 @@ const StudentHome = ({ user, fetchUserSessionData }) => {
     );
 }
 
-const AdminHome = ({ user, fetchUserSessionData, loginType }) => {
+const AdminHome = ({ user, fetchUserSessionData, loginCtx  }) => {
+    const { loginType } = loginCtx;
     const [dataLoaded, setDataLoaded] = useState(true);
 
     const attendanceData = [
@@ -93,7 +97,7 @@ const AdminHome = ({ user, fetchUserSessionData, loginType }) => {
                         </div>
                         <div className="row">
                             <div className="dblock semi-full banner">
-                                <WelcomeBanner user={user} banner="admin" />
+                                <WelcomeBanner user={user} banner="admin" setLoginType={loginCtx.setLoginType} />
                             </div>
                              <div className="dblock calendar">
                                 <Calendar />
@@ -324,10 +328,10 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
     );
 };
 
-const WelcomeBanner = ({ user, banner='student' }) => {
-
+const WelcomeBanner = ({ user, banner='student', setLoginType }) => {
+    console.log(setLoginType);
     const switchView = (view='student') => {
-        
+        setLoginType(view)
     };
 
     return (
@@ -340,9 +344,16 @@ const WelcomeBanner = ({ user, banner='student' }) => {
                         <Link to="/attendance" className="check-attendance-btn">
                             Check Attendance
                         </Link>
-                        <button type="button" className="switch-admin-view" onClick={switchView('admin')}>
-                            Switch to admin view <i className="fa-solid fa-angle-right"></i>
-                        </button>
+                        { (banner === 'student') ? (
+                            <button type="button" className="switch-view" onClick={switchView('admin')}>
+                                Switch to admin view <i className="fa-solid fa-angle-right"></i>
+                            </button>
+                        ) : (
+                            <button type="button" className="switch-view" onClick={switchView('student')}>
+                                Switch to student view <i className="fa-solid fa-angle-right"></i>
+                            </button>
+                        )}
+                        
                     </div>
                 </div>
             </div>

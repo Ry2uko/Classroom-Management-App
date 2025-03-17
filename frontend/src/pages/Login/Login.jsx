@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router';
 import { useNavigate, Navigate } from 'react-router-dom';
+import { LoginContext } from '../../contexts/LoginContext';
 import './Login.css';
 import axiosInstance from '../../services/axiosInstance';
 
@@ -14,6 +15,8 @@ const Login = ({ fetchUserSessionData }) => {
     const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const loginCtx = useContext(LoginContext);
 
     const handleStudentSwitch = () => {
         if (loginType !== 'student') {
@@ -62,7 +65,7 @@ const Login = ({ fetchUserSessionData }) => {
 
             fetchUserSessionData();
             
-            localStorage.setItem('_loginType', loginType);
+            loginCtx.setLoginType(loginType);
             navigate('/', { 
                 replace: true, 
              });

@@ -9,12 +9,12 @@ import Login from './pages/Login/Login';
 import ContentForm from './pages/ContentForm/ContentForm';
 import Attendance from './pages/Attendance/Attendance';
 import axiosInstance from './services/axiosInstance'; 
-import { LoginContext, LoginProvider } from '../../LoginContext';
+import { LoginContext } from './contexts/LoginContext';
 import './App.css';
 
 const App = () => {
   const navigate = useNavigate();
-  const { setLoginType } = useContext(LoginContext);
+  const { loginType, setLoginType } = useContext(LoginContext);
   const [user, setUser] = useState({});
 
   const handleLogout = async () => {  
@@ -27,7 +27,7 @@ const App = () => {
       localStorage.removeItem('refreshToken');
       setUser({});
 
-      localStorage.removeItem('_loginType');
+      setLoginType('')
       navigate('/login', { replace: true });
     } catch (err) {
       console.error('Error during logout on the server: ', err);
@@ -44,7 +44,7 @@ const App = () => {
     try {
       const response = await axiosInstance.get('/');
       setUser(response.data); 
-      if (!localStorage.getItem('_loginType')) {
+      if (!loginType) {
         setLoginType(response.data.type);
       }
     } catch (err) {
@@ -74,47 +74,45 @@ const App = () => {
   }, []);
 
   return (
-    <LoginProvider>
-      <div className="App parent-container">
-        <Routes>
-          <Route path="/login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
-          <Route index element={
-            <ProtectedRoute>
-              <Navigation handleLogout={handleLogout} />
-              <Home user={user} fetchUserSessionData={fetchUserSessionData} />
-            </ProtectedRoute>
-          } />
-          {/* Content System */}
-          <Route path="/c/create" element={
-            <ProtectedRoute>
-              <Navigation handleLogout={handleLogout} />
-              <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
-                mode="create" />
-            </ProtectedRoute>
-          } />
-          <Route path ="/c/:id/edit" element={
-            <ProtectedRoute>
-              <Navigation handleLogout={handleLogout} />
-              <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
-                mode="edit" />
-            </ProtectedRoute>
-          } />
-      
-          <Route path="/attendance" element={
-            <ProtectedRoute>
-              <Navigation handleLogout={handleLogout} />
-              <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />
-            </ProtectedRoute>
-          } />
-          <Route path="*" element={
-            <ProtectedRoute>
-              <Navigation handleLogout={handleLogout} />
-              <h1>Error 404 Not Found</h1>
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </div>
-    </LoginProvider>
+    <div className="App parent-container">
+      <Routes>
+        <Route path="/login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
+        <Route index element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <Home user={user} fetchUserSessionData={fetchUserSessionData} />
+          </ProtectedRoute>
+        } />
+        {/* Content System */}
+        <Route path="/c/create" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
+              mode="create" />
+          </ProtectedRoute>
+        } />
+        <Route path ="/c/:id/edit" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
+              mode="edit" />
+          </ProtectedRoute>
+        } />
+    
+        <Route path="/attendance" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />
+          </ProtectedRoute>
+        } />
+        <Route path="*" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <h1>Error 404 Not Found</h1>
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </div>
   );
 }
 

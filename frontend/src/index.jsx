@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter  } from 'react-router';
 import App from './App';
+import { LoginProvider } from './contexts/LoginContext';
 
 const root = document.getElementById('root');
 
 ReactDOM.createRoot(root).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <LoginProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </LoginProvider>
 );
 
 /* FOR REFERENCE:

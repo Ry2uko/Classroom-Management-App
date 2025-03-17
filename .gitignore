@@ -6,3 +6,4 @@ sheets.py
 *.pyc
 __pycache__/
 passwords/
+env/
