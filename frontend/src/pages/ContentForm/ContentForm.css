@@ -124,21 +124,28 @@ body, html, #root {
   max-width: 800px;
 }
 .main-container .form-container .header h1 {
+  display: flex;
+  align-items: center;
+  height: 50px;
   font-family: "Nunito", serif;
   font-size: 2rem;
   font-weight: 500;
 }
 .main-container .form-container .header h1 .title-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 12px;
-  padding: 6px 14px;
+  width: 50px;
+  height: 100%;
   font-size: 1.7rem;
-  border-radius: 50%;
-  color: #239732;
-  background-color: #9ce79c;
+  border-radius: 0.5rem;
+  color: #006fe6;
+  background-color: #99C5F5;
 }
 .main-container .form-container .content-form {
   max-width: 800px;
-  margin: 2rem 0;
+  margin: 1rem 0;
   background-color: #fff;
   padding: 2rem;
   width: 80%;
@@ -240,7 +247,7 @@ body, html, #root {
   display: flex;
   position: relative;
   margin-bottom: 15px;
-  padding: 5px;
+  padding: 7px 5px;
   align-items: center;
   border: 1px solid #DADCE0;
   border-radius: 0.25rem;
@@ -254,13 +261,14 @@ body, html, #root {
   align-items: center;
 }
 .main-container .form-container .content-form .attachments-container .attachment .attachment-icon i {
-  color: #239732;
+  color: #006fe6;
   font-size: 1.6rem;
 }
 .main-container .form-container .content-form .attachments-container .attachment .attachment-main {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
+  width: 0;
   flex: 1;
   font-family: "Nunito", serif;
 }
@@ -268,6 +276,20 @@ body, html, #root {
   display: flex;
   align-items: center;
   width: 100%;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row .file-progress-bar {
+  width: 85%;
+  height: 3px;
+  border-radius: 30px;
+  background: #d9d9d9;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row .file-progress-bar .file-progress {
+  width: 80%;
+  background: #006fe6;
+  border-radius: inherit;
+  height: inherit;
 }
 .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title, .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
   display: inline-block;
@@ -277,7 +299,7 @@ body, html, #root {
 }
 .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title {
   margin-right: 5px;
-  max-width: 75%;
+  max-width: 60%;
 }
 .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-mimetype {
   margin-left: 5px;
@@ -329,22 +351,32 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1.2rem;
 }
-.main-container .sidebar button#create-content {
+.main-container .sidebar .btn-group {
   margin-top: auto;
-  background-color: #239732;
+  align-self: end;
+  gap: 15px;
+  display: flex;
+}
+.main-container .sidebar .btn-group button {
+  min-width: 100px;
+  background-color: #006fe6;
   color: #fff;
-  border: none;
+  border: 1px solid #006fe6;
   border-radius: 0.3rem;
   padding: 7px 20px;
-  align-self: end;
   cursor: pointer;
   transition: 0.2s;
   font-family: "Merriweather Sans", serif;
   font-size: 1.2rem;
 }
-.main-container .sidebar button#create-content:hover {
+.main-container .sidebar .btn-group button#cancel-edit {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #111;
+}
+.main-container .sidebar .btn-group button:hover {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-.main-container .sidebar button#create-content i {
+.main-container .sidebar .btn-group button i {
   margin-right: 10px;
 }/*# sourceMappingURL=ContentForm.css.map */

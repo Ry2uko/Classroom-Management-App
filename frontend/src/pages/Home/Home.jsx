@@ -763,6 +763,9 @@ const TopBar = () => {
                 { loginType !== 'student' && (
                     <div className="admin-btn-group">
                         <button type="button" className="topbar-btn">
+                            <i className="fa-solid fa-plus"></i>
+                        </button>
+                        <button type="button" className="topbar-btn">
                             <i className="fa-solid fa-bell"></i>
                         </button>
                         <button type="button" className="topbar-btn">

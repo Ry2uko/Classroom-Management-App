@@ -35,22 +35,29 @@ $input-text: #212326
             max-width: 800px
 
             h1
+                display: flex
+                align-items: center
+                height: 50px
                 font:
                     family: $ff-nunito
                     size: 2rem
                     weight: 500
 
                 .title-icon
+                    display: flex
+                    align-items: center
+                    justify-content: center
                     margin-right: 12px
-                    padding: 6px 14px
+                    width: 50px
+                    height: 100%
                     font-size: 1.7rem
-                    border-radius: 50%
-                    color: $theme1
-                    background-color: #9ce79c
+                    border-radius: 0.5rem
+                    color: $theme2
+                    background-color: $theme2-transparent
 
         .content-form
             max-width: 800px
-            margin: 2rem 0
+            margin: 1rem 0
             background-color: #fff
             padding: 2rem
             width: 80%
@@ -157,7 +164,7 @@ $input-text: #212326
                     display: flex
                     position: relative
                     margin-bottom: 15px
-                    padding: 5px
+                    padding: 7px 5px
                     align-items: center
                     border: 1px solid #DADCE0
                     border-radius: 0.25rem
@@ -171,13 +178,14 @@ $input-text: #212326
                         align-items: center
 
                         i
-                            color: $theme1
+                            color: $theme2
                             font-size: 1.6rem
 
                     .attachment-main
                         display: flex
                         flex-direction: column
                         margin-left: 10px
+                        width: 0
                         flex: 1
                         font:
                             family: $ff-nunito
@@ -187,6 +195,20 @@ $input-text: #212326
                             align-items: center
                             width: 100%
 
+                            .file-progress-bar
+                                width: 85%
+                                height: 3px
+                                border-radius: 30px
+                                background: #d9d9d9
+                                margin-top: 5px
+                                margin-bottom: 5px
+
+                                .file-progress
+                                    width: 80%
+                                    background: $theme2
+                                    border-radius: inherit
+                                    height: inherit
+
                             span.attachment-title, span.attachment-content
                                 display: inline-block
                                 white-space: nowrap
@@ -195,7 +217,7 @@ $input-text: #212326
 
                             span.attachment-title
                                 margin-right: 5px
-                                max-width: calc(75%)
+                                max-width: calc(60%)
 
                             span.attachment-mimetype
                                 margin-left: 5px
@@ -252,23 +274,33 @@ $input-text: #212326
                 font:
                     family: $ff-nunito
                     size: 1.2rem
-
-        button#create-content
+        
+        .btn-group
             margin-top: auto
-            background-color: $theme1
-            color: #fff
-            border: none
-            border-radius: 0.3rem
-            padding: 7px 20px
             align-self: end
-            cursor: pointer
-            transition: 0.2s 
-            font:
-                family: $ff-merriweather-sans
-                size: 1.2rem
+            gap: 15px
+            display: flex
 
-            &:hover
-                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+            button
+                min-width: 100px
+                background-color: $theme2
+                color: #fff
+                border: 1px solid $theme2
+                border-radius: 0.3rem
+                padding: 7px 20px
+                cursor: pointer
+                transition: 0.2s 
+                font:
+                    family: $ff-merriweather-sans
+                    size: 1.2rem
 
-            i
-                margin-right: 10px
+                &#cancel-edit
+                    background-color: #fff
+                    border: 1px solid #ccc
+                    color: #111
+
+                &:hover
+                    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+
+                i
+                    margin-right: 10px

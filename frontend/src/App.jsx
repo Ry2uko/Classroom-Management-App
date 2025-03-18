@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import ContentForm from './pages/ContentForm/ContentForm';
+import Content from './pages/Content/Content';
 import Attendance from './pages/Attendance/Attendance';
 import axiosInstance from './services/axiosInstance'; 
 import { LoginContext } from './contexts/LoginContext';
@@ -91,6 +92,12 @@ const App = () => {
             <Navigation handleLogout={handleLogout} />
             <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
               mode="create" />
+          </ProtectedRoute>
+        } />
+        <Route path="/c/:id" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <Content />
           </ProtectedRoute>
         } />
         <Route path ="/c/:id/edit" element={
