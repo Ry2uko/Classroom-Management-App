@@ -1,8 +1,9 @@
 .env
 .vscode
 credentials.json
-drive.py
-sheets.py
 *.pyc
 __pycache__/
 passwords/
+env/
+migrations/
+db.sqlite3

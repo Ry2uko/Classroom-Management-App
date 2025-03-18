@@ -64,6 +64,9 @@ body, html, #root {
   transform: translateZ(0);
   animation-delay: -0.16s;
 }
+.loader.admin {
+  color: #006fe6;
+}
 
 .loader:before, .loader:after {
   content: "";
@@ -237,15 +240,16 @@ body, html, #root {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #239732;
   z-index: 1;
   transition: 0.25s ease-out;
 }
 .Login .login-form-container .type-switch-container .type-switch .toggle-indicator.student {
+  background-color: #239732;
   border-top-left-radius: 2rem;
   border-bottom-left-radius: 2rem;
 }
 .Login .login-form-container .type-switch-container .type-switch .toggle-indicator.admin {
+  background-color: #006fe6;
   transform: translate(180px);
   border-left-width: 0;
   border-top-right-radius: 2rem;
@@ -266,8 +270,13 @@ body, html, #root {
 }
 .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn.active {
   color: #fff;
-  border-color: #239732;
   font-weight: 450;
+}
+.Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn.active#switch-student {
+  border-color: #239732;
+}
+.Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn.active#switch-admin {
+  border-color: #006fe6;
 }
 .Login .login-form-container .type-switch-container .type-switch button.toggle-switch-btn:hover {
   font-weight: 450;
@@ -298,19 +307,29 @@ body, html, #root {
 .Login .login-form-container .login-form .login-btn-container button#login-btn {
   border-radius: 1rem;
   border: none;
-  background-color: #239732;
   color: #fff;
   padding: 11px 60px;
   text-align: center;
   letter-spacing: 2px;
-  transition: 0.1s ease-out;
+  transition: 0.25s ease-out;
   cursor: pointer;
   font-family: "Merriweather Sans", serif;
   font-size: 1.1rem;
   font-weight: 400;
 }
-.Login .login-form-container .login-form .login-btn-container button#login-btn:hover {
+.Login .login-form-container .login-form .login-btn-container button#login-btn.student {
+  background-color: #239732;
+}
+.Login .login-form-container .login-form .login-btn-container button#login-btn.student:hover {
+  transition: 0.1s ease-out;
   background-color: #239031;
+}
+.Login .login-form-container .login-form .login-btn-container button#login-btn.admin {
+  background-color: #006fe6;
+}
+.Login .login-form-container .login-form .login-btn-container button#login-btn.admin:hover {
+  transition: 0.1s ease-out;
+  background-color: #076ad4;
 }
 .Login .login-form-container .login-form .text-input-container {
   width: 100%;

@@ -3,8 +3,9 @@ import { createContext, useState, useEffect } from "react";
 const LoginContext = createContext();
 
 const LoginProvider = ({ children }) => {
-  const [loginType, setLoginType] = useState(localStorage.getItem('_loginType') || 'student');
+  const [loginType, setLoginType] = useState(localStorage.getItem('_loginType') || '');
 
+  // Sync local storage and local state
   useEffect(() => {
     localStorage.setItem('_loginType', loginType);
   }, [loginType]); 

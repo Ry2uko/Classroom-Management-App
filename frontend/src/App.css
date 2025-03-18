@@ -64,6 +64,9 @@ body, html, #root {
   transform: translateZ(0);
   animation-delay: -0.16s;
 }
+.loader.admin {
+  color: #006fe6;
+}
 
 .loader:before, .loader:after {
   content: "";

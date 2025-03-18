@@ -64,6 +64,9 @@ body, html, #root {
   transform: translateZ(0);
   animation-delay: -0.16s;
 }
+.loader.admin {
+  color: #006fe6;
+}
 
 .loader:before, .loader:after {
   content: "";
@@ -442,17 +445,478 @@ body, html, #root {
   color: #fff;
 }
 
+.Home.admin-view {
+  display: flex;
+  flex-direction: column;
+  background-color: #e8eaee;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  align-items: center;
+}
+.Home.admin-view .loader {
+  margin-top: 1.5rem;
+}
+.Home.admin-view .main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 2rem;
+  width: 100%;
+  height: 100%;
+  /* FIX LATER */
+  max-width: 1100px;
+  min-width: 1080px;
+}
+.Home.admin-view .main-container > .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0 15px;
+}
+.Home.admin-view .dblock > .dblock-body {
+  padding: 15px 25px;
+}
+.Home.admin-view .dblock > .dblock-header {
+  display: flex;
+  padding: 15px 25px;
+  border-bottom: 2px solid #e5e6e7;
+}
+.Home.admin-view .dblock > .dblock-header .header-btn {
+  background-color: #CDCFD2;
+  color: #484848;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  padding: 3px 12px;
+  display: flex;
+  align-items: center;
+  font-family: "Merriweather Sans", serif;
+  font-size: 0.9rem;
+}
+.Home.admin-view .dblock > .dblock-header .header-btn i {
+  font-size: 0.8rem;
+  margin-left: 5px;
+}
+.Home.admin-view .dblock > .dblock-header h5 {
+  flex: 1;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
 .Home.admin-view .dblock.semi-full {
-  width: 800px;
+  width: 700px;
+}
+.Home.admin-view .dblock.full {
+  width: 100%;
+}
+.Home.admin-view .dblock.announcements {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  width: 480px;
+}
+.Home.admin-view .dblock.announcements .dblock-body {
+  padding: 0;
+  overflow-y: auto;
+}
+.Home.admin-view .dblock.announcements .announcement-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Home.admin-view .dblock.announcements .announcement-items-container .announcement-item {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 25px;
+  border-bottom: 1px solid #ccc;
+}
+.Home.admin-view .dblock.announcements .announcement-items-container .announcement-item:last-child {
+  border-bottom: none;
+}
+.Home.admin-view .dblock.announcements .announcement-items-container .announcement-item span.announcement-title {
+  line-break: loose;
+  color: #003a78;
+  cursor: pointer;
+  max-width: 90%;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 360;
+  font-size: 1.2rem;
+}
+.Home.admin-view .dblock.announcements .announcement-items-container .announcement-item span.announcement-date {
+  color: #555555;
+  margin-top: 5px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 420;
+}
+.Home.admin-view .dblock.courses {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  flex: 1;
+}
+.Home.admin-view .dblock.courses .dblock-body {
+  padding: 0;
+}
+.Home.admin-view .dblock.courses .course-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 25px;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item:last-child {
+  border-bottom: none;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-icon {
+  background-color: #B2D3F8;
+  border-radius: 0.5rem;
+  color: #006fe6;
+  padding: 12px;
+  font-size: 1.35rem;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-btn-icon {
+  font-size: 1.25rem;
+  color: #172B4C;
+  transition: 0.15s;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-btn-icon:hover {
+  color: #0152CC;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-details {
+  width: 0;
+  margin-left: 20px;
+  flex: 1;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-details span.course-title {
+  max-width: 85%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 350;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-details .details-group {
+  margin-top: 5px;
+  display: flex;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-details .details-group .detail-info {
+  margin-right: 15px;
+  color: #1a1a1a;
+  font-family: "Nunito", serif;
+  font-size: 1rem;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item .course-details .details-group .detail-info i {
+  margin-right: 2px;
+}
+.Home.admin-view .dblock.classroom {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  padding-inline: 15px;
+}
+.Home.admin-view .dblock.classroom .classroom-icon {
+  background-color: #B2D3F8;
+  border-radius: 50%;
+  color: #006fe6;
+  padding: 25px;
+  font-size: 3rem;
+}
+.Home.admin-view .dblock.classroom .classroom-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  font-family: "Merriweather Sans", serif;
+}
+.Home.admin-view .dblock.classroom .classroom-details span.classroom-name {
+  font-size: 1.5rem;
+}
+.Home.admin-view .dblock.classroom .classroom-details span.classroom-adviser, .Home.admin-view .dblock.classroom .classroom-details span.classroom-students {
+  font-size: 1.1rem;
+  margin-right: 5px;
+}
+.Home.admin-view .dblock.classroom .classroom-details span.classroom-adviser i, .Home.admin-view .dblock.classroom .classroom-details span.classroom-students i {
+  margin-right: 5px;
+}
+.Home.admin-view .dblock.classroom .details-group {
+  margin-top: 10px;
+  display: flex;
+  gap: 0 20px;
+  font-size: 1rem;
+  font-weight: 350;
+}
+.Home.admin-view .dblock.classroom .btn-group {
+  display: flex;
+  gap: 0 15px;
+  margin-top: 22px;
+}
+.Home.admin-view .dblock.classroom .btn-group .details-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  border: 1px solid rgb(152, 152, 152);
+  padding: 8px 15px;
+  color: #000;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  background-color: #fff;
+  transition: 0.15s ease-out;
+  font-family: "Nunito", serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.Home.admin-view .dblock.classroom .btn-group .details-btn:hover {
+  background-color: #f5f5f5;
+}
+.Home.admin-view .dblock.calendar {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  padding: 15px 10px;
+  height: 256px;
+}
+.Home.admin-view .dblock.students {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  flex: 1;
+  height: 400px;
+  overflow: hidden;
+}
+.Home.admin-view .dblock.students .dblock-body {
+  padding: 0;
+}
+.Home.admin-view .dblock.students .student-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: 0.1s;
+  border-bottom: 1px solid #ccc;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item:last-child {
+  border-bottom: none;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item:hover {
+  background-color: rgba(0, 0, 0, 0.0196078431);
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-icon {
+  height: 55px;
+  width: 55px;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-details {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  padding-right: 30px;
+  flex: 1;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 350;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-details span {
+  max-width: 100%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-details span.student-name {
+  font-size: 1.25rem;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-details span.student-strand {
+  font-size: 1rem;
+  color: #333333;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-attendance .ping {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-attendance .ping.present {
+  background-color: #4CAF50;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-attendance .ping.late {
+  background-color: #FFC107;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-attendance .ping.absent {
+  background-color: #F44336;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-attendance .ping.excused {
+  background-color: #2196F3;
+}
+.Home.admin-view .dblock.students .student-items-container .student-item .student-attendance .ping.not-marked {
+  background-color: #9E9E9E;
+}
+.Home.admin-view .dblock.attendance {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.Home.admin-view .dblock.attendance .dblock-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
 }
 .Home.admin-view .Calendar .calendar-day.today {
   background-color: #006fe6 !important;
 }
+.Home.admin-view .WelcomeBanner {
+  height: 100%;
+}
 .Home.admin-view .WelcomeBanner h2.greetings {
   color: #006fe6 !important;
 }
-.Home.admin-view .WelcomeBanner a.check-attendance-btn {
-  background-color: #006fe6 !important;
+.Home.admin-view .qlinks-section {
+  margin: 1rem 0;
+  width: 100%;
+}
+.Home.admin-view .qlinks-section h4 {
+  color: #424242;
+  margin-bottom: 1rem;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 500;
+  font-size: 1.35rem;
+}
+.Home.admin-view .qlinks-section .qlinks-items-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 10px;
+}
+.Home.admin-view .qlinks-section .qlinks-card {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.25rem;
+  padding: 15px 35px;
+  display: flex;
+  align-items: center;
+}
+.Home.admin-view .qlinks-section .qlinks-card a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-decoration: none;
+}
+.Home.admin-view .qlinks-section .qlinks-card .icon-container {
+  display: flex;
+  align-items: center;
+}
+.Home.admin-view .qlinks-section .qlinks-card .icon-container i {
+  font-size: 2.15rem;
+  color: #012246;
+}
+.Home.admin-view .qlinks-section .qlinks-card .text-container {
+  display: flex;
+  flex-direction: column;
+  color: #1A1A1A;
+  margin-left: 25px;
+}
+.Home.admin-view .qlinks-section .qlinks-card .text-container h6 {
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+.Home.admin-view .qlinks-section .qlinks-card .text-container span {
+  margin-top: 3px;
+  font-family: "Nunito", serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.TopBar {
+  display: flex;
+  width: 100%;
+  padding: 1.5rem 2rem;
+  align-items: center;
+}
+.TopBar .date-container {
+  display: flex;
+  align-items: center;
+}
+.TopBar .date-container .date-text {
+  color: #464646;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+.TopBar .date-container .admin-btn-group {
+  margin-left: 15px;
+}
+.TopBar .date-container .topbar-btn {
+  background-color: #fff;
+  font-size: 1.3rem;
+  padding: 7px 12px;
+  margin: 0 7px;
+  border: none;
+  border-radius: 0.2rem;
+  color: #172B4C;
+  transition: 0.15s ease-out;
+  cursor: pointer;
+}
+.TopBar .date-container .topbar-btn:hover {
+  color: #0152CC;
+}
+.TopBar .search-bar-container {
+  flex: 1;
+}
+.TopBar .search-bar-container .search-bar-input-group {
+  position: relative;
+  display: flex;
+  height: 45px;
+}
+.TopBar .search-bar-container .search-bar-input-group button.search-btn {
+  position: absolute;
+  border: none;
+  font-size: 1.3rem;
+  height: 45px;
+  width: 45px;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+.TopBar .search-bar-container .search-bar-input-group button.search-btn.student {
+  color: #239732;
+  background-color: #9DCAA7;
+}
+.TopBar .search-bar-container .search-bar-input-group button.search-btn.admin {
+  color: #006fe6;
+  background-color: #99C5F5;
+}
+.TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text {
+  padding-left: 25px;
+  margin-left: 30px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 0.4rem;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text:focus {
+  outline: none;
 }
 
 .Calendar {
@@ -546,25 +1010,50 @@ body, html, #root {
   font-size: 1.8rem;
   font-weight: 800;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container {
+.WelcomeBanner .banner-section-left .attendance-status-text-container, .WelcomeBanner .banner-section-left .schedule-status-text-container {
   margin-top: 15px;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container .row {
+.WelcomeBanner .banner-section-left .attendance-status-text-container .row, .WelcomeBanner .banner-section-left .schedule-status-text-container .row {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
   width: 100%;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text {
+.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text, .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text, .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text, .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text {
   color: #464646;
   font-family: "Merriweather Sans", serif;
   font-size: 1rem;
   font-weight: 400;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .attendance-highlight {
+.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .schedule-highlight, .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text .schedule-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text .schedule-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text .schedule-highlight {
   font-weight: 500;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn {
+.WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view {
+  border: none;
+  padding: 5px 0;
+  cursor: pointer;
+  display: flex;
+  border-radius: 0.4rem;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+  color: #484848;
+  margin-left: 10px;
+  transition: 0.15s;
+  font-family: "Nunito", serif;
+  font-size: 1.1rem;
+}
+.WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-student:hover, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-student:hover {
+  background-color: #9DCAA7;
+  color: #239732;
+}
+.WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-admin:hover, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-admin:hover {
+  background-color: #99C5F5;
+  color: #006fe6;
+}
+.WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn, .WelcomeBanner .banner-section-left .attendance-status-text-container a.view-schedule-btn, .WelcomeBanner .banner-section-left .schedule-status-text-container a.check-attendance-btn, .WelcomeBanner .banner-section-left .schedule-status-text-container a.view-schedule-btn {
   text-decoration: none;
   display: inline-block;
-  margin-top: 20px;
   padding: 8px 20px;
   background-color: #239732;
   color: #fff;
@@ -574,6 +1063,9 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1rem;
   font-weight: 400;
+}
+.WelcomeBanner .banner-section-left .attendance-status-text-container a.view-schedule-btn, .WelcomeBanner .banner-section-left .schedule-status-text-container a.view-schedule-btn {
+  background-color: #006fe6;
 }
 .WelcomeBanner .banner-section-right {
   display: flex;

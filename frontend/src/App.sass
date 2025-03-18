@@ -4,6 +4,7 @@ $ff-roboto: "Roboto", serif
 $ff-schoolbell: "Schoolbell", serif
 $ff-eb-garamond: "EB Garamond", serif
 $ff-open-sans: "Open Sans", serif
+$ff-noto-sans: "Noto Sans", sans-serif
 $bg-main: #fff
 $bg-alt: #e8eaee
 $theme1: #239732
@@ -12,6 +13,10 @@ $theme1-transparent: #9DCAA7
 $theme1-transparent2: #C5E4C9
 $theme1-text: #167f24
 $theme2: #006fe6
+$theme2-text: #003a78
+$theme2-dark: #076ad4
+$theme2-transparent: #99C5F5
+$theme2-transparent2: #B2D3F8
 
 $blue: #007BFF
 $red: #DC3545
@@ -19,6 +24,12 @@ $orange: #FD7E14
 $purple: #6F42C1 
 $yellow: #FFC107 
 $teal: #20C997 
+
+$present: #4CAF50
+$late: #FFC107
+$absent: #F44336
+$excused: #2196F3
+$not-marked: #9E9E9E
 
 *, ::before, ::after
     margin: 0
@@ -73,13 +84,16 @@ body, html, #root
   animation-fill-mode: both
   animation: bblFadInOut 1.75s infinite ease-in-out
 
-.loader     
-    color: $theme1
+.loader 
+    color: $theme1    
     font-size: 7px    
     position: relative    
     text-indent: -9999em  
     transform: translateZ(0)  
     animation-delay: -0.16s   
+    
+    &.admin
+        color: $theme2
 
 .loader:before, .loader:after   
     content: ''   

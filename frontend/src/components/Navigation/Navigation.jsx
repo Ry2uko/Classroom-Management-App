@@ -1,9 +1,10 @@
 import { NavLink, Link } from 'react-router';
 import { useContext } from 'react';
+import { LoginContext } from '../../contexts/LoginContext';
 import './Navigation.css';
 
 const Navigation = ({ handleLogout }) => {
-    const { loginType } = useContext();
+    const { loginType } = useContext(LoginContext);
 
     return (
         <>

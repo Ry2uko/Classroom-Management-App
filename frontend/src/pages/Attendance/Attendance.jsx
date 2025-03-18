@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
-import TopBar from '../../components/TopBar/TopBar';
 import { fetchUserData } from '../../utils/apiUtils';
 import './Attendance.css';
 

@@ -155,15 +155,16 @@
                     position: absolute
                     top: 0
                     left: 0
-                    background-color: $theme1
                     z-index: 1
                     transition: 0.25s ease-out
 
                     &.student
+                        background-color: $theme1
                         border-top-left-radius: $bradius
                         border-bottom-left-radius: $bradius
 
                     &.admin
+                        background-color: $theme2
                         transform: translate(180px)
                         border-left-width: 0
                         border-top-right-radius: $bradius
@@ -186,8 +187,13 @@
                     
                     &.active
                         color: #fff
-                        border-color: $theme1
                         font-weight: 450
+
+                        &#switch-student
+                            border-color: $theme1
+                        
+                        &#switch-admin
+                            border-color: $theme2
 
                     &:hover
                         font-weight: 450
@@ -218,20 +224,30 @@
                 button#login-btn
                     border-radius: 1rem
                     border: none
-                    background-color: $theme1
                     color: #fff
                     padding: 11px 60px
                     text-align: center
                     letter-spacing: 2px
-                    transition: 0.1s ease-out
+                    transition: 0.25s ease-out
                     cursor: pointer
                     font:
                         family: $ff-merriweather-sans
                         size: 1.1rem
                         weight: 400
-                    
-                    &:hover
-                        background-color: $theme1-dark
+
+                    &.student
+                        background-color: $theme1
+
+                        &:hover
+                            transition: 0.1s ease-out
+                            background-color: $theme1-dark
+
+                    &.admin
+                        background-color: $theme2
+
+                        &:hover
+                            transition: 0.1s ease-out
+                            background-color: $theme2-dark
 
             .text-input-container
                 width: 100%

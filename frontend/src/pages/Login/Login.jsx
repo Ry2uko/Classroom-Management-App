@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router';
 import { useNavigate, Navigate } from 'react-router-dom';
+import { LoginContext } from '../../contexts/LoginContext';
 import './Login.css';
 import axiosInstance from '../../services/axiosInstance';
 
-const Login = ({ fetchUserSessionData }) => {
+const Login = () => {
     const navigate = useNavigate();
 
-    const [loginType, setLoginType] = useState('student');
+    const { setLoginType } = useContext(LoginContext);
+
+    const [inputLoginType, setInputLoginType] = useState('student');
     const [errorMsg, setErrorMsg] = useState('This is a placeholder text');
     const [visibleError, setVisibleError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -16,14 +19,14 @@ const Login = ({ fetchUserSessionData }) => {
     const [loading, setLoading] = useState(false);
 
     const handleStudentSwitch = () => {
-        if (loginType !== 'student') {
-            setLoginType('student');
+        if (inputLoginType !== 'student') {
+            setInputLoginType('student');
         }
     };
 
     const handleAdminSwitch = () => {
-        if (loginType !== 'admin') {            
-            setLoginType('admin');
+        if (inputLoginType !== 'admin') {            
+            setInputLoginType('admin');
         }
     };
 
@@ -51,7 +54,7 @@ const Login = ({ fetchUserSessionData }) => {
             const response = await axiosInstance.post('token/',{
                 'full_name': fullName,
                 'password': password,
-                'type': loginType,
+                'type': inputLoginType,
             });
 
             const { access, refresh } = response.data;
@@ -60,9 +63,8 @@ const Login = ({ fetchUserSessionData }) => {
             localStorage.setItem('accessToken', access);
             localStorage.setItem('refreshToken', refresh);
 
-            fetchUserSessionData();
-            
-            localStorage.setItem('_loginType', loginType);
+            setLoginType(inputLoginType);
+
             navigate('/', { 
                 replace: true, 
              });
@@ -105,11 +107,11 @@ const Login = ({ fetchUserSessionData }) => {
             <div className="login-form-section">
                 {
                     loading ? (
-                        <span className="loader"></span>
+                        <span className={`loader ${inputLoginType}`}></span>
                     ) : (
                         <div className="login-form-container">
                             <h1>
-                                <div className={`text-animation ${loginType}`}>
+                                <div className={`text-animation ${inputLoginType}`}>
                                     <span className="student">Student</span>
                                     <span className="admin">Admin</span>
                                 </div>
@@ -117,12 +119,12 @@ const Login = ({ fetchUserSessionData }) => {
                             </h1>
                             <div className="type-switch-container">
                                 <div className="type-switch">
-                                    <div className={`toggle-indicator ${loginType}`}></div>
-                                    <button type="button" className={`toggle-switch-btn ${loginType === 'student' ? 'active' : ''}`} id="switch-student"
+                                    <div className={`toggle-indicator ${inputLoginType}`}></div>
+                                    <button type="button" className={`toggle-switch-btn ${inputLoginType === 'student' ? 'active' : ''}`} id="switch-student"
                                     onClick={handleStudentSwitch}>
                                         Student
                                     </button>
-                                    <button type="button" className={`toggle-switch-btn ${loginType === 'admin' ? 'active' : ''}`} id="switch-admin"
+                                    <button type="button" className={`toggle-switch-btn ${inputLoginType === 'admin' ? 'active' : ''}`} id="switch-admin"
                                     onClick={handleAdminSwitch}>
                                         Admin
                                     </button>
@@ -156,7 +158,8 @@ const Login = ({ fetchUserSessionData }) => {
                                     </div>
                                 </div>
                                 <div className="login-btn-container">
-                                    <button type="button" id="login-btn" onClick={handleLogin}>LOGIN</button>
+                                    <button type="button" id="login-btn" onClick={handleLogin}
+                                    className={ inputLoginType }>LOGIN</button>
                                 </div>
                             </div>
                         </div>
