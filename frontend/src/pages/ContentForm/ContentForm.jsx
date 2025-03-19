@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import './ContentForm.css'
 
-const ContentForm = ({ user, fetchUserSessionData, mode }) => {
+const ContentForm = ({ user, fetchUserSessionData, mode, openModal }) => {
     const [ searchParams ] = useSearchParams();
     const [dataLoaded, setDataLoaded] = useState(false);
     const [content, setContent] = useState('');
@@ -16,6 +16,14 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
         } catch (err) {
             console.error('Failed to fetch content form data', err);
         }
+    }
+
+    const modules = {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['clean']
+        ],
     }
 
     useEffect(() => {
@@ -35,46 +43,49 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
 
     let contentCategory = 'course';
     if (searchParams.has('t')) contentCategory = searchParams.get('t');
-    
-    const modules = {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['clean']
-        ],
-    }
+
+    const handleAddLink = () => {
+        console.log(openModal)
+        openModal(
+            <>
+                <h1>Hello Modal</h1>
+            </>
+        );
+    };
 
     return (
         <div className="ContentForm">
             { dataLoaded ? ( 
-                <div className="main-container">
-                    <div className="form-container">
-                        <div className="header">
-                            <h1 className="header-title" onClick={() => console.log(content)}>
-                                <span className="title-icon">
-                                    <i className={categoriesMap[contentCategory][0]}></i>
-                                </span>
-                                { mode === 'edit' && 'Edit' } {categoriesMap[contentCategory][1]}
-                            </h1>
-                        </div>
-                        <div className="content-form">
-                            <div className="input-group">
-                                <input className={`input-text ${title ? 'active' : ''}`} type="text" id="content-title"
-                                value={title} onChange={(e) => setTitle(e.target.value)} required />
-                                <div className="input-label">Title</div>
+                <>
+                    <div className="main-container">
+                        <div className="form-container">
+                            <div className="header">
+                                <h1 className="header-title" onClick={() => console.log(content)}>
+                                    <span className="title-icon">
+                                        <i className={categoriesMap[contentCategory][0]}></i>
+                                    </span>
+                                    { mode === 'edit' && 'Edit' } {categoriesMap[contentCategory][1]}
+                                </h1>
                             </div>
-                            <ReactQuill
-                                value={content}
-                                onChange={setContent}
-                                placeholder="Content (optional)"
-                                theme="snow"
-                                modules={modules}
-                            />
-                            <Attachments />
+                            <div className="content-form">
+                                <div className="input-group">
+                                    <input className={`input-text ${title ? 'active' : ''}`} type="text" id="content-title"
+                                    value={title} onChange={(e) => setTitle(e.target.value)} required />
+                                    <div className="input-label">Title</div>
+                                </div>
+                                <ReactQuill
+                                    value={content}
+                                    onChange={setContent}
+                                    placeholder="Content (optional)"
+                                    theme="snow"
+                                    modules={modules}
+                                />
+                                <Attachments handleAddLink={handleAddLink} />
+                            </div>
                         </div>
+                        <Sidebar category={contentCategory} mode={mode}/>
                     </div>
-                    <Sidebar category={contentCategory} mode={mode}/>
-                </div>
+                </>
             ) : (
                 <span className="loader admin"></span>
             )}
@@ -82,7 +93,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
     );
 }
 
-const Attachments = () => {
+const Attachments = ({ handleAddLink }) => {
     const fileInputRef = useRef(null);
     const [files, setFiles] = useState([]);
 
@@ -113,10 +124,6 @@ const Attachments = () => {
         setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
 
-    const handleUploadURL = () => {
-        return;
-    };
-
     return (
         <div className="Attachments">
             <div className="btn-group">
@@ -128,7 +135,7 @@ const Attachments = () => {
                     Upload
                 </button>
                 <button type="button" className="form-btn" id="upload-url"
-                onClick={handleUploadURL}>
+                onClick={handleAddLink}>
                     <i className="fa-solid fa-link"></i>
                     Link
                 </button>

@@ -9,120 +9,141 @@ import Login from './pages/Login/Login';
 import ContentForm from './pages/ContentForm/ContentForm';
 import Content from './pages/Content/Content';
 import Attendance from './pages/Attendance/Attendance';
-import axiosInstance from './services/axiosInstance'; 
+import Modal from './components/Modal/Modal';
+import axiosInstance from './services/axiosInstance';
 import { LoginContext } from './contexts/LoginContext';
 import './App.css';
 
 const App = () => {
-  const navigate = useNavigate();
-  const { loginType, setLoginType } = useContext(LoginContext);
-  const [user, setUser] = useState({});
+    const navigate = useNavigate();
+    const { loginType, setLoginType } = useContext(LoginContext);
+    const [user, setUser] = useState({});
 
-  const handleLogout = async () => {  
-    const refreshToken = localStorage.getItem('refreshToken');
+    const [isModalOpen, setIsModalOpen] = useState(false);   
+    const [modalContent, setModalContent] = useState(null);
 
-    try {
-      await axiosInstance.post('logout/', { refresh: refreshToken });
-
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      setUser({});
-
-      setLoginType('');
-
-      navigate('/login', { replace: true });
-    } catch (err) {
-      console.error('Error during logout on the server: ', err);
-    }    
-  }
-
-  const fetchUserSessionData = async () => {
-    /* Loads user data from session */
-
-    // Already logged in or no token available
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken || user?.id) return;
-    
-    try {
-      const response = await axiosInstance.get('/');
-      setUser(response.data); 
-
-      if (!loginType) {
-        setLoginType(response.data.type);
-      }
-    } catch (err) {
-      console.error('Failed to fetch user data', err);
+    const openModal = (content) => {
+        setModalContent(content);
+        setIsModalOpen(true);
     }
-  }
 
-  const hasTokenExpired = (token) => {
-    try {
-      const { exp } = jwtDecode(token);
-      const currTime = Math.floor(Date.now() / 1000);
-      return exp < currTime;
-    } catch (err) {
-      return true;
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setTimeout(() => {
+            setModalContent(null);
+        }, 225); // wait for animation
     }
-  };
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken || hasTokenExpired(accessToken)) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      navigate('/login', { replace: true });
-    } else {
-      fetchUserSessionData();
+    const handleLogout = async () => {
+        const refreshToken = localStorage.getItem('refreshToken');
+
+        try {
+            await axiosInstance.post('logout/', { refresh: refreshToken });
+
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            setUser({});
+
+            setLoginType('');
+
+            navigate('/login', { replace: true });
+        } catch (err) {
+            console.error('Error during logout on the server: ', err);
+        }
     }
-  }, []);
 
-  return (
-    <div className="App parent-container">
-      <Routes>
-        <Route path="/login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
-        <Route index element={
-          <ProtectedRoute>
-            <Navigation handleLogout={handleLogout} />
-            <Home user={user} fetchUserSessionData={fetchUserSessionData} />
-          </ProtectedRoute>
-        } />
-        {/* Content System */}
-        <Route path="/c/create" element={
-          <ProtectedRoute>
-            <Navigation handleLogout={handleLogout} />
-            <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
-              mode="create" />
-          </ProtectedRoute>
-        } />
-        <Route path="/c/:id" element={
-          <ProtectedRoute>
-            <Navigation handleLogout={handleLogout} />
-            <Content />
-          </ProtectedRoute>
-        } />
-        <Route path ="/c/:id/edit" element={
-          <ProtectedRoute>
-            <Navigation handleLogout={handleLogout} />
-            <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
-              mode="edit" />
-          </ProtectedRoute>
-        } />
-    
-        <Route path="/attendance" element={
-          <ProtectedRoute>
-            <Navigation handleLogout={handleLogout} />
-            <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />
-          </ProtectedRoute>
-        } />
-        <Route path="*" element={
-          <ProtectedRoute>
-            <Navigation handleLogout={handleLogout} />
-            <h1>Error 404 Not Found</h1>
-          </ProtectedRoute>
-        } />
-      </Routes>
-    </div>
-  );
+    const fetchUserSessionData = async () => {
+        /* Loads user data from session */
+
+        // Already logged in or no token available
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken || user?.id) return;
+
+        try {
+            const response = await axiosInstance.get('/');
+            setUser(response.data);
+
+            if (!loginType) {
+                setLoginType(response.data.type);
+            }
+        } catch (err) {
+            console.error('Failed to fetch user data', err);
+        }
+    }
+
+    const hasTokenExpired = (token) => {
+        try {
+            const { exp } = jwtDecode(token);
+            const currTime = Math.floor(Date.now() / 1000);
+            return exp < currTime;
+        } catch (err) {
+            return true;
+        }
+    };
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken || hasTokenExpired(accessToken)) {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            navigate('/login', { replace: true });
+        } else {
+            fetchUserSessionData();
+        }
+    }, []);
+
+    return (
+        <div className="App parent-container">
+            <Routes>
+                <Route path="/login" element={<Login fetchUserSessionData={fetchUserSessionData} />} />
+                <Route index element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <Home user={user} fetchUserSessionData={fetchUserSessionData} />
+                    </ProtectedRoute>
+                } />
+                {/* Content System */}
+                <Route path="/c/create" element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
+                            mode="create" openModal={openModal} />
+                    </ProtectedRoute>
+                } />
+                <Route path="/c/:id" element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <Content />
+                    </ProtectedRoute>
+                } />
+                <Route path="/c/:id/edit" element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
+                            mode="edit" openModal={openModal} />
+                    </ProtectedRoute>
+                } />
+
+                <Route path="/attendance" element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />
+                    </ProtectedRoute>
+                } />
+                <Route path="*" element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <h1>Error 404 Not Found</h1>
+                    </ProtectedRoute>
+                } />
+            </Routes>
+
+            {/* General Modal */}
+            <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
+                {modalContent}
+            </Modal>
+        </div>
+    );
 }
 
 export default App;
