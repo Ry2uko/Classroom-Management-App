@@ -459,6 +459,7 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
                     flex-direction: column
                     padding: 16px 25px
                     border-bottom: 1px solid #ccc
+                    transition: 0.15s
 
                     &:last-child
                         border-bottom: none
@@ -466,12 +467,16 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
                     span.announcement-title
                         line-break: loose
                         color: $theme2-text
-                        cursor: pointer
                         max-width: 90%
+                        transition: 0.1s
+                        cursor: pointer
                         font:
                             family: $ff-noto-sans
                             weight: 360
                             size: 1.2rem
+                        
+                        &:hover
+                            color: #0152CC
 
                     span.announcement-date
                         color: #555555
@@ -496,7 +501,15 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
                     display: flex
                     align-items: center
                     border-bottom: 1px solid #ccc
-                    padding: 20px 25px
+                    padding: 22px 25px
+                    transition: 0.15s
+                    cursor: pointer
+
+                    &:hover
+                        background-color: #00000005  
+
+                        .course-btn-icon
+                            color: #0152CC
 
                     &:last-child
                         border-bottom: none
@@ -512,9 +525,6 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
                         font-size: 1.25rem
                         color: #172B4C
                         transition: 0.15s
-
-                        &:hover
-                            color: #0152CC
 
                     .course-details
                         width: 0
@@ -737,6 +747,13 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
             display: flex
             align-items: center
 
+            &:hover
+                .icon-container i
+                    color: #022f5f
+                
+                .text-container
+                    color: #022f5f
+
             a
                 width: 100%
                 height: 100%
@@ -749,6 +766,7 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
             
                 i
                     font-size: 2.15rem
+                    transition: 0.15s
                     color: #012246
 
             .text-container
@@ -756,6 +774,7 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
                 flex-direction: column
                 color: #1A1A1A
                 margin-left: 25px
+                transition: 0.15s
 
                 h6
                     font:
@@ -975,7 +994,7 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
 
                 &.to-student
                     &:hover
-                        background-color: $theme1-transparent
+                        background-color: $theme1-transparent2
                         color: $theme1
 
                 &.to-admin

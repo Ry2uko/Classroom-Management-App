@@ -89,6 +89,11 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
         { label: 'Not Marked', value: 5 },
     ];
 
+    useEffect(() => { 
+        // Fetch on home page render
+        fetchUserSessionData();
+    }, []);
+
     return (
         <div className="Home admin-view">
             { dataLoaded ? (
@@ -112,10 +117,10 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                                     <span className="classroom-name">12-STEM Our Lady of the Most Holy Rosary</span>
                                     <div className="details-group">
                                         <span className="classroom-students">
-                                            <i class="fa-solid fa-users"></i> 16 Students
+                                            <i className="fa-solid fa-users"></i> 16 Students
                                         </span>
                                         <span className="classroom-adviser">
-                                            <i class="fa-regular fa-circle-user"></i> Sir Joseph
+                                            <i className="fa-regular fa-circle-user"></i> Sir Joseph
                                         </span>
                                     </div>
                                     <div className="btn-group">
@@ -133,7 +138,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                             <div className="dblock students">
                                 <div className="dblock-header">
                                     <h5>12-STEM Students</h5>
-                                    <Link to="/" class="header-btn">
+                                    <Link to="/" className="header-btn">
                                         View All <i className="fa-solid fa-chevron-right"></i>
                                     </Link>
                                 </div>
@@ -193,7 +198,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                             <div className="dblock attendance">
                                 <div className="dblock-header">
                                     <h5>Today's Attendance</h5>
-                                    <Link to="/" class="header-btn">
+                                    <Link to="/" className="header-btn">
                                         View Record <i className="fa-solid fa-chevron-right"></i>
                                     </Link>
                                 </div>
@@ -206,7 +211,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                             <div className="dblock announcements">
                                 <div className="dblock-header">
                                     <h5>Announcements</h5>
-                                    <Link to="/" class="header-btn">
+                                    <Link to="/" className="header-btn">
                                         View all <i className="fa-solid fa-chevron-right"></i>
                                     </Link>
                                 </div>
@@ -230,7 +235,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                             <div className="dblock courses">
                                 <div className="dblock-header">
                                     <h5>Courses</h5>
-                                    <Link to="/" class="header-btn">
+                                    <Link to="/" className="header-btn">
                                         View All <i className="fa-solid fa-chevron-right"></i>
                                     </Link>
                                 </div>
@@ -764,9 +769,6 @@ const TopBar = () => {
                     <div className="admin-btn-group">
                         <button type="button" className="topbar-btn">
                             <i className="fa-solid fa-plus"></i>
-                        </button>
-                        <button type="button" className="topbar-btn">
-                            <i className="fa-solid fa-bell"></i>
                         </button>
                         <button type="button" className="topbar-btn">
                             <i className="fa-solid fa-user"></i>

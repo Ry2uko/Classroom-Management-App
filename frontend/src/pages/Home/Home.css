@@ -530,6 +530,7 @@ body, html, #root {
   flex-direction: column;
   padding: 16px 25px;
   border-bottom: 1px solid #ccc;
+  transition: 0.15s;
 }
 .Home.admin-view .dblock.announcements .announcement-items-container .announcement-item:last-child {
   border-bottom: none;
@@ -537,11 +538,15 @@ body, html, #root {
 .Home.admin-view .dblock.announcements .announcement-items-container .announcement-item span.announcement-title {
   line-break: loose;
   color: #003a78;
-  cursor: pointer;
   max-width: 90%;
+  transition: 0.1s;
+  cursor: pointer;
   font-family: "Noto Sans", sans-serif;
   font-weight: 360;
   font-size: 1.2rem;
+}
+.Home.admin-view .dblock.announcements .announcement-items-container .announcement-item span.announcement-title:hover {
+  color: #0152CC;
 }
 .Home.admin-view .dblock.announcements .announcement-items-container .announcement-item span.announcement-date {
   color: #555555;
@@ -567,7 +572,15 @@ body, html, #root {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ccc;
-  padding: 20px 25px;
+  padding: 22px 25px;
+  transition: 0.15s;
+  cursor: pointer;
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item:hover {
+  background-color: rgba(0, 0, 0, 0.0196078431);
+}
+.Home.admin-view .dblock.courses .course-items-container .course-item:hover .course-btn-icon {
+  color: #0152CC;
 }
 .Home.admin-view .dblock.courses .course-items-container .course-item:last-child {
   border-bottom: none;
@@ -583,9 +596,6 @@ body, html, #root {
   font-size: 1.25rem;
   color: #172B4C;
   transition: 0.15s;
-}
-.Home.admin-view .dblock.courses .course-items-container .course-item .course-btn-icon:hover {
-  color: #0152CC;
 }
 .Home.admin-view .dblock.courses .course-items-container .course-item .course-details {
   width: 0;
@@ -814,6 +824,12 @@ body, html, #root {
   display: flex;
   align-items: center;
 }
+.Home.admin-view .qlinks-section .qlinks-card:hover .icon-container i {
+  color: #022f5f;
+}
+.Home.admin-view .qlinks-section .qlinks-card:hover .text-container {
+  color: #022f5f;
+}
 .Home.admin-view .qlinks-section .qlinks-card a {
   width: 100%;
   height: 100%;
@@ -826,6 +842,7 @@ body, html, #root {
 }
 .Home.admin-view .qlinks-section .qlinks-card .icon-container i {
   font-size: 2.15rem;
+  transition: 0.15s;
   color: #012246;
 }
 .Home.admin-view .qlinks-section .qlinks-card .text-container {
@@ -833,6 +850,7 @@ body, html, #root {
   flex-direction: column;
   color: #1A1A1A;
   margin-left: 25px;
+  transition: 0.15s;
 }
 .Home.admin-view .qlinks-section .qlinks-card .text-container h6 {
   font-family: "Merriweather Sans", serif;
@@ -1044,7 +1062,7 @@ body, html, #root {
   font-size: 1.1rem;
 }
 .WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-student:hover, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-student:hover {
-  background-color: #9DCAA7;
+  background-color: #C5E4C9;
   color: #239732;
 }
 .WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-admin:hover, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-admin:hover {

@@ -39,7 +39,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
     const modules = {
         toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered ' }, { 'list': 'bullet' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             ['clean']
         ],
     }
@@ -50,7 +50,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
                 <div className="main-container">
                     <div className="form-container">
                         <div className="header">
-                            <h1 className="header-title">
+                            <h1 className="header-title" onClick={() => console.log(content)}>
                                 <span className="title-icon">
                                     <i className={categoriesMap[contentCategory][0]}></i>
                                 </span>
