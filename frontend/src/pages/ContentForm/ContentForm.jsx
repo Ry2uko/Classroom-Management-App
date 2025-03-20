@@ -2,13 +2,18 @@ import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
-import './ContentForm.css'
+import './ContentForm.css';
+import Modal from '../../components/Modal/Modal';
 
-const ContentForm = ({ user, fetchUserSessionData, mode, openModal }) => {
+const ContentForm = ({ user, fetchUserSessionData, mode }) => {
     const [ searchParams ] = useSearchParams();
     const [dataLoaded, setDataLoaded] = useState(false);
     const [content, setContent] = useState('');
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState('');
+    const [link, setLink] = useState('');
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalAnimating, setIsModalAnimating] = useState(false);
 
     const fetchData = async () => {
         try {
@@ -43,20 +48,44 @@ const ContentForm = ({ user, fetchUserSessionData, mode, openModal }) => {
 
     let contentCategory = 'course';
     if (searchParams.has('t')) contentCategory = searchParams.get('t');
+    
+    const openModal = () => {
+        setIsModalOpen(true);
+        setTimeout(() => setIsModalAnimating(true), 10); // reflow
+    }
 
-    const handleAddLink = () => {
-        console.log(openModal)
-        openModal(
-            <>
-                <h1>Hello Modal</h1>
-            </>
-        );
+    const closeModal = () => {
+        setIsModalAnimating(false);
+        setTimeout(() => {
+            setIsModalOpen(false);
+            setLink('');
+        }, 225); // wait for animation
     };
 
     return (
         <div className="ContentForm">
             { dataLoaded ? ( 
                 <>
+                    { isModalOpen && (
+                        <Modal isModalOpen={isModalOpen} isModalAnimating={isModalAnimating} closeModal={closeModal} >
+                            <div className="wrapper">
+                                <div className="input-group">
+                                    <input className={`input-text ${link ? 'active' : ''}`} type="text" id="content-link"
+                                    value={link} onChange={(e) => setLink(e.target.value)} required />
+                                    <div className="input-label">Link</div>
+                                </div>
+                                <div className="btn-group">
+                                    <button type="button" onClick={closeModal}>
+                                        Cancel
+                                    </button>
+                                    <button type="button" className={ `${!link && 'disabled'}` }>
+                                        Add Link
+                                    </button>
+                                </div>
+                            </div>
+                        </Modal>
+                    )}
+
                     <div className="main-container">
                         <div className="form-container">
                             <div className="header">
@@ -80,7 +109,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode, openModal }) => {
                                     theme="snow"
                                     modules={modules}
                                 />
-                                <Attachments handleAddLink={handleAddLink} />
+                                <Attachments openModal={openModal} />
                             </div>
                         </div>
                         <Sidebar category={contentCategory} mode={mode}/>
@@ -93,7 +122,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode, openModal }) => {
     );
 }
 
-const Attachments = ({ handleAddLink }) => {
+const Attachments = ({ openModal }) => {
     const fileInputRef = useRef(null);
     const [files, setFiles] = useState([]);
 
@@ -135,7 +164,7 @@ const Attachments = ({ handleAddLink }) => {
                     Upload
                 </button>
                 <button type="button" className="form-btn" id="upload-url"
-                onClick={handleAddLink}>
+                onClick={openModal}>
                     <i className="fa-solid fa-link"></i>
                     Link
                 </button>

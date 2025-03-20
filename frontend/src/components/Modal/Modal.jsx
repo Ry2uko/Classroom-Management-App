@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 import './Modal.css';
 
-const Modal = ({ isModalOpen, closeModal, children }) => {
+const Modal = ({ isModalOpen, isModalAnimating, closeModal, children }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
         if (isModalOpen) {
             setIsVisible(true);
-            setTimeout(() => setIsAnimating(true), 10); // reflow
         } else {
-            setIsAnimating(false);
-            setTimeout(() => setIsVisible(false), 225); // wait for animation
+           setIsVisible(false); 
         }
     }, [isModalOpen]);
 
@@ -20,9 +17,9 @@ const Modal = ({ isModalOpen, closeModal, children }) => {
             closeModal();
         }
     }
-    
+
     return isVisible ? (
-        <div className={`modal-overlay ${isAnimating ? 'in' : 'out'}`} onClick={handleOverlayClick}>
+        <div className={`modal-overlay ${isModalAnimating ? 'in' : 'out'}`} onClick={handleOverlayClick}>
             <div className="modal-container">
                 <div className="Modal" onClick={(e) => e.stopPropagation()}>
                     { children }

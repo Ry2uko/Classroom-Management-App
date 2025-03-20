@@ -7,3 +7,4 @@ passwords/
 env/
 migrations/
 db.sqlite3
+profile_imgs/

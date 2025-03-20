@@ -383,4 +383,71 @@ body, html, #root {
 }
 .main-container .sidebar .btn-group button i {
   margin-right: 10px;
+}
+
+.Modal .wrapper {
+  width: 400px;
+  padding: 15px 5px;
+}
+.Modal .btn-group {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.Modal .btn-group button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #006fe6;
+  border: none;
+  cursor: pointer;
+  margin-inline: 10px;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.Modal .btn-group button.disabled {
+  color: #B5B6B7;
+  pointer-events: none;
+}
+.Modal .input-group {
+  height: 50px;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 1.5rem;
+}
+.Modal .input-group .input-text {
+  position: absolute;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid #b0b0b0;
+  padding: 0 20px;
+  transition: 0.2s ease;
+  z-index: 99;
+  font-family: "Nunito", serif;
+  font-size: 1.1rem;
+}
+.Modal .input-group .input-text:focus {
+  border-color: #282828;
+}
+.Modal .input-group .input-text:focus + .input-label, .Modal .input-group .input-text.active + .input-label {
+  top: 0;
+  left: -5px;
+  transform: translateY(-50%);
+  z-index: 99;
+  font-size: 1rem;
+  color: #282828;
+}
+.Modal .input-group .input-label {
+  background-color: #fff;
+  position: absolute;
+  transition: 0.2s ease;
+  margin: 0 20px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-family: "Nunito", serif;
+  font-size: 1.1rem;
 }/*# sourceMappingURL=ContentForm.css.map */

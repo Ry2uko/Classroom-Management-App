@@ -9,7 +9,6 @@ import Login from './pages/Login/Login';
 import ContentForm from './pages/ContentForm/ContentForm';
 import Content from './pages/Content/Content';
 import Attendance from './pages/Attendance/Attendance';
-import Modal from './components/Modal/Modal';
 import axiosInstance from './services/axiosInstance';
 import { LoginContext } from './contexts/LoginContext';
 import './App.css';
@@ -18,21 +17,6 @@ const App = () => {
     const navigate = useNavigate();
     const { loginType, setLoginType } = useContext(LoginContext);
     const [user, setUser] = useState({});
-
-    const [isModalOpen, setIsModalOpen] = useState(false);   
-    const [modalContent, setModalContent] = useState(null);
-
-    const openModal = (content) => {
-        setModalContent(content);
-        setIsModalOpen(true);
-    }
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setTimeout(() => {
-            setModalContent(null);
-        }, 225); // wait for animation
-    }
 
     const handleLogout = async () => {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -107,7 +91,7 @@ const App = () => {
                     <ProtectedRoute>
                         <Navigation handleLogout={handleLogout} />
                         <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
-                            mode="create" openModal={openModal} />
+                            mode="create" />
                     </ProtectedRoute>
                 } />
                 <Route path="/c/:id" element={
@@ -120,7 +104,7 @@ const App = () => {
                     <ProtectedRoute>
                         <Navigation handleLogout={handleLogout} />
                         <ContentForm user={user} fetchUserSessionData={fetchUserSessionData}
-                            mode="edit" openModal={openModal} />
+                            mode="edit" />
                     </ProtectedRoute>
                 } />
 
@@ -137,11 +121,6 @@ const App = () => {
                     </ProtectedRoute>
                 } />
             </Routes>
-
-            {/* General Modal */}
-            <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-                {modalContent}
-            </Modal>
         </div>
     );
 }
