@@ -10,7 +10,9 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
+    const [attachments, setAttachments] = useState([]);
     const [link, setLink] = useState('');
+    const [linkTitle, setLinkTitle] = useState('');
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalAnimating, setIsModalAnimating] = useState(false);
@@ -59,7 +61,26 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
         setTimeout(() => {
             setIsModalOpen(false);
             setLink('');
+            setLinkTitle('');
         }, 225); // wait for animation
+    };
+
+    const handleAddLink = async () => {
+        if (!link.trim()) return;
+
+        try {   
+            new URL(link);
+
+            setAttachments((prevAttachments) => [...prevAttachments, {
+                title: linkTitle,
+                type: 'link',
+                url: link,
+            }]);
+            
+            closeModal();
+        } catch (err) { 
+            alert("Invalid LINK!!!"); // TODO: UPDATE LATER W/ ERROR MSG
+        }
     };
 
     return (
@@ -70,6 +91,11 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
                         <Modal isModalOpen={isModalOpen} isModalAnimating={isModalAnimating} closeModal={closeModal} >
                             <div className="wrapper">
                                 <div className="input-group">
+                                    <input className={`input-text ${linkTitle ? 'active' : ''}`} type="text" id="content-link-title"
+                                    value={linkTitle} onChange={(e) => setLinkTitle(e.target.value)} required />
+                                    <div className="input-label">Title</div>
+                                </div>
+                                <div className="input-group">
                                     <input className={`input-text ${link ? 'active' : ''}`} type="text" id="content-link"
                                     value={link} onChange={(e) => setLink(e.target.value)} required />
                                     <div className="input-label">Link</div>
@@ -78,7 +104,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
                                     <button type="button" onClick={closeModal}>
                                         Cancel
                                     </button>
-                                    <button type="button" className={ `${!link && 'disabled'}` }>
+                                    <button type="button" className={ `${(!link || !linkTitle) && 'disabled'}` } onClick={handleAddLink}>
                                         Add Link
                                     </button>
                                 </div>
@@ -109,7 +135,8 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
                                     theme="snow"
                                     modules={modules}
                                 />
-                                <Attachments openModal={openModal} />
+                                <Attachments openModal={openModal} attachments={attachments}
+                                setAttachments={setAttachments} />
                             </div>
                         </div>
                         <Sidebar category={contentCategory} mode={mode}/>
@@ -122,9 +149,8 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
     );
 }
 
-const Attachments = ({ openModal }) => {
+const Attachments = ({ openModal, attachments, setAttachments }) => {
     const fileInputRef = useRef(null);
-    const [files, setFiles] = useState([]);
 
     const getShortMimeType = (mimeType) => {
         const mimeMap = {
@@ -145,12 +171,11 @@ const Attachments = ({ openModal }) => {
 
     const handleFileChange = (event) => {
         const selectedFiles = Array.from(event.target.files);
-        setFiles(selectedFiles);
-        console.log(files)
+        setAttachments((prevAttachments) => [...prevAttachments, ...selectedFiles]);
     };
 
-    const handleRemoveFile = (index) => {
-        setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    const handleRemoveAttachment = (index) => {
+        setAttachments((prevAttachments) => prevAttachments.filter((_, i) => i !== index));
     };
 
     return (
@@ -170,44 +195,51 @@ const Attachments = ({ openModal }) => {
                 </button>
             </div>
             <div className="attachments-container">
-                { files.map((file, index) => (
+                { attachments.map((attachment, index) => (
                     <div className="attachment" key={index}>
-                        <button type="button" className="cancel-attachment" onClick={() => handleRemoveFile(index)}>
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
-                        <div className="attachment-icon">
-                            <i className="fa-solid fa-file-lines"></i>
-                        </div>
-                        <div className="attachment-main">
-                            <div className="row">
-                                <span className="attachment-title">{ file.name }</span>
-                                •
-                                <span className="attachment-mimetype">{ getShortMimeType(file.type) || '' }</span>
-                            </div>
-                            <div className="row">
-                                <span className="attachment-content">
-                                    <small className="file-size">{(file.size / (1024 * 1024)).toFixed(2)} MB</small>
-                                </span>
-                            </div>
-                        </div>
+                        {
+                            attachment?.type == 'link' ? (
+                                <>
+                                    <button type="button" className="cancel-attachment">
+                                        <i className="fa-solid fa-xmark"></i>
+                                    </button>
+                                    <div className="attachment-icon">
+                                        <i className="fa-solid fa-link"></i>
+                                    </div>
+                                    <div className="attachment-main">
+                                        <div className="row">
+                                            <span className="attachment-title">{attachment.title}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span className="attachment-content">{attachment.url}</span>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <button type="button" className="cancel-attachment" onClick={() => handleRemoveAttachment(index)}>
+                                        <i className="fa-solid fa-xmark"></i>
+                                    </button>
+                                    <div className="attachment-icon">
+                                        <i className="fa-solid fa-file-lines"></i>
+                                    </div>
+                                    <div className="attachment-main">
+                                        <div className="row">
+                                            <span className="attachment-title">{ attachment.name }</span>
+                                            •
+                                            <span className="attachment-mimetype">{ getShortMimeType(attachment.type) || '' }</span>
+                                        </div>
+                                        <div className="row">
+                                            <span className="attachment-content">
+                                                <small className="file-size">{(attachment.size / (1024 * 1024)).toFixed(2)} MB</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </>    
+                            )
+                        }
                     </div>
-                ))}
-                <div className="attachment">
-                    <button type="button" className="cancel-attachment">
-                        <i className="fa-solid fa-xmark"></i>
-                    </button>
-                    <div className="attachment-icon">
-                        <i className="fa-solid fa-link"></i>
-                    </div>
-                    <div className="attachment-main">
-                        <div className="row">
-                            <span className="attachment-title">Youtube</span>
-                        </div>
-                        <div className="row">
-                            <span className="attachment-content">https://www.youtube.com/watch?v=Bd_xKxJuzUA&t=1025s</span>
-                        </div>
-                    </div>
-                </div>
+                )) }
             </div>
         </div>
     );
@@ -243,6 +275,19 @@ const CourseMaterialSidebar = ({ mode }) => {
                 </div>
             </div>
 
+            { mode === 'edit' && (
+                <div className="btn-group block">
+                    <button type="button" id="archive-content">
+                        <i className="fa-solid fa-box-archive"></i>
+                        Archive
+                    </button>
+                    <button type="button" id="delete-content">
+                        <i className="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            )}
+
             <div className="btn-group">
                 {
                     mode === 'edit' ? (
@@ -255,10 +300,14 @@ const CourseMaterialSidebar = ({ mode }) => {
                             </button>
                         </>
                     ) : (
-                        <button type="button" id="create-content">
-                            <i className="fa-solid fa-plus"></i>
-                            Create
-                        </button>
+                        <>
+                            <button type="button" id="cancel-edit">
+                                Cancel
+                            </button>
+                            <button type="button" id="create-content">
+                                Create
+                            </button>
+                        </>
                     )
                 }
             </div>
@@ -270,6 +319,18 @@ const CourseMaterialSidebar = ({ mode }) => {
 const SchoolMaterialSidebar = ({ mode }) => {
     return (
         <div className="CourseMaterialSidebar sidebar">
+            { mode === 'edit' && (
+                <div className="btn-group block">
+                    <button type="button" id="archive-content">
+                        <i className="fa-solid fa-box-archive"></i>
+                        Archive
+                    </button>
+                    <button type="button" id="delete-content">
+                        <i className="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            )}
             <div className="btn-group">
                 {
                     mode === 'edit' ? (
@@ -282,10 +343,14 @@ const SchoolMaterialSidebar = ({ mode }) => {
                             </button>
                         </>
                     ) : (
-                        <button type="button" id="create-content">
-                            <i className="fa-solid fa-plus"></i>
-                            Create
-                        </button>
+                        <>
+                            <button type="button" id="cancel-edit">
+                                Cancel
+                            </button>
+                            <button type="button" id="create-content">
+                                Create
+                            </button>
+                        </>
                     )
                 }
             </div>
@@ -308,6 +373,19 @@ const ClassroomMaterialSidebar = ({ mode }) => {
                 </div>
             </div>
 
+            { mode === 'edit' && (
+                <div className="btn-group block">
+                    <button type="button" id="archive-content">
+                        <i className="fa-solid fa-box-archive"></i>
+                        Archive
+                    </button>
+                    <button type="button" id="delete-content">
+                        <i className="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            )}
+
             <div className="btn-group">
                 {
                     mode === 'edit' ? (
@@ -320,10 +398,14 @@ const ClassroomMaterialSidebar = ({ mode }) => {
                             </button>
                         </>
                     ) : (
-                        <button type="button" id="create-content">
-                            <i className="fa-solid fa-plus"></i>
-                            Create
-                        </button>
+                        <>
+                            <button type="button" id="cancel-edit">
+                                Cancel
+                            </button>
+                            <button type="button" id="create-content">
+                                Create
+                            </button>
+                        </>
                     )
                 }
             </div>
@@ -364,6 +446,19 @@ const AnnouncementSidebar = ({ mode }) => {
                 </div>
             </div>
 
+            { mode === 'edit' && (
+                <div className="btn-group block">
+                    <button type="button" id="archive-content">
+                        <i className="fa-solid fa-box-archive"></i>
+                        Archive
+                    </button>
+                    <button type="button" id="delete-content">
+                        <i className="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            )}
+
             <div className="btn-group">
                 {
                     mode === 'edit' ? (
@@ -376,10 +471,14 @@ const AnnouncementSidebar = ({ mode }) => {
                             </button>
                         </>
                     ) : (
-                        <button type="button" id="create-content">
-                            <i className="fa-solid fa-plus"></i>
-                            Create
-                        </button>
+                        <>
+                            <button type="button" id="cancel-edit">
+                                Cancel
+                            </button>
+                            <button type="button" id="create-content">
+                                Create
+                            </button>
+                        </>
                     )
                 }
             </div>

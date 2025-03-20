@@ -286,6 +286,21 @@ $input-text: #212326
             gap: 15px
             display: flex
 
+            &.block
+                width: 100%
+                flex-direction: column
+
+                button
+                    background-color: #fff
+
+                    &#archive-content
+                        color: #333
+                        border-color: #666
+
+                    &#delete-content
+                        color: #dc1414
+                        border-color: #dc1414
+
             button
                 min-width: 100px
                 background-color: $theme2

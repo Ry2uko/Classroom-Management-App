@@ -34,6 +34,8 @@ axiosInstance.interceptors.request.use((config) => {
   return Promise.reject(error);
 })
 
+// TODO: NOT REALLY SURE WHAT THIS CODE DOES LMAO
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {

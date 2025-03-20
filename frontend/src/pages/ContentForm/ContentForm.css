@@ -361,6 +361,21 @@ body, html, #root {
   gap: 15px;
   display: flex;
 }
+.main-container .sidebar .btn-group.block {
+  width: 100%;
+  flex-direction: column;
+}
+.main-container .sidebar .btn-group.block button {
+  background-color: #fff;
+}
+.main-container .sidebar .btn-group.block button#archive-content {
+  color: #333;
+  border-color: #666;
+}
+.main-container .sidebar .btn-group.block button#delete-content {
+  color: #dc1414;
+  border-color: #dc1414;
+}
 .main-container .sidebar .btn-group button {
   min-width: 100px;
   background-color: #006fe6;

@@ -150,7 +150,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                                             </div>
                                             <div className="student-details">
                                                 <span className="student-name">Gabriel M. Fradejas</span>
-                                                <span className="student-strand">STEM</span>
+                                                <span className="student-strand">12-STEM</span>
                                             </div>
                                             <div className="student-attendance">
                                                 <div className="ping present"></div>        
@@ -162,7 +162,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                                             </div>
                                             <div className="student-details">
                                                 <span className="student-name">Andrei V. Petate</span>
-                                                <span className="student-strand">STEM</span>
+                                                <span className="student-strand">12-STEM</span>
                                             </div>
                                             <div className="student-attendance">
                                                 <div className="ping late"></div>        
@@ -174,7 +174,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                                             </div>
                                             <div className="student-details">
                                                 <span className="student-name">Livana Jenell C. Rivera</span>
-                                                <span className="student-strand">STEM</span>
+                                                <span className="student-strand">12-STEM</span>
                                             </div>
                                             <div className="student-attendance">
                                                 <div className="ping present"></div>        
@@ -186,7 +186,7 @@ const AdminHome = ({ user, fetchUserSessionData  }) => {
                                             </div>
                                             <div className="student-details">
                                                 <span className="student-name">Aiden Tyler E. Mendoza</span>
-                                                <span className="student-strand">STEM</span>
+                                                <span className="student-strand">12-STEM</span>
                                             </div>
                                             <div className="student-attendance">
                                                 <div className="ping absent"></div>        
