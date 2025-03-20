@@ -17,6 +17,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalAnimating, setIsModalAnimating] = useState(false);
 
+    /*
     const fetchData = async () => {
         try {
             setDataLoaded(true);
@@ -24,6 +25,7 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
             console.error('Failed to fetch content form data', err);
         }
     }
+    */
 
     const modules = {
         toolbar: [
@@ -35,11 +37,14 @@ const ContentForm = ({ user, fetchUserSessionData, mode }) => {
 
     useEffect(() => {
         fetchUserSessionData();
+        setDataLoaded(true);
     }, []);
 
+    /*
     useEffect(() => {
         if (user?.id) fetchData();
     }, [user]);
+    */
 
     const categoriesMap = {
         'course': ['fa-solid fa-book-bookmark', 'Course Material'],  

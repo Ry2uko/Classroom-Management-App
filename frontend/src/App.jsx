@@ -9,6 +9,7 @@ import Login from './pages/Login/Login';
 import ContentForm from './pages/ContentForm/ContentForm';
 import Content from './pages/Content/Content';
 import Attendance from './pages/Attendance/Attendance';
+import School from './pages/School/School';
 import axiosInstance from './services/axiosInstance';
 import { LoginContext } from './contexts/LoginContext';
 import './App.css';
@@ -84,6 +85,12 @@ const App = () => {
                     <ProtectedRoute>
                         <Navigation handleLogout={handleLogout} />
                         <Home user={user} fetchUserSessionData={fetchUserSessionData} />
+                    </ProtectedRoute>
+                } />
+                <Route path="/school" element={
+                    <ProtectedRoute>
+                        <Navigation handleLogout={handleLogout} />
+                        <School user={user} fetchUserSessionData={fetchUserSessionData} />
                     </ProtectedRoute>
                 } />
                 {/* Content System */}
