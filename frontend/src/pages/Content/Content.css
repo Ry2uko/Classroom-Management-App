@@ -1,0 +1,473 @@
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+}
+
+.parent-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* https://cssloaders.github.io/ */
+.loader2 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: #239732;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: -38px -12px, -14px 0, 14px 0, 38px 0;
+  }
+  33% {
+    box-shadow: -38px 0px, -14px -12px, 14px 0, 38px 0;
+  }
+  66% {
+    box-shadow: -38px 0px, -14px 0, 14px -12px, 38px 0;
+  }
+  100% {
+    box-shadow: -38px 0, -14px 0, 14px 0, 38px -12px;
+  }
+}
+.loader {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.loader, .loader:before, .loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.75s infinite ease-in-out;
+}
+
+.loader {
+  color: #239732;
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+.loader.admin {
+  color: #006fe6;
+}
+
+.loader:before, .loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+.loader:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+
+.loader:after {
+  left: 3.5em;
+}
+
+@keyframes bblFadInOut {
+  0%, 80%, 100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+.Content {
+  display: flex;
+  flex-direction: column;
+  background-color: #e8eaee;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  align-items: center;
+  overflow-y: auto;
+}
+.Content .loader {
+  margin-top: 1.5rem;
+}
+.Content .main-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+  height: fit-content;
+}
+.Content .content {
+  display: flex;
+}
+.Content .content .content-icon {
+  margin-right: 15px;
+}
+.Content .content .content-icon i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-size: 1.75rem;
+  border-radius: 0.5rem;
+  color: #006fe6;
+  background-color: #99C5F5;
+}
+.Content .content .content-main {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+.Content .content .content-main .content-header {
+  position: relative;
+}
+.Content .content .content-main .content-header .kebab {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.8rem;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: #222;
+  background-color: rgba(0, 0, 0, 0);
+}
+.Content .content .content-main .content-header .kebab-container {
+  background-color: #fff;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.Content .content .content-main .content-header .kebab-container ul li {
+  transition: 0.2s;
+  list-style: none;
+  padding: 7px 15px;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+  font-text-align: center;
+}
+.Content .content .content-main .content-header .kebab-container ul li:hover {
+  background-color: rgba(0, 0, 0, 0.0274509804);
+}
+.Content .content .content-main .content-header .content-title {
+  font-family: "Nunito", serif;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.Content .content .content-main .content-header .header-group {
+  display: flex;
+  color: #333;
+  margin-left: 2px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 450;
+}
+.Content .content .content-main .content-header .header-group small.divider {
+  margin-inline: 5px;
+}
+.Content .content .content-main .content-body {
+  margin-top: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #fff;
+  border-radius: 0.35rem;
+  padding: 1.5rem 2rem;
+}
+.Content .content .content-main .content-body .content-markdown {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1.05rem;
+}
+.Content .content .content-main .content-body .content-markdown ol li {
+  list-style-position: inside;
+}
+.Content .content .content-main .content-body .content-markdown ol li[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li[data-list=bullet] {
+  list-style-type: disc;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-1 {
+  margin-left: 20px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-1[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-2 {
+  margin-left: 40px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-2[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-3 {
+  margin-left: 60px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-3[data-list=ordered] {
+  list-style-type: upper-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-4 {
+  margin-left: 80px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-4[data-list=ordered] {
+  list-style-type: upper-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-5 {
+  margin-left: 100px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-5[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-6 {
+  margin-left: 120px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-6[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-7 {
+  margin-left: 140px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-7[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-8 {
+  margin-left: 160px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-8[data-list=ordered] {
+  list-style-type: upper-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-9 {
+  margin-left: 180px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-9[data-list=ordered] {
+  list-style-type: upper-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-10 {
+  margin-left: 200px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-10[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-11 {
+  margin-left: 220px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-11[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-12 {
+  margin-left: 240px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-12[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-13 {
+  margin-left: 260px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-13[data-list=ordered] {
+  list-style-type: upper-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-14 {
+  margin-left: 280px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-14[data-list=ordered] {
+  list-style-type: upper-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-15 {
+  margin-left: 300px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-15[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-16 {
+  margin-left: 320px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-16[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-17 {
+  margin-left: 340px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-17[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-18 {
+  margin-left: 360px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-18[data-list=ordered] {
+  list-style-type: upper-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-19 {
+  margin-left: 380px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-19[data-list=ordered] {
+  list-style-type: upper-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-20 {
+  margin-left: 400px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-20[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-21 {
+  margin-left: 420px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-21[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-22 {
+  margin-left: 440px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-22[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-23 {
+  margin-left: 460px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-23[data-list=ordered] {
+  list-style-type: upper-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-24 {
+  margin-left: 480px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-24[data-list=ordered] {
+  list-style-type: upper-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-25 {
+  margin-left: 500px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-25[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-26 {
+  margin-left: 520px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-26[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-27 {
+  margin-left: 540px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-27[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-28 {
+  margin-left: 560px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-28[data-list=ordered] {
+  list-style-type: upper-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-29 {
+  margin-left: 580px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-29[data-list=ordered] {
+  list-style-type: upper-roman;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-30 {
+  margin-left: 600px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-30[data-list=ordered] {
+  list-style-type: decimal;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-31 {
+  margin-left: 620px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-31[data-list=ordered] {
+  list-style-type: lower-alpha;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-32 {
+  margin-left: 640px;
+}
+.Content .content .content-main .content-body .content-markdown ol li.ql-indent-32[data-list=ordered] {
+  list-style-type: lower-roman;
+}
+.Content .content .content-main .content-body .attachments-container {
+  margin-top: 1.5rem;
+}
+.Content .content .content-main .content-body .attachments-container .attachment-items-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+.Content .content .content-main .content-body .attachments-container .attachment {
+  width: 100%;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #DADCE0;
+  border-radius: 0.25rem;
+  background: #fff;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-icon {
+  flex-shrink: 0;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.3rem;
+  background: #fff;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-icon i {
+  color: #006fe6;
+  font-size: 1.75rem;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  overflow: hidden;
+  font-family: "Nunito", serif;
+  min-width: 0;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.attachment-title, .Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.attachment-content {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.attachment-title {
+  max-width: 70%;
+  font-size: 1.05rem;
+  font-weight: 450;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.attachment-content {
+  max-width: 90%;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.attachment-content small {
+  color: #333;
+  font-size: 0.9rem;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.divider {
+  margin-inline: 5px;
+}
+.Content .content .content-main .content-body .attachments-container .attachment .attachment-main .row span.attachment-mimetype {
+  fotn-weight: 450;
+}/*# sourceMappingURL=Content.css.map */
