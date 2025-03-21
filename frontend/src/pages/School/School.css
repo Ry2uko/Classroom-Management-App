@@ -90,4 +90,14 @@ body, html, #root {
   40% {
     box-shadow: 0 2.5em 0 0;
   }
+}
+.School {
+  background-color: #e8eaee;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  padding: 2rem;
+}
+.School .loader {
+  margin-top: 1.5rem;
 }/*# sourceMappingURL=School.css.map */

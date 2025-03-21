@@ -1,4 +1,125 @@
 @import '../../App'
 
 .Display
+    .search-bar-container
+        flex: 1
+        width: 600px
+
+        .search-bar-input-group
+            position: relative
+            display: flex
+            height: 45px
+
+            button.search-btn
+                position: absolute
+                border: none
+                font-size: 1.3rem
+                height: 45px
+                width: 45px
+                border-radius: 0.8rem
+                cursor: pointer
+
+                &.student
+                    color: $theme1
+                    background-color: $theme1-transparent
+                &.admin
+                    color: $theme2
+                    background-color: $theme2-transparent
+        
+            .input-text-container
+                width: 100%
+
+                input.search-input-text
+                    padding-left: 25px
+                    margin-left: 30px
+                    height: 100%
+                    width: 100%
+                    border: none
+                    border-radius: 0.4rem
+                    font:
+                        family: $ff-merriweather-sans
+                        size: 1rem
+                        weight: 400
+
+                    &:focus
+                        outline: none
+
+    .display-container
+        .display-header
+            display: flex
+        
+        .display-body
+            .content-items-container
+                display: flex
+                flex-direction: column
+
+                .content-item
+                    display: flex
+                    align-items: center
+                    border: 1px solid #ccc
+                    padding: 22px 25px
+                    transition: 0.15s
+                    cursor: pointer
+
+                    &:hover
+                        background-color: #00000005
+
+                    .content-icon
+                        background-color: $theme2-transparent2
+                        border-radius: 0.5rem
+                        color: $theme2
+                        padding: 12px
+                        font-size: 1.35rem
+
+                    .kebab
+                        font-size: 1.25rem
+                        color: #222
+
+                    .kebab-container
+                        background-color: #fff
+                        position: absolute
+                        top: 0
+                        right: 0
+                        border-radius: 0.2rem
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+
+                        ul
+                            li
+                                transition: 0.2s
+                                list-style: none
+                                padding: 7px 15px
+                                cursor: pointer
+                                font:
+                                    family: $ff-nunito
+                                    size: 1.2rem
+                                    text-align: center
+
+                                &:hover
+                                    background-color: #00000007
+
+                    .content-details
+                        width: 0
+                        margin-left: 20px
+                        flex: 1
+
+                        span.content-title
+                            max-width: 85%
+                            display: block
+                            white-space: nowrap
+                            overflow: hidden
+                            text-overflow: ellipsis
+                            font:
+                                family: $ff-merriweather-sans
+                                size: 1.1rem
+                                weight: 350
+                            
+                        .details-group
+                            margin-top: 5px
+                            display: flex
+
+                            .content-date
+                                display: flex
+
+                    
+
     

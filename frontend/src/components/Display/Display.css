@@ -90,4 +90,118 @@ body, html, #root {
   40% {
     box-shadow: 0 2.5em 0 0;
   }
+}
+.Display .search-bar-container {
+  flex: 1;
+  width: 600px;
+}
+.Display .search-bar-container .search-bar-input-group {
+  position: relative;
+  display: flex;
+  height: 45px;
+}
+.Display .search-bar-container .search-bar-input-group button.search-btn {
+  position: absolute;
+  border: none;
+  font-size: 1.3rem;
+  height: 45px;
+  width: 45px;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+.Display .search-bar-container .search-bar-input-group button.search-btn.student {
+  color: #239732;
+  background-color: #9DCAA7;
+}
+.Display .search-bar-container .search-bar-input-group button.search-btn.admin {
+  color: #006fe6;
+  background-color: #99C5F5;
+}
+.Display .search-bar-container .search-bar-input-group .input-text-container {
+  width: 100%;
+}
+.Display .search-bar-container .search-bar-input-group .input-text-container input.search-input-text {
+  padding-left: 25px;
+  margin-left: 30px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 0.4rem;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.Display .search-bar-container .search-bar-input-group .input-text-container input.search-input-text:focus {
+  outline: none;
+}
+.Display .display-container .display-header {
+  display: flex;
+}
+.Display .display-container .display-body .content-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Display .display-container .display-body .content-items-container .content-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 22px 25px;
+  transition: 0.15s;
+  cursor: pointer;
+}
+.Display .display-container .display-body .content-items-container .content-item:hover {
+  background-color: rgba(0, 0, 0, 0.0196078431);
+}
+.Display .display-container .display-body .content-items-container .content-item .content-icon {
+  background-color: #B2D3F8;
+  border-radius: 0.5rem;
+  color: #006fe6;
+  padding: 12px;
+  font-size: 1.35rem;
+}
+.Display .display-container .display-body .content-items-container .content-item .kebab {
+  font-size: 1.25rem;
+  color: #222;
+}
+.Display .display-container .display-body .content-items-container .content-item .kebab-container {
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.Display .display-container .display-body .content-items-container .content-item .kebab-container ul li {
+  transition: 0.2s;
+  list-style: none;
+  padding: 7px 15px;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+  font-text-align: center;
+}
+.Display .display-container .display-body .content-items-container .content-item .kebab-container ul li:hover {
+  background-color: rgba(0, 0, 0, 0.0274509804);
+}
+.Display .display-container .display-body .content-items-container .content-item .content-details {
+  width: 0;
+  margin-left: 20px;
+  flex: 1;
+}
+.Display .display-container .display-body .content-items-container .content-item .content-details span.content-title {
+  max-width: 85%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 350;
+}
+.Display .display-container .display-body .content-items-container .content-item .content-details .details-group {
+  margin-top: 5px;
+  display: flex;
+}
+.Display .display-container .display-body .content-items-container .content-item .content-details .details-group .content-date {
+  display: flex;
 }/*# sourceMappingURL=Display.css.map */
