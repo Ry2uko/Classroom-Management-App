@@ -38,7 +38,7 @@ const Navigation = ({ handleLogout }) => {
               <span>Classroom</span>
             </NavLink>
           </div>
-          <div className="navbar-item">
+          <div className="navbar-item school">
             <NavLink to="/school">
               <i className="fa-solid fa-school-flag"></i>
               <span>School</span>

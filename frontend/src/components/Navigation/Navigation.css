@@ -138,6 +138,9 @@ body, html, #root {
   width: 100%;
   padding: 15px 0;
 }
+.Navigation .navbar-menu .navbar-item.school a.active {
+  color: #167f24 !important;
+}
 .Navigation .navbar-menu .navbar-item a, .Navigation .navbar-menu .navbar-item button#signout-btn {
   cursor: pointer;
   text-decoration: none;

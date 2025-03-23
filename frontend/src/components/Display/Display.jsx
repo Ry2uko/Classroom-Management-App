@@ -1,13 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 import { LoginContext } from '../../contexts/LoginContext';
+import { useNavigate } from 'react-router';
 import './Display.css';
 
-const Display = ({ displayType = 'content', displayData, mode='display', theme }) => {
+const Display = ({ displayType='content', displayData, mode='display', displayContext='course', theme }) => {
   const [searchVal, setSearchVal] = useState('');
   const [activeFilter, setActiveFilter] = useState(0);
   const [kebabStatus, setKebabStatus] = useState({ 1: false, 2: false, 3: false });
   const { loginType } = useContext(LoginContext);
 
+  const navigate = useNavigate();
   const displayTheme = theme || loginType; // override theme
 
   // Display types: content, student, classroom
@@ -41,6 +43,20 @@ const Display = ({ displayType = 'content', displayData, mode='display', theme }
     setSearchVal(e.target.value);
   };
 
+  const handleCreate = () => {
+    if (displayType ==='classroom') {
+      navigate('/r/create');
+    } else if (displayType === 'content') {
+      if (displayContext === 'school') {
+        navigate('/c/create?t=school');
+      } else if (displayContext === 'course') {
+        navigate('/c/create?t=course');
+      } else if (displayContext === 'classroom') {
+        navigate('/c/create?t=classroom');
+      }
+    }
+  }
+
   return (
     <div className="Display">
       <div className={`search-bar-container ${mode}`}>
@@ -67,8 +83,8 @@ const Display = ({ displayType = 'content', displayData, mode='display', theme }
             }
           </div>
           {
-            (loginType !== 'student' && mode === 'display') && (
-              <button type="button" className={`create-btn ${displayTheme}`}>
+            ((loginType !== 'student' && mode === 'display') || (loginType !== 'student' && mode !== 'display' && displayType === 'classroom')) && (
+              <button type="button" className={`create-btn ${displayTheme}`} onClick={handleCreate}>
                 <i className="fa-solid fa-plus"></i>
               </button>
             )

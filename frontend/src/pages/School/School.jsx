@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import Display from '../../components/Display/Display';
+import { useNavigate } from 'react-router';
 import './School.css';
 
 const School = ({ user, fetchUserSessionData }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [newsIndex, setNewsIndex] = useState(0);
+
+  const navigate = useNavigate();
 
   const schoolContent = [
     {
@@ -57,7 +60,7 @@ const School = ({ user, fetchUserSessionData }) => {
               <div className="btn-block-group">
                 <div className="wrapper">
                   <div className="btn-wrapper">
-                    <button type="button" className="dir-btn">
+                    <button type="button" className="dir-btn" onClick={() => navigate('/school/f/prayers')}>
                       <i className="fa-solid fa-hands-praying"></i>
                     </button>
                     <span className="dir-title">
@@ -65,7 +68,7 @@ const School = ({ user, fetchUserSessionData }) => {
                     </span>
                   </div>
                   <div className="btn-wrapper">
-                    <button type="button" className="dir-btn">
+                    <button type="button" className="dir-btn" onClick={() => navigate('/school/f/vision-mission')}>
                       <i className="fa-solid fa-bullseye"></i>
                     </button>
                     <span className="dir-title">
@@ -73,7 +76,7 @@ const School = ({ user, fetchUserSessionData }) => {
                     </span>
                   </div>
                   <div className="btn-wrapper">
-                    <button type="button" className="dir-btn">
+                    <button type="button" className="dir-btn" onClick={() => navigate('/school/f/about')}>
                       <i className="fa-solid fa-star"></i>
                     </button>
                     <span className="dir-title">
@@ -81,7 +84,7 @@ const School = ({ user, fetchUserSessionData }) => {
                     </span>
                   </div>
                   <div className="btn-wrapper">
-                    <button type="button" className="dir-btn">
+                    <button type="button" className="dir-btn" onClick={() => navigate('/school/f/chart')}>
                       <i className="fa-solid fa-sitemap"></i>
                     </button>
                     <span className="dir-title">
@@ -89,7 +92,7 @@ const School = ({ user, fetchUserSessionData }) => {
                     </span>
                   </div>
                   <div className="btn-wrapper">
-                    <button type="button" className="dir-btn">
+                    <button type="button" className="dir-btn" onClick={() => navigate('/school/f/hymn')}>
                       <i className="fa-solid fa-music"></i>
                     </button>
                     <span className="dir-title">
@@ -189,7 +192,7 @@ const School = ({ user, fetchUserSessionData }) => {
               </div>
               <div className="display-block">
                 <div className="display-wrapper">
-                  <Display displayType='content' displayData={schoolContent} theme='student' />
+                  <Display displayType='content' displayData={schoolContent} theme='student' displayContext='school' />
                 </div>
               </div>
             </div>

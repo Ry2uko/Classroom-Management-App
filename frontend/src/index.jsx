@@ -16,3 +16,8 @@ ReactDOM.createRoot(root).render(
     </ClassroomProvider>
   </LoginProvider>
 );
+
+// /c -> content
+// /u -> user
+// /r -> clasroom
+// /l -> course

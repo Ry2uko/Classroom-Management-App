@@ -817,6 +817,7 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
     .date-container
       display: flex
       align-items: center
+
       .date-text
         color: #464646
         font:
@@ -826,6 +827,41 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
 
       .admin-btn-group
         margin-left: 15px
+        position: relative
+
+        .dropdown-container
+          position: absolute
+          background-color: #fff
+          top: 48px
+          z-index: 99
+          right: 65px
+          border-radius: 0.2rem
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
+
+          .dd-list
+            display: flex
+            flex-direction: column
+            
+            .dd-list-item
+              text-decoration: none
+              transition: 0.2s
+              white-space: nowrap
+              list-style: none
+              padding: 10px 18px
+              color: #0d182a
+              transition: 0.15s ease-out
+              cursor: pointer
+              font:
+                family: $ff-nunito
+                size: 1.2rem
+                text-align: center
+
+              &:hover
+                background-color: #00000007
+              
+              i
+                margin-right: 7px
+                min-width: 25px
 
       .topbar-btn
         background-color: #fff

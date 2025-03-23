@@ -897,6 +897,40 @@ body, html, #root {
 }
 .Home .TopBar .date-container .admin-btn-group {
   margin-left: 15px;
+  position: relative;
+}
+.Home .TopBar .date-container .admin-btn-group .dropdown-container {
+  position: absolute;
+  background-color: #fff;
+  top: 48px;
+  z-index: 99;
+  right: 65px;
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.Home .TopBar .date-container .admin-btn-group .dropdown-container .dd-list {
+  display: flex;
+  flex-direction: column;
+}
+.Home .TopBar .date-container .admin-btn-group .dropdown-container .dd-list .dd-list-item {
+  text-decoration: none;
+  transition: 0.2s;
+  white-space: nowrap;
+  list-style: none;
+  padding: 10px 18px;
+  color: #0d182a;
+  transition: 0.15s ease-out;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+  font-text-align: center;
+}
+.Home .TopBar .date-container .admin-btn-group .dropdown-container .dd-list .dd-list-item:hover {
+  background-color: rgba(0, 0, 0, 0.0274509804);
+}
+.Home .TopBar .date-container .admin-btn-group .dropdown-container .dd-list .dd-list-item i {
+  margin-right: 7px;
+  min-width: 25px;
 }
 .Home .TopBar .date-container .topbar-btn {
   background-color: #fff;

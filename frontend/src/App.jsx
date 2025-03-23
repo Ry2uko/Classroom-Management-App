@@ -96,6 +96,7 @@ const App = () => {
             <School user={user} fetchUserSessionData={fetchUserSessionData} />
           </ProtectedRoute>
         } />
+
         {/* Content System */}
         <Route path="/c/create" element={
           <ProtectedRoute>
@@ -118,16 +119,89 @@ const App = () => {
           </ProtectedRoute>
         } />
 
+        <Route path="/courses" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
+          </ProtectedRoute>
+        }>
+        </Route>
+        
+        { /* NOT FINISHED */ }
+        <Route path="/calendar" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
+          </ProtectedRoute>
+        }>
+        </Route>
         <Route path="/attendance" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
-            <Attendance user={user} fetchUserSessionData={fetchUserSessionData} />
+            {/* <Attendance user={user} fetchUserSessionData={fetchUserSessionData} /> */}
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
           </ProtectedRoute>
         } />
+        <Route path="/schedule" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            {/* <Attendance user={user} fetchUserSessionData={fetchUserSessionData} /> */}
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } />
+        <Route path="/announcements" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            {/* <Attendance user={user} fetchUserSessionData={fetchUserSessionData} /> */}
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } />
+        <Route path="/school/f/:feature" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            {/* <Attendance user={user} fetchUserSessionData={fetchUserSessionData} /> */}
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } />
+
         <Route path="*" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
-            <h1>Error 404 Not Found</h1>
+            <div className="not-found-wrapper">
+              <div className="gear-wrapper">
+                <div className="gears" id="two-gears">
+                  <div className="gears-container">
+                    <div className="gear-rotate"></div>
+                    <div className="gear-rotate-left"></div>
+                  </div>
+                </div>
+              </div>
+              <h1>404 Not Found :(</h1>
+            </div>
           </ProtectedRoute>
         } />
       </Routes>

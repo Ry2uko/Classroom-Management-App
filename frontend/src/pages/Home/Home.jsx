@@ -129,7 +129,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                 <button type="button" className="close-modal" onClick={closeModal}>
                   <i className="fa-solid fa-times"></i>
                 </button>
-                <Display displayType='classroom' displayData={testContent} mode="select" />
+                <Display displayType="classroom" displayData={testContent} mode="select" />
               </div>
             </Modal> 
           )}
@@ -234,7 +234,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
               <div className="dblock attendance">
                 <div className="dblock-header">
                   <h5>Today's Attendance</h5>
-                  <Link to="/" className="header-btn">
+                  <Link to="/attendance" className="header-btn">
                     View Record <i className="fa-solid fa-chevron-right"></i>
                   </Link>
                 </div>
@@ -247,7 +247,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
               <div className="dblock announcements">
                 <div className="dblock-header">
                   <h5>Announcements</h5>
-                  <Link to="/" className="header-btn">
+                  <Link to="/announcements" className="header-btn">
                     View all <i className="fa-solid fa-chevron-right"></i>
                   </Link>
                 </div>
@@ -271,7 +271,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
               <div className="dblock courses">
                 <div className="dblock-header">
                   <h5>Courses</h5>
-                  <Link to="/" className="header-btn">
+                  <Link to="/courses" className="header-btn">
                     View All <i className="fa-solid fa-chevron-right"></i>
                   </Link>
                 </div>
@@ -343,7 +343,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                 <h4>Quick Links</h4>
                 <div className="qlinks-items-container qlinks-grid">
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/courses" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-lines-leaning"></i>
                       </div>
@@ -354,7 +354,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/school" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-school"></i>
                       </div>
@@ -365,7 +365,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/announcements" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-bullhorn"></i>
                       </div>
@@ -376,7 +376,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/schedule" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-clock"></i>
                       </div>
@@ -387,7 +387,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/calendar" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-calendar"></i>
                       </div>
@@ -398,7 +398,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/announcement" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-bullhorn"></i>
                       </div>
@@ -409,7 +409,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/l/create" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-lines-leaning"></i>
                       </div>
@@ -420,7 +420,7 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     </Link>
                   </div>
                   <div className="qlinks-card">
-                    <Link to="/" className="qlinks-text">
+                    <Link to="/u/create" className="qlinks-text">
                       <div className="icon-container">
                         <i className="fa-solid fa-user-plus"></i>
                       </div>
@@ -506,13 +506,13 @@ const MainContent = ({ user, userClassroomData, coursesData }) => {
         <div className="qlinks-items-container">
           <div className="qlinks-row">
             <div className="qlinks-card red">
-              <Link to="/" className="qlinks-text">
+              <Link to="/announcements" className="qlinks-text">
                 <i className="fa-solid fa-bullhorn"></i>
                 <span>Announcements</span>
               </Link>
             </div>
             <div className="qlinks-card blue">
-              <Link to="/" className="qlinks-text">
+              <Link to="/schedule" className="qlinks-text">
                 <i className="fa-regular fa-clock"></i>
                 <span>Schedule</span>
               </Link>
@@ -764,6 +764,7 @@ const ProfileContent = ({ user }) => (
 
 /* TopBar */
 const TopBar = () => {
+  const [isCreateDropdownOpen, setIsCreateDropdownOpen] = useState(false);
   const { loginType } = useContext(LoginContext);
 
   const handleSearch = () => {
@@ -803,15 +804,25 @@ const TopBar = () => {
         <span className="date-text">{dateText}</span>
         {loginType !== 'student' && (
           <div className="admin-btn-group">
-            <div className="dropdown-container">
-              <ul>
-                <li>Copy Link</li>
-                { loginType === 'admin' && (
-                  <li>Edit Content</li>
-                ) }
-              </ul>
-            </div>
-            <button type="button" className="topbar-btn">
+            { isCreateDropdownOpen && (
+              <div className="dropdown-container">
+                <div className="dd-list">
+                  <Link to="/c/create?t=course" className="dd-list-item">
+                    <i className="fa-solid fa-book-bookmark"></i> Course Material
+                  </Link>
+                  <Link to="/c/create?t=classroom" className="dd-list-item">
+                    <i className="fa-solid fa-chalkboard"></i> Classroom Material
+                  </Link>
+                  <Link to="/c/create?t=school" className="dd-list-item">
+                    <i className="fa-solid fa-school"></i> School Material
+                  </Link>
+                  <Link to="/c/create?t=announcement" className="dd-list-item">
+                    <i className="fa-solid fa-bullhorn"></i> Announcement
+                  </Link>
+                </div>
+              </div>
+            ) }
+            <button type="button" className="topbar-btn" onClick={() => setIsCreateDropdownOpen(!isCreateDropdownOpen)}>
               <i className="fa-solid fa-plus"></i>
             </button>
             <button type="button" className="topbar-btn">

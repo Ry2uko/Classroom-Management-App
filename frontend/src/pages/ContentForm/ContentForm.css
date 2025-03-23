@@ -449,7 +449,7 @@ body, html, #root {
   font-family: "Merriweather Sans", serif;
   font-size: 1.2rem;
 }
-.ContentForm .main-container .sidebar .btn-group button#cancel-edit {
+.ContentForm .main-container .sidebar .btn-group button#cancel-edit, .ContentForm .main-container .sidebar .btn-group button#cancel-create {
   background-color: #fff;
   border: 1px solid #ccc;
   color: #111;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import './ContentForm.css';
@@ -205,7 +205,7 @@ const Attachments = ({ openModal, attachments, setAttachments }) => {
             {
               attachment?.type == 'link' ? (
                 <>
-                  <button type="button" className="cancel-attachment">
+                  <button type="button" className="cancel-attachment" onClick={() => handleRemoveAttachment(index)}>
                     <i className="fa-solid fa-xmark"></i>
                   </button>
                   <div className="attachment-icon">
@@ -267,6 +267,8 @@ const Sidebar = ({ category, mode }) => {
 }
 
 const CourseMaterialSidebar = ({ mode }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="CourseMaterialSidebar sidebar">
       <div className="sidebar-form">
@@ -297,7 +299,7 @@ const CourseMaterialSidebar = ({ mode }) => {
         {
           mode === 'edit' ? (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-edit" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="save-content">
@@ -306,7 +308,7 @@ const CourseMaterialSidebar = ({ mode }) => {
             </>
           ) : (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-create" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="create-content">
@@ -322,6 +324,8 @@ const CourseMaterialSidebar = ({ mode }) => {
 }
 
 const SchoolMaterialSidebar = ({ mode }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="CourseMaterialSidebar sidebar">
       { mode === 'edit' && (
@@ -340,7 +344,7 @@ const SchoolMaterialSidebar = ({ mode }) => {
         {
           mode === 'edit' ? (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-edit" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="save-content">
@@ -349,7 +353,7 @@ const SchoolMaterialSidebar = ({ mode }) => {
             </>
           ) : (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-create" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="create-content">
@@ -364,6 +368,8 @@ const SchoolMaterialSidebar = ({ mode }) => {
 }
 
 const ClassroomMaterialSidebar = ({ mode }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="CourseMaterialSidebar sidebar">
       <div className="sidebar-form">
@@ -395,7 +401,7 @@ const ClassroomMaterialSidebar = ({ mode }) => {
         {
           mode === 'edit' ? (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-edit" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="save-content">
@@ -404,7 +410,7 @@ const ClassroomMaterialSidebar = ({ mode }) => {
             </>
           ) : (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-create" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="create-content">
@@ -419,6 +425,8 @@ const ClassroomMaterialSidebar = ({ mode }) => {
 }
 
 const AnnouncementSidebar = ({ mode }) => {
+  const navigate = useNavigate();
+  
   return (
     <div className="CourseMaterialSidebar sidebar">
       <div className="sidebar-form">
@@ -468,7 +476,7 @@ const AnnouncementSidebar = ({ mode }) => {
         {
           mode === 'edit' ? (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-edit" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="save-content">
@@ -477,7 +485,7 @@ const AnnouncementSidebar = ({ mode }) => {
             </>
           ) : (
             <>
-              <button type="button" id="cancel-edit">
+              <button type="button" id="cancel-create" onClick={() => navigate(-1)}>
                 Cancel
               </button>
               <button type="button" id="create-content">
