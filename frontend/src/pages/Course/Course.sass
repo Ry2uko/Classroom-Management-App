@@ -1,0 +1,128 @@
+@import '../../App'
+
+.Course
+  display: flex
+  background-color: $bg-alt
+  border-top-left-radius: 2rem
+  border-bottom-left-radius: 2rem
+  padding: 1.5rem 0
+  width: 100%
+  height: 100%
+  overflow-y: auto
+  position: relative
+
+  .main-container
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding: 0.5rem 2rem
+    width: 100%
+    height: 100%
+
+    .course-banner
+      width: 90%
+      height: 275px
+      margin-bottom: 1.5rem
+      position: relative
+
+      .kebab
+        font-size: 1.8rem
+        position: absolute
+        top: 0
+        right: 0
+        color: #fff
+        border: none
+        background-color: rgba(0,0,0,0)
+        z-index: 3
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7)
+        padding: 5px
+        margin: 10px 22px
+        cursor: pointer
+
+      .kebab-container
+        position: absolute
+        z-index: 10
+        top: 55px
+        right: 15px
+        background-color: #fff
+        border-radius: 0.2rem
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px
+        z-index: 6
+
+        ul
+          li
+            transition: 0.2s
+            list-style: none
+            padding: 10px 20px
+            cursor: pointer
+            font:
+              family: $ff-nunito
+              size: 1.3rem
+              text-align: center
+
+            &:hover
+              background-color: #00000007
+
+      .title-group
+        display: flex
+        flex-direction: column
+        position: absolute
+        bottom: 0
+        left: 0
+        margin: 25px 25px
+        z-index: 3
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7)
+
+        span
+          color: #fff
+
+          &.course-title
+            width: 80%
+            display: -webkit-box
+            -webkit-line-clamp: 2
+            -webkit-box-orient: vertical
+            overflow: hidden
+            text-overflow: ellipsis
+            font:
+              family: $ff-merriweather-sans
+              size: 2.1rem
+              weight: 400
+          
+          &.course-strand
+            margin-top: 5px
+            font:
+              family: $ff-nunito
+              size: 1.7rem
+              weight: 400
+
+      .course-bg
+        width: 100%
+        height: 100%
+        position: relative
+        border-radius: 0.45rem
+
+        &::after
+          content: ""
+          position: absolute
+          border-radius: inherit
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+          background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 60%)
+
+        img
+          position: absolute
+          width: 100%
+          height: 100%
+          object-fit: cover
+          border-radius: inherit
+
+    .display-block
+      display: flex
+      width: 100%
+      justify-content: center
+      
+      .display-wrapper
+        width: 90%
+        height: fit-content

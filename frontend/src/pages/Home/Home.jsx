@@ -163,9 +163,9 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                     <Link to="/" className="details-btn">
                       View Classroom
                     </Link>
-                    <Link to="/" className="details-btn" onClick={openModal}>
+                    <button type="button" className="details-btn" onClick={openModal}>
                       Switch Classroom
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -254,15 +254,15 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                 <div className="dblock-body">
                   <div className="announcement-items-container">
                     <div className="announcement-item">
-                      <span className="announcement-title">SGA 61st Founding Anniversary</span>
+                      <Link to="/announcements" className="announcement-title">SGA 61st Founding Anniversary</Link>
                       <span className="announcement-date">March 18, 2025</span>
                     </div>
                     <div className="announcement-item">
-                      <span className="announcement-title">Supreme Student Council Officers S.Y. 2025-2026</span>
+                      <Link to="/announcements" className="announcement-title">Supreme Student Council Officers S.Y. 2025-2026</Link>
                       <span className="announcement-date">March 15, 2024</span>
                     </div>
                     <div className="announcement-item">
-                      <span className="announcement-title">Sports Tryout</span>
+                      <Link to="/announcements" className="announcement-title">Sports Tryout</Link>
                       <span className="announcement-date">March 4, 2024</span>
                     </div>
                   </div>

@@ -140,7 +140,44 @@ const Display = ({ displayType='content', displayData, mode='display', displayCo
                         <ul>
                           <li>Copy Link</li>
                           {loginType !== 'student' && (
-                            <li>Edit Content</li>
+                            <li>Edit Course</li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  <div className="title-group">
+                    <span className="course-title">General Chemistry 2</span>
+                    <span className="course-strand">STEM</span>
+                  </div>
+                </div>
+                <div className="course-body">
+                  <div className="details-group">
+                    <span className="detail-info">
+                      <i className="fa-regular fa-folder"></i> 8 Items
+                    </span>
+                    <span className="detail-info">
+                      <i className="fa-regular fa-circle-user"></i> Ms Juvie
+                    </span>
+                  </div>
+                  <button type="button" className={`view-course-btn ${displayTheme}`}>
+                    <i className="fa-solid fa-angle-right"></i>
+                  </button>
+                </div>
+              </div>
+              <div className="course-item" key="1">
+                <div className="course-header">
+                  <div className="course-bg">
+                    <img src="/images/course-bg.png" />
+                  </div>
+                    <button type="button" className="kebab" onClick={() => openKebab(1)}>
+                      <i className="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                    {kebabStatus[1] && (
+                      <div className="kebab-container">
+                        <ul>
+                          <li>Copy Link</li>
+                          {loginType !== 'student' && (
+                            <li>Edit Course</li>
                           )}
                         </ul>
                       </div>

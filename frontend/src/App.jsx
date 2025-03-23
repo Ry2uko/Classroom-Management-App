@@ -9,6 +9,9 @@ import Login from './pages/Login/Login';
 import ContentForm from './pages/ContentForm/ContentForm';
 import Content from './pages/Content/Content';
 import Attendance from './pages/Attendance/Attendance';
+import Courses from './pages/Courses/Courses';
+import Course from './pages/Course/Course';
+import Classroom from './pages/Classroom/Classroom';
 import School from './pages/School/School';
 import axiosInstance from './services/axiosInstance';
 import { LoginContext } from './contexts/LoginContext';
@@ -119,18 +122,25 @@ const App = () => {
           </ProtectedRoute>
         } />
 
+        <Route path="/classroom" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <Classroom user={user} fetchUserSessionData={fetchUserSessionData} />
+          </ProtectedRoute>
+        } />
+
         <Route path="/courses" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
-            <div className="meow-wrapper">
-              <div className="meow">
-                <img src="/images/meow.png"></img>
-              </div>
-            </div>
+            <Courses user={user} fetchUserSessionData={fetchUserSessionData} />
           </ProtectedRoute>
-        }>
-        </Route>
-        
+        } />
+        <Route path="/course/:id" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <Course user={user} fetchUserSessionData={fetchUserSessionData} />
+          </ProtectedRoute>
+        } />
         { /* NOT FINISHED */ }
         <Route path="/calendar" element={
           <ProtectedRoute>
@@ -191,16 +201,18 @@ const App = () => {
         <Route path="*" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />
-            <div className="not-found-wrapper">
-              <div className="gear-wrapper">
-                <div className="gears" id="two-gears">
-                  <div className="gears-container">
-                    <div className="gear-rotate"></div>
-                    <div className="gear-rotate-left"></div>
+            <div className="nf-page-wrapper">
+              <div className="not-found-wrapper">
+                <div className="gear-wrapper">
+                  <div className="gears" id="two-gears">
+                    <div className="gears-container">
+                      <div className="gear-rotate"></div>
+                      <div className="gear-rotate-left"></div>
+                    </div>
                   </div>
                 </div>
+                <h1>404 Not Found :(</h1>
               </div>
-              <h1>404 Not Found :(</h1>
             </div>
           </ProtectedRoute>
         } />

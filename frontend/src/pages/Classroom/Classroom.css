@@ -1,0 +1,619 @@
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+}
+
+.parent-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.not-found-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+  height: fit-content;
+  align-items: center;
+}
+.not-found-wrapper h1 {
+  color: #454545;
+  font-family: "Merriweather Sans", serif;
+  font-size: 2rem;
+}
+
+.meow-wrapper {
+  display: flex;
+  background-color: #e8eaee;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.meow-wrapper .meow {
+  width: 480px;
+  height: auto;
+}
+.meow-wrapper .meow img {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  animation: meowwww 3.5s ease-in-out forwards;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+@keyframes meowwww {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* https://cssloaders.github.io/ */
+.loader2 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: #239732;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: -38px -12px, -14px 0, 14px 0, 38px 0;
+  }
+  33% {
+    box-shadow: -38px 0px, -14px -12px, 14px 0, 38px 0;
+  }
+  66% {
+    box-shadow: -38px 0px, -14px 0, 14px -12px, 38px 0;
+  }
+  100% {
+    box-shadow: -38px 0, -14px 0, 14px 0, 38px -12px;
+  }
+}
+.loader {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.loader, .loader:before, .loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.75s infinite ease-in-out;
+}
+
+.loader {
+  color: #239732;
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+.loader.admin {
+  color: #006fe6;
+}
+
+.loader:before, .loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+.loader:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+
+.loader:after {
+  left: 3.5em;
+}
+
+@keyframes bblFadInOut {
+  box-shadow: 0 2.5em 0 -1.3em;
+  box-shadow: 0 2.5em 0 0;
+}
+/* https://codepen.io/LindsayMac/pen/MwrONL?editors=1100 */
+.gears-container {
+  width: 150px;
+  height: 150px;
+  transform: scale(0.9);
+  font-size: 24px;
+  padding: 9%;
+  position: relative;
+  margin: 0 auto;
+  top: 20px;
+  left: 20px;
+}
+
+.gear-rotate, .gear-rotate-left {
+  width: 2em;
+  height: 2em;
+  background: #454545;
+  position: absolute;
+  border-radius: 1em;
+}
+
+.gear-rotate {
+  top: 50%;
+  left: 50%;
+  margin-top: -1em;
+  margin-left: -1em;
+  animation: gear-rotate 1s linear infinite;
+}
+
+.gear-rotate-left {
+  top: 50%;
+  margin-top: -2.7em;
+  animation: gear-rotate-left 1.1s linear infinite;
+}
+
+.gear-rotate::before, .gear-rotate-left::before {
+  width: 2.8em;
+  height: 2.8em;
+  background: linear-gradient(0deg, transparent 39%, #454545 39%, #454545 61%, transparent 61%), linear-gradient(60deg, transparent 42%, #454545 42%, #454545 58%, transparent 58%), linear-gradient(120deg, transparent 42%, #454545 42%, #454545 58%, transparent 58%);
+  position: absolute;
+  content: "";
+  top: -0.4em;
+  left: -0.4em;
+  border-radius: 1.4em;
+}
+
+.gear-rotate::after, .gear-rotate-left::after {
+  width: 1em;
+  height: 1em;
+  background: #181818;
+  position: absolute;
+  content: "";
+  top: 0.5em;
+  left: 0.5em;
+  border-radius: 0.5em;
+}
+
+@keyframes gear-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-180deg);
+  }
+}
+@keyframes gear-rotate-left {
+  0% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(210deg);
+  }
+}
+.Classroom {
+  display: flex;
+  flex-direction: column;
+  background-color: #e8eaee;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  padding: 1.5rem 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  align-items: center;
+}
+.Classroom .loader {
+  margin-top: 1.5rem;
+}
+.Classroom .Modal {
+  position: relative;
+}
+.Classroom .Modal .wrapper {
+  padding: 1rem 0.5rem;
+  width: 900px;
+}
+.Classroom .Modal .wrapper button.close-modal {
+  background-color: inherit;
+  border: none;
+  padding: 5px;
+  position: absolute;
+  color: #252525;
+  cursor: pointer;
+  top: 0;
+  margin: 10px 15px;
+  right: 0;
+  font-size: 1.6rem;
+}
+.Classroom .main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 2rem;
+  width: 100%;
+  height: fit-content;
+  /* FIX LATER */
+  max-width: 1100px;
+  min-width: 1080px;
+}
+.Classroom .main-container > .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+  gap: 0 15px;
+}
+.Classroom .main-container > .row.display-block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.Classroom .main-container > .row.display-block .display-wrapper {
+  width: 90%;
+  height: fit-content;
+}
+.Classroom .dblock > .dblock-body {
+  padding: 15px 25px;
+}
+.Classroom .dblock > .dblock-header {
+  display: flex;
+  padding: 15px 25px;
+  border-bottom: 2px solid #e5e6e7;
+}
+.Classroom .dblock > .dblock-header .header-btn {
+  background-color: #CDCFD2;
+  color: #484848;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  padding: 3px 12px;
+  display: flex;
+  align-items: center;
+  font-family: "Merriweather Sans", serif;
+  font-size: 0.9rem;
+}
+.Classroom .dblock > .dblock-header .header-btn i {
+  font-size: 0.8rem;
+  margin-left: 5px;
+}
+.Classroom .dblock > .dblock-header h5 {
+  flex: 1;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+.Classroom .dblock.semi-full {
+  width: 700px;
+}
+.Classroom .dblock.full {
+  width: 100%;
+}
+.Classroom .dblock.announcements {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  width: 480px;
+}
+.Classroom .dblock.announcements .dblock-body {
+  padding: 0;
+  overflow-y: auto;
+}
+.Classroom .dblock.announcements .announcement-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Classroom .dblock.announcements .announcement-items-container.student .announcement-title {
+  color: #167f24;
+}
+.Classroom .dblock.announcements .announcement-items-container.student .announcement-title:hover {
+  color: #184c17;
+}
+.Classroom .dblock.announcements .announcement-items-container.admin .announcement-title {
+  color: #0060c6;
+}
+.Classroom .dblock.announcements .announcement-items-container.admin .announcement-title:hover {
+  color: #0152CC;
+}
+.Classroom .dblock.announcements .announcement-items-container .announcement-item {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 25px;
+  border-bottom: 1px solid #ccc;
+  transition: 0.15s;
+}
+.Classroom .dblock.announcements .announcement-items-container .announcement-item:last-child {
+  border-bottom: none;
+}
+.Classroom .dblock.announcements .announcement-items-container .announcement-item .announcement-title {
+  text-decoration: none;
+  line-break: loose;
+  max-width: 90%;
+  transition: 0.1s;
+  cursor: pointer;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 360;
+  font-size: 1.2rem;
+}
+.Classroom .dblock.announcements .announcement-items-container .announcement-item .announcement-title:hover {
+  text-decoration: underline;
+}
+.Classroom .dblock.announcements .announcement-items-container .announcement-item span.announcement-date {
+  color: #555555;
+  margin-top: 5px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 420;
+}
+.Classroom .dblock.courses {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  flex: 1;
+}
+.Classroom .dblock.courses .dblock-body {
+  padding: 0;
+}
+.Classroom .dblock.courses .course-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Classroom .dblock.courses .course-items-container.student .course-item:hover {
+  background-color: rgba(0, 0, 0, 0.0196078431);
+}
+.Classroom .dblock.courses .course-items-container.student .course-item:hover .course-btn-icon {
+  color: #1b7d19;
+}
+.Classroom .dblock.courses .course-items-container.student .course-btn-icon {
+  color: #184c17;
+}
+.Classroom .dblock.courses .course-items-container.student .course-icon {
+  background-color: #B2DBB7;
+  color: #239732;
+}
+.Classroom .dblock.courses .course-items-container.admin .course-item:hover {
+  background-color: rgba(0, 0, 0, 0.0196078431);
+}
+.Classroom .dblock.courses .course-items-container.admin .course-item:hover .course-btn-icon {
+  color: #0152CC;
+}
+.Classroom .dblock.courses .course-items-container.admin .course-btn-icon {
+  color: #172B4C;
+}
+.Classroom .dblock.courses .course-items-container.admin .course-icon {
+  background-color: #B2D3F8;
+  color: #006fe6;
+}
+.Classroom .dblock.courses .course-items-container .course-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 22px 25px;
+  transition: 0.15s;
+  cursor: pointer;
+}
+.Classroom .dblock.courses .course-items-container .course-item:last-child {
+  border-bottom: none;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-icon {
+  border-radius: 0.5rem;
+  padding: 12px;
+  font-size: 1.35rem;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-btn-icon {
+  font-size: 1.25rem;
+  transition: 0.15s;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-details {
+  width: 0;
+  margin-left: 20px;
+  flex: 1;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-details span.course-title {
+  max-width: 85%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 350;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-details .details-group {
+  margin-top: 5px;
+  display: flex;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-details .details-group .detail-info {
+  margin-right: 15px;
+  color: #1a1a1a;
+  font-family: "Nunito", serif;
+  font-size: 1rem;
+}
+.Classroom .dblock.courses .course-items-container .course-item .course-details .details-group .detail-info i {
+  margin-right: 2px;
+}
+.Classroom .dblock.classroom {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  padding-inline: 15px;
+}
+.Classroom .dblock.classroom .classroom-icon {
+  border-radius: 50%;
+  padding: 25px;
+  font-size: 3rem;
+}
+.Classroom .dblock.classroom .classroom-icon.admin {
+  color: #006fe6;
+  background-color: #B2D3F8;
+}
+.Classroom .dblock.classroom .classroom-icon.student {
+  color: #239732;
+  background-color: #B2DBB7;
+}
+.Classroom .dblock.classroom .classroom-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  font-family: "Merriweather Sans", serif;
+}
+.Classroom .dblock.classroom .classroom-details span.classroom-name {
+  font-size: 1.5rem;
+}
+.Classroom .dblock.classroom .classroom-details span.classroom-adviser, .Classroom .dblock.classroom .classroom-details span.classroom-students {
+  font-size: 1.1rem;
+  margin-right: 5px;
+}
+.Classroom .dblock.classroom .classroom-details span.classroom-adviser i, .Classroom .dblock.classroom .classroom-details span.classroom-students i {
+  margin-right: 5px;
+}
+.Classroom .dblock.classroom .details-group {
+  margin-top: 10px;
+  display: flex;
+  gap: 0 20px;
+  font-size: 1rem;
+  font-weight: 350;
+}
+.Classroom .dblock.classroom .btn-group {
+  display: flex;
+  gap: 0 15px;
+  margin-top: 22px;
+}
+.Classroom .dblock.classroom .btn-group .details-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  border: 1px solid rgb(152, 152, 152);
+  padding: 8px 15px;
+  color: #000;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  background-color: #fff;
+  transition: 0.15s ease-out;
+  font-family: "Nunito", serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.Classroom .dblock.classroom .btn-group .details-btn:hover {
+  background-color: #f5f5f5;
+}
+.Classroom .dblock.classroom .btn-group .details-btn i {
+  margin-left: 5px;
+}
+.Classroom .dblock.calendar {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  padding: 15px 10px;
+  height: 256px;
+}
+.Classroom .dblock.students {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  flex: 1;
+  height: 400px;
+  overflow: hidden;
+}
+.Classroom .dblock.students .dblock-body {
+  padding: 0;
+}
+.Classroom .dblock.students .student-items-container {
+  display: flex;
+  flex-direction: column;
+}
+.Classroom .dblock.students .student-items-container .student-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: 0.1s;
+  border-bottom: 1px solid #ccc;
+}
+.Classroom .dblock.students .student-items-container .student-item:last-child {
+  border-bottom: none;
+}
+.Classroom .dblock.students .student-items-container .student-item:hover {
+  background-color: rgba(0, 0, 0, 0.0196078431);
+}
+.Classroom .dblock.students .student-items-container .student-item .student-icon {
+  height: 55px;
+  width: 55px;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-details {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  padding-right: 30px;
+  flex: 1;
+  font-family: "Merriweather Sans", serif;
+  font-weight: 350;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-details span {
+  max-width: 100%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-details span.student-name {
+  font-size: 1.25rem;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-details span.student-strand {
+  font-size: 1rem;
+  color: #333333;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-attendance .ping {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-attendance .ping.present {
+  background-color: #4CAF50;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-attendance .ping.late {
+  background-color: #FFC107;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-attendance .ping.absent {
+  background-color: #F44336;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-attendance .ping.excused {
+  background-color: #2196F3;
+}
+.Classroom .dblock.students .student-items-container .student-item .student-attendance .ping.not-marked {
+  background-color: #9E9E9E;
+}
+.Classroom .dblock.attendance {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.Classroom .dblock.attendance .dblock-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}/*# sourceMappingURL=Classroom.css.map */

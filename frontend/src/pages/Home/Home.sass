@@ -394,7 +394,7 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
     > .row
       display: flex
       justify-content: space-between
-      margin-bottom: 1rem
+      margin-bottom: 1.1rem
       gap: 0 15px
 
   .dblock
@@ -463,8 +463,9 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
           &:last-child
             border-bottom: none
 
-          span.announcement-title
+          .announcement-title
             line-break: loose
+            text-decoration: none
             color: $theme2-text
             max-width: 90%
             transition: 0.1s
@@ -476,8 +477,9 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
             
             &:hover
               color: #0152CC
+              text-decoration: underline
 
-          span.announcement-date
+          .announcement-date
             color: #555555
             margin-top: 5px
             font:
