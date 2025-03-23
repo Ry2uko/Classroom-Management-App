@@ -84,12 +84,8 @@ body, html, #root {
 }
 
 @keyframes bblFadInOut {
-  0%, 80%, 100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
-  }
+  box-shadow: 0 2.5em 0 -1.3em;
+  box-shadow: 0 2.5em 0 0;
 }
 .ContentForm {
   display: flex;
@@ -104,13 +100,78 @@ body, html, #root {
 .ContentForm .loader {
   margin-top: 1.5rem;
 }
-
-.main-container {
+.ContentForm .Modal .wrapper {
+  width: 400px;
+  padding: 15px 5px;
+}
+.ContentForm .Modal .btn-group {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.ContentForm .Modal .btn-group button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #006fe6;
+  border: none;
+  cursor: pointer;
+  margin-inline: 10px;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.ContentForm .Modal .btn-group button.disabled {
+  color: #B5B6B7;
+  pointer-events: none;
+}
+.ContentForm .Modal .input-group {
+  height: 50px;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 1.5rem;
+}
+.ContentForm .Modal .input-group .input-text {
+  position: absolute;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid #b0b0b0;
+  padding: 0 20px;
+  transition: 0.2s ease;
+  z-index: 99;
+  font-family: "Nunito", serif;
+  font-size: 1.1rem;
+}
+.ContentForm .Modal .input-group .input-text:focus {
+  border-color: #282828;
+}
+.ContentForm .Modal .input-group .input-text:focus + .input-label, .ContentForm .Modal .input-group .input-text.active + .input-label {
+  top: 0;
+  left: -5px;
+  transform: translateY(-50%);
+  z-index: 99;
+  font-size: 1rem;
+  color: #282828;
+}
+.ContentForm .Modal .input-group .input-label {
+  background-color: #fff;
+  position: absolute;
+  transition: 0.2s ease;
+  margin: 0 20px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-family: "Nunito", serif;
+  font-size: 1.1rem;
+}
+.ContentForm .main-container {
   display: flex;
   width: 100%;
   height: 100%;
 }
-.main-container .form-container {
+.ContentForm .main-container .form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,12 +180,12 @@ body, html, #root {
   overflow-y: auto;
   flex: 1;
 }
-.main-container .form-container .header {
+.ContentForm .main-container .form-container .header {
   margin-top: 2rem;
   width: 80%;
   max-width: 800px;
 }
-.main-container .form-container .header h1 {
+.ContentForm .main-container .form-container .header h1 {
   display: flex;
   align-items: center;
   height: 50px;
@@ -132,7 +193,7 @@ body, html, #root {
   font-size: 2rem;
   font-weight: 500;
 }
-.main-container .form-container .header h1 .title-icon {
+.ContentForm .main-container .form-container .header h1 .title-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,7 +205,7 @@ body, html, #root {
   color: #006fe6;
   background-color: #99C5F5;
 }
-.main-container .form-container .content-form {
+.ContentForm .main-container .form-container .content-form {
   max-width: 800px;
   margin: 1rem 0;
   background-color: #fff;
@@ -154,35 +215,35 @@ body, html, #root {
   border-radius: 0.35rem;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.main-container .form-container .content-form .quill {
+.ContentForm .main-container .form-container .content-form .quill {
   width: 100%;
 }
-.main-container .form-container .content-form .quill .ql-toolbar {
+.ContentForm .main-container .form-container .content-form .quill .ql-toolbar {
   border-color: #b0b0b0;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
-.main-container .form-container .content-form .quill .ql-container {
+.ContentForm .main-container .form-container .content-form .quill .ql-container {
   border-color: #b0b0b0;
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-.main-container .form-container .content-form .quill .ql-container .ql-editor {
+.ContentForm .main-container .form-container .content-form .quill .ql-container .ql-editor {
   min-height: 180px;
   font-family: "Nunito", serif;
   font-size: 1.2rem;
 }
-.main-container .form-container .content-form .quill .ql-container .ql-editor ol {
+.ContentForm .main-container .form-container .content-form .quill .ql-container .ql-editor ol {
   padding-left: 0;
 }
-.main-container .form-container .content-form .input-group {
+.ContentForm .main-container .form-container .content-form .input-group {
   height: 50px;
   position: relative;
   width: 100%;
   background-color: #fff;
   margin-bottom: 1.5rem;
 }
-.main-container .form-container .content-form .input-group .input-text {
+.ContentForm .main-container .form-container .content-form .input-group .input-text {
   position: absolute;
   outline: none;
   width: 100%;
@@ -196,10 +257,10 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1.3rem;
 }
-.main-container .form-container .content-form .input-group .input-text:focus {
+.ContentForm .main-container .form-container .content-form .input-group .input-text:focus {
   border-color: #282828;
 }
-.main-container .form-container .content-form .input-group .input-text:focus + .input-label, .main-container .form-container .content-form .input-group .input-text.active + .input-label {
+.ContentForm .main-container .form-container .content-form .input-group .input-text:focus + .input-label, .ContentForm .main-container .form-container .content-form .input-group .input-text.active + .input-label {
   top: 0;
   left: -5px;
   transform: translateY(-50%);
@@ -207,7 +268,7 @@ body, html, #root {
   font-size: 1rem;
   color: #282828;
 }
-.main-container .form-container .content-form .input-group .input-label {
+.ContentForm .main-container .form-container .content-form .input-group .input-label {
   background-color: #fff;
   position: absolute;
   transition: 0.2s ease;
@@ -218,10 +279,10 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1.3rem;
 }
-.main-container .form-container .content-form .btn-group {
+.ContentForm .main-container .form-container .content-form .btn-group {
   margin-top: 1rem;
 }
-.main-container .form-container .content-form .btn-group button.form-btn {
+.ContentForm .main-container .form-container .content-form .btn-group button.form-btn {
   padding: 3px 15px;
   background-color: #fff;
   border-radius: 0.2rem;
@@ -233,20 +294,20 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1.2rem;
 }
-.main-container .form-container .content-form .btn-group button.form-btn:hover {
+.ContentForm .main-container .form-container .content-form .btn-group button.form-btn:hover {
   box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px;
   color: #000;
   border-color: #757575;
 }
-.main-container .form-container .content-form .btn-group button.form-btn i {
+.ContentForm .main-container .form-container .content-form .btn-group button.form-btn i {
   color: #212121;
   font-size: 1.1rem;
   margin-right: 8px;
 }
-.main-container .form-container .content-form .attachments-container {
+.ContentForm .main-container .form-container .content-form .attachments-container {
   margin-top: 1.5rem;
 }
-.main-container .form-container .content-form .attachments-container .attachment {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment {
   width: 100%;
   display: flex;
   position: relative;
@@ -256,7 +317,7 @@ body, html, #root {
   border: 1px solid #DADCE0;
   border-radius: 0.25rem;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-icon {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-icon {
   border-radius: 0.3rem;
   height: 100%;
   width: 40px;
@@ -264,11 +325,11 @@ body, html, #root {
   justify-content: center;
   align-items: center;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-icon i {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-icon i {
   color: #006fe6;
   font-size: 1.6rem;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
@@ -276,12 +337,12 @@ body, html, #root {
   flex: 1;
   font-family: "Nunito", serif;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row {
   display: flex;
   align-items: center;
   width: 100%;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row .file-progress-bar {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row .file-progress-bar {
   width: 85%;
   height: 3px;
   border-radius: 30px;
@@ -289,31 +350,31 @@ body, html, #root {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row .file-progress-bar .file-progress {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row .file-progress-bar .file-progress {
   width: 80%;
   background: #006fe6;
   border-radius: inherit;
   height: inherit;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title, .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title, .ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-title {
   margin-right: 5px;
   max-width: 60%;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-mimetype {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-mimetype {
   margin-left: 5px;
   color: #2a2a2a;
 }
-.main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment .attachment-main .row span.attachment-content {
   max-width: 300px;
   color: #2a2a2a;
 }
-.main-container .form-container .content-form .attachments-container .attachment button.cancel-attachment {
+.ContentForm .main-container .form-container .content-form .attachments-container .attachment button.cancel-attachment {
   position: absolute;
   right: 0;
   top: 50%;
@@ -325,7 +386,7 @@ body, html, #root {
   border: none;
   font-size: 1.3rem;
 }
-.main-container .sidebar {
+.ContentForm .main-container .sidebar {
   background-color: #fff;
   border-radius: 2rem;
   padding: 2.5rem 1.5rem;
@@ -337,15 +398,15 @@ body, html, #root {
   height: 100%;
   font-family: "Merriweather Sans", serif;
 }
-.main-container .sidebar .sidebar-form .input-group {
+.ContentForm .main-container .sidebar .sidebar-form .input-group {
   margin-bottom: 1.5rem;
 }
-.main-container .sidebar .sidebar-form .input-label {
+.ContentForm .main-container .sidebar .sidebar-form .input-label {
   margin-bottom: 8px;
   font-family: "Merriweather Sans", serif;
   font-size: 1.3rem;
 }
-.main-container .sidebar .sidebar-form .input-select {
+.ContentForm .main-container .sidebar .sidebar-form .input-select {
   background-color: #fff;
   width: 100%;
   border: 1px solid #a6a6a6;
@@ -355,28 +416,28 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1.2rem;
 }
-.main-container .sidebar .btn-group {
+.ContentForm .main-container .sidebar .btn-group {
   margin-top: auto;
   align-self: end;
   gap: 15px;
   display: flex;
 }
-.main-container .sidebar .btn-group.block {
+.ContentForm .main-container .sidebar .btn-group.block {
   width: 100%;
   flex-direction: column;
 }
-.main-container .sidebar .btn-group.block button {
+.ContentForm .main-container .sidebar .btn-group.block button {
   background-color: #fff;
 }
-.main-container .sidebar .btn-group.block button#archive-content {
+.ContentForm .main-container .sidebar .btn-group.block button#archive-content {
   color: #333;
   border-color: #666;
 }
-.main-container .sidebar .btn-group.block button#delete-content {
+.ContentForm .main-container .sidebar .btn-group.block button#delete-content {
   color: #dc1414;
   border-color: #dc1414;
 }
-.main-container .sidebar .btn-group button {
+.ContentForm .main-container .sidebar .btn-group button {
   min-width: 100px;
   background-color: #006fe6;
   color: #fff;
@@ -388,81 +449,14 @@ body, html, #root {
   font-family: "Merriweather Sans", serif;
   font-size: 1.2rem;
 }
-.main-container .sidebar .btn-group button#cancel-edit {
+.ContentForm .main-container .sidebar .btn-group button#cancel-edit {
   background-color: #fff;
   border: 1px solid #ccc;
   color: #111;
 }
-.main-container .sidebar .btn-group button:hover {
+.ContentForm .main-container .sidebar .btn-group button:hover {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-.main-container .sidebar .btn-group button i {
+.ContentForm .main-container .sidebar .btn-group button i {
   margin-right: 10px;
-}
-
-.Modal .wrapper {
-  width: 400px;
-  padding: 15px 5px;
-}
-.Modal .btn-group {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: flex-end;
-}
-.Modal .btn-group button {
-  background-color: rgba(0, 0, 0, 0);
-  color: #006fe6;
-  border: none;
-  cursor: pointer;
-  margin-inline: 10px;
-  font-family: "Merriweather Sans", serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-}
-.Modal .btn-group button.disabled {
-  color: #B5B6B7;
-  pointer-events: none;
-}
-.Modal .input-group {
-  height: 50px;
-  position: relative;
-  width: 100%;
-  background-color: #fff;
-  margin-bottom: 1.5rem;
-}
-.Modal .input-group .input-text {
-  position: absolute;
-  outline: none;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border-radius: 0.25rem;
-  border: 1px solid #b0b0b0;
-  padding: 0 20px;
-  transition: 0.2s ease;
-  z-index: 99;
-  font-family: "Nunito", serif;
-  font-size: 1.1rem;
-}
-.Modal .input-group .input-text:focus {
-  border-color: #282828;
-}
-.Modal .input-group .input-text:focus + .input-label, .Modal .input-group .input-text.active + .input-label {
-  top: 0;
-  left: -5px;
-  transform: translateY(-50%);
-  z-index: 99;
-  font-size: 1rem;
-  color: #282828;
-}
-.Modal .input-group .input-label {
-  background-color: #fff;
-  position: absolute;
-  transition: 0.2s ease;
-  margin: 0 20px;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  font-family: "Nunito", serif;
-  font-size: 1.1rem;
 }/*# sourceMappingURL=ContentForm.css.map */

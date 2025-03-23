@@ -84,12 +84,8 @@ body, html, #root {
 }
 
 @keyframes bblFadInOut {
-  0%, 80%, 100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
-  }
+  box-shadow: 0 2.5em 0 -1.3em;
+  box-shadow: 0 2.5em 0 0;
 }
 .Home.default {
   display: flex;
@@ -172,7 +168,7 @@ body, html, #root {
   transition: 0.1s ease-out;
 }
 .Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item:hover {
-  background-color: #C5E4C9;
+  background-color: #B2DBB7;
   border-radius: 0.3rem;
 }
 .Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container {
@@ -180,7 +176,7 @@ body, html, #root {
   align-items: center;
 }
 .Home.student-view .profile-content-container .ProfileContent .reminders-section-container .reminders-items-container .reminder-item .icon-container i {
-  background-color: #C5E4C9;
+  background-color: #B2DBB7;
   color: #167f24;
   border-radius: 0.4rem;
   padding: 10px 15px;
@@ -537,7 +533,7 @@ body, html, #root {
 }
 .Home.admin-view .dblock.announcements .announcement-items-container .announcement-item span.announcement-title {
   line-break: loose;
-  color: #003a78;
+  color: #0060c6;
   max-width: 90%;
   transition: 0.1s;
   cursor: pointer;
@@ -864,26 +860,45 @@ body, html, #root {
   font-weight: 400;
 }
 
-.TopBar {
+.Home .Modal {
+  position: relative;
+}
+.Home .Modal .wrapper {
+  padding: 1rem 0.5rem;
+  width: 900px;
+}
+.Home .Modal .wrapper button.close-modal {
+  background-color: inherit;
+  border: none;
+  padding: 5px;
+  position: absolute;
+  color: #252525;
+  cursor: pointer;
+  top: 0;
+  margin: 10px 15px;
+  right: 0;
+  font-size: 1.6rem;
+}
+.Home .TopBar {
   display: flex;
   width: 100%;
   padding: 1.5rem 2rem;
   align-items: center;
 }
-.TopBar .date-container {
+.Home .TopBar .date-container {
   display: flex;
   align-items: center;
 }
-.TopBar .date-container .date-text {
+.Home .TopBar .date-container .date-text {
   color: #464646;
   font-family: "Merriweather Sans", serif;
   font-weight: 400;
   font-size: 1.1rem;
 }
-.TopBar .date-container .admin-btn-group {
+.Home .TopBar .date-container .admin-btn-group {
   margin-left: 15px;
 }
-.TopBar .date-container .topbar-btn {
+.Home .TopBar .date-container .topbar-btn {
   background-color: #fff;
   font-size: 1.3rem;
   padding: 7px 12px;
@@ -894,18 +909,18 @@ body, html, #root {
   transition: 0.15s ease-out;
   cursor: pointer;
 }
-.TopBar .date-container .topbar-btn:hover {
+.Home .TopBar .date-container .topbar-btn:hover {
   color: #0152CC;
 }
-.TopBar .search-bar-container {
+.Home .TopBar .search-bar-container {
   flex: 1;
 }
-.TopBar .search-bar-container .search-bar-input-group {
+.Home .TopBar .search-bar-container .search-bar-input-group {
   position: relative;
   display: flex;
   height: 45px;
 }
-.TopBar .search-bar-container .search-bar-input-group button.search-btn {
+.Home .TopBar .search-bar-container .search-bar-input-group button.search-btn {
   position: absolute;
   border: none;
   font-size: 1.3rem;
@@ -914,15 +929,15 @@ body, html, #root {
   border-radius: 0.8rem;
   cursor: pointer;
 }
-.TopBar .search-bar-container .search-bar-input-group button.search-btn.student {
+.Home .TopBar .search-bar-container .search-bar-input-group button.search-btn.student {
   color: #239732;
-  background-color: #9DCAA7;
+  background-color: #B2DBB7;
 }
-.TopBar .search-bar-container .search-bar-input-group button.search-btn.admin {
+.Home .TopBar .search-bar-container .search-bar-input-group button.search-btn.admin {
   color: #006fe6;
   background-color: #99C5F5;
 }
-.TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text {
+.Home .TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text {
   padding-left: 25px;
   margin-left: 30px;
   height: 100%;
@@ -933,11 +948,10 @@ body, html, #root {
   font-size: 1rem;
   font-weight: 400;
 }
-.TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text:focus {
+.Home .TopBar .search-bar-container .search-bar-input-group .input-text-container input.search-input-text:focus {
   outline: none;
 }
-
-.Calendar {
+.Home .Calendar {
   width: 280px;
   display: flex;
   flex-direction: column;
@@ -945,11 +959,11 @@ body, html, #root {
   font-weight: 300;
   font-size: 1rem;
 }
-.Calendar .calendar-header {
+.Home .Calendar .calendar-header {
   display: flex;
   justify-content: space-between;
 }
-.Calendar .calendar-header button#calendar-prev-btn, .Calendar .calendar-header button#calendar-next-btn {
+.Home .Calendar .calendar-header button#calendar-prev-btn, .Home .Calendar .calendar-header button#calendar-next-btn {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 1.1rem;
@@ -959,34 +973,34 @@ body, html, #root {
   border-radius: 0.5rem;
   transition: 0.1s ease-out;
 }
-.Calendar .calendar-header button#calendar-prev-btn:hover, .Calendar .calendar-header button#calendar-next-btn:hover {
+.Home .Calendar .calendar-header button#calendar-prev-btn:hover, .Home .Calendar .calendar-header button#calendar-next-btn:hover {
   background-color: #f1f1f1;
 }
-.Calendar .calendar-header #calendar-month-year {
+.Home .Calendar .calendar-header #calendar-month-year {
   font-weight: 600;
   font-size: 1.1rem;
 }
-.Calendar .calendar-body {
+.Home .Calendar .calendar-body {
   margin-top: 7px;
   display: flex;
   flex-direction: column;
 }
-.Calendar .calendar-body .calendar-weekdays {
+.Home .Calendar .calendar-body .calendar-weekdays {
   display: flex;
   justify-content: space-around;
   text-align: center;
 }
-.Calendar .calendar-body .calendar-weekdays .weekday {
+.Home .Calendar .calendar-body .calendar-weekdays .weekday {
   width: 14.28%;
   font-weight: 600;
   font-size: 0.9rem;
 }
-.Calendar .calendar-body .calendar-days {
+.Home .Calendar .calendar-body .calendar-days {
   margin-top: 7px;
   display: flex;
   flex-wrap: wrap;
 }
-.Calendar .calendar-body .calendar-days .calendar-day {
+.Home .Calendar .calendar-body .calendar-days .calendar-day {
   padding: 4px;
   width: 14.28%;
   text-align: center;
@@ -994,16 +1008,15 @@ body, html, #root {
   font-weight: 400;
   font-size: 1rem;
 }
-.Calendar .calendar-body .calendar-days .calendar-day.dimmed {
+.Home .Calendar .calendar-body .calendar-days .calendar-day.dimmed {
   opacity: 0.5;
 }
-.Calendar .calendar-body .calendar-days .calendar-day.today {
+.Home .Calendar .calendar-body .calendar-days .calendar-day.today {
   color: #fff;
   background-color: #239732;
   border-radius: 0.3rem;
 }
-
-.WelcomeBanner {
+.Home .WelcomeBanner {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
   background-color: #fff;
@@ -1013,7 +1026,7 @@ body, html, #root {
   padding: 10px;
   position: relative;
 }
-.WelcomeBanner .banner-section-left {
+.Home .WelcomeBanner .banner-section-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1021,32 +1034,32 @@ body, html, #root {
   height: 100%;
   flex: 1;
 }
-.WelcomeBanner .banner-section-left h2.greetings {
+.Home .WelcomeBanner .banner-section-left h2.greetings {
   z-index: 1;
   color: #167f24;
   font-family: "Merriweather Sans", serif;
   font-size: 1.8rem;
   font-weight: 800;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container, .WelcomeBanner .banner-section-left .schedule-status-text-container {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container {
   margin-top: 15px;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container .row, .WelcomeBanner .banner-section-left .schedule-status-text-container .row {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container .row, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .row {
   margin-top: 20px;
   display: flex;
   align-items: center;
   width: 100%;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text, .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text, .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text, .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text, .Home .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text {
   color: #464646;
   font-family: "Merriweather Sans", serif;
   font-size: 1rem;
   font-weight: 400;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .schedule-highlight, .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text .schedule-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text .schedule-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text .attendance-highlight, .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text .schedule-highlight {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .attendance-highlight, .Home .WelcomeBanner .banner-section-left .attendance-status-text-container .attendance-status-text .schedule-highlight, .Home .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text .attendance-highlight, .Home .WelcomeBanner .banner-section-left .attendance-status-text-container .schedule-status-text .schedule-highlight, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text .attendance-highlight, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .attendance-status-text .schedule-highlight, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text .attendance-highlight, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container .schedule-status-text .schedule-highlight {
   font-weight: 500;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view {
   border: none;
   padding: 5px 0;
   cursor: pointer;
@@ -1061,15 +1074,15 @@ body, html, #root {
   font-family: "Nunito", serif;
   font-size: 1.1rem;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-student:hover, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-student:hover {
-  background-color: #C5E4C9;
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-student:hover, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-student:hover {
+  background-color: #a7cdac;
   color: #239732;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-admin:hover, .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-admin:hover {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container button.switch-view.to-admin:hover, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container button.switch-view.to-admin:hover {
   background-color: #99C5F5;
   color: #006fe6;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn, .WelcomeBanner .banner-section-left .attendance-status-text-container a.view-schedule-btn, .WelcomeBanner .banner-section-left .schedule-status-text-container a.check-attendance-btn, .WelcomeBanner .banner-section-left .schedule-status-text-container a.view-schedule-btn {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container a.check-attendance-btn, .Home .WelcomeBanner .banner-section-left .attendance-status-text-container a.view-schedule-btn, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container a.check-attendance-btn, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container a.view-schedule-btn {
   text-decoration: none;
   display: inline-block;
   padding: 8px 20px;
@@ -1082,17 +1095,17 @@ body, html, #root {
   font-size: 1rem;
   font-weight: 400;
 }
-.WelcomeBanner .banner-section-left .attendance-status-text-container a.view-schedule-btn, .WelcomeBanner .banner-section-left .schedule-status-text-container a.view-schedule-btn {
+.Home .WelcomeBanner .banner-section-left .attendance-status-text-container a.view-schedule-btn, .Home .WelcomeBanner .banner-section-left .schedule-status-text-container a.view-schedule-btn {
   background-color: #006fe6;
 }
-.WelcomeBanner .banner-section-right {
+.Home .WelcomeBanner .banner-section-right {
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
   width: 40%;
 }
-.WelcomeBanner .banner-section-right .banner-hero-container img.banner-hero {
+.Home .WelcomeBanner .banner-section-right .banner-hero-container img.banner-hero {
   pointer-events: none;
   user-select: none;
   z-index: 0;

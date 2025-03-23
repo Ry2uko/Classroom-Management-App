@@ -1,11 +1,380 @@
 @import '../../App'
 
 .School
-    background-color: $bg-alt
-    width: 100%
-    height: 100%
-    border-radius: 2rem
-    padding: 2rem
+  background-color: $bg-alt
+  width: 100%
+  height: 100%
+  border-top-left-radius: 2rem
+  border-bottom-left-radius: 2rem
+  display: flex
+  justify-content: center
+  overflow-y: auto
+  overflow-x: hidden
 
-    .loader
-        margin-top: 1.5rem
+  .loader
+    margin-top: 1.5rem
+
+  .main-container
+    display: flex
+    flex-direction: column
+    width: 100%
+
+    .school-header
+      display: flex
+      margin: 15px 20px
+      height: 100px
+
+      .logo-container
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 100%
+
+        .usal-logo
+          margin-right: 5px
+          width: 80px
+          height: 80px
+
+        .sga-logo
+          width: 90px
+          height: 90px
+
+        .usal-logo, .sga-logo
+          img
+            width: 100%
+            height: 100%
+      
+      .title-container
+        display: flex
+        flex-direction: column
+        justify-content: center
+        margin-left: 25px
+        letter-spacing: 1px
+        font:
+          family: $ff-eb-garamond
+          size: 1.7rem
+          weight: 480
+    
+    .school-banner
+      display: flex
+      width: 100%
+      height: 400px
+      position: relative
+
+      img.banner-img
+        display: block
+        z-index: 0
+        width: 100%
+        height: 100%
+        object-fit: cover
+        filter: blur(2px)
+        -webkit-filter: blur(2px)
+        pointer-events: none
+        user-select: none
+        position: relative
+
+      &::after
+        content: ""
+        position: absolute
+        display: block
+        z-index: 1
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: rgba(9, 65, 9, 0.84)
+        pointer-events: none
+
+      .wrapper  
+        z-index: 2
+        display: flex
+        flex-direction: column
+        position: absolute
+        align-items: center
+        justify-content: center
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+
+        img.school-logo
+          $size: 200px
+
+          filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))
+          -webkit-filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))
+          width: $size
+          margin-bottom: 5px
+          height: $size
+          pointer-events: none
+          user-select: none
+
+        span.tagline
+          text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5)
+          letter-spacing: 3px
+          text-align: center
+          width: 360px
+          color: #ffffffed
+          pointer-events: none
+          user-select: none
+          font:
+            family: $ff-eb-garamond
+            size: 1.7rem
+            weight: 450
+
+    .main-wrapper
+      padding: 2rem 3rem
+
+      .btn-block-group
+        margin: 1rem 0
+        display: flex
+        width: 100%
+        justify-content: center
+
+        .wrapper
+          display: flex
+          gap: 0 40px
+
+          .btn-wrapper
+            display: flex
+            cursor: pointer
+            flex-direction: column
+            align-items: center
+            position: relative
+
+            &:hover
+              button.dir-btn
+                background-color: rgba(0,0,0,0)
+                color: $theme1
+
+              span.dir-title
+                color: $theme1-text
+
+          span.dir-title
+            text-align: center
+            padding-top: 15px
+            width: 100px
+            font:
+              family: $ff-merriweather-sans
+              size: 1.1rem
+              weight: 380
+
+          button.dir-btn
+            $size: 62px
+
+            font-size: 1.6rem
+            border-radius: 50%
+            background-color: $theme1
+            border: 2px solid $theme1
+            color: #fff
+            transition: 0.15s ease-out
+            width: $size
+            height: $size
+            display: flex
+            justify-content: center
+            align-items: center
+            cursor: pointer
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+
+      .core-container
+        margin-top: 2rem
+        background-color: #fff 
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+        border-radius: 0.5rem
+        display: flex
+        padding: 1rem 2rem
+        gap: 0 30px
+
+        .announcements-container
+          display: flex
+          width: 100%
+          flex-direction: column
+
+          .announcements-header
+            h5
+              padding: 10px 0
+              border-bottom: 2px solid #ccc
+              font:
+                family: $ff-merriweather-sans
+                size: 1.45rem
+                weight: 360
+
+          .announcement-items-container
+            display: flex
+            flex-direction: column
+            height: 560px
+            overflow-y: auto
+
+            .announcement-item
+              max-width: 100%
+              display: flex
+              flex-direction: column
+              padding: 33px 0
+              border-bottom: 1px solid #ccc
+              transition: 0.15s
+
+              &:last-child
+                border-bottom: none
+
+              span.announcement-title
+                line-break: loose
+                color: $theme1-text
+                max-width: 85%
+                line-height: 33px
+                transition: 0.1s
+                cursor: pointer
+                font:
+                  family: $ff-noto-sans
+                  weight: 360
+                  size: 1.2rem
+                
+                &:hover
+                  text-decoration: underline
+
+              span.announcement-date
+                color: #555555
+                margin-top: 7px
+                font:
+                  family: $ff-noto-sans
+                  size: 1.1rem
+                  weight: 360
+
+        .news-container
+          display: flex
+          flex-direction: column
+          width: 100%
+
+          .news-header
+            position: relative
+
+            h5
+              padding: 10px 0
+              border-bottom: 2px solid #ccc
+              font:
+                family: $ff-merriweather-sans
+                size: 1.45rem
+                weight: 360
+            
+            .btn-group
+              display: flex
+              position: absolute
+              top: 50%
+              right: 0
+              transform: translateY(-50%)
+
+              button.news-btn
+                color: #bbbbbb
+                background-color: #fff
+                border: 1px solid #d3d3d3
+                transition: 0.15s ease-out
+                font-size: 1.2rem
+                border-radius: 0.3rem
+                margin-inline: 3px
+                padding: 5px 11px
+                cursor: pointer
+
+                &:hover
+                  background-color: $theme1
+                  border-color: $theme1
+                  color: #fff
+
+          .news-body
+            overflow: hidden
+            width: 100%
+
+            .carousel-wrapper
+              display: flex
+              overflow: hidden
+              padding: 1rem 0
+              width: 100%
+
+            .news-carousel
+              display: flex
+              transition: transform 0.5s ease-in-out
+              gap: 0 5%
+
+              .news-item
+                width: 100%
+                flex-shrink: 0
+
+                &:hover
+                  .news-img-container::after
+                    opacity: 1
+
+                a.news-anchor
+                  text-decoration: none
+                  color: inherit
+                  cursor: auto
+
+                .news-img-container
+                  width: 100%
+                  height: 450px
+                  position: relative
+                  cursor: pointer
+
+                  &::after
+                    content: ""
+                    display: block
+                    transition: 0.35s ease-in-out
+                    width: 100%
+                    height: 100%
+                    background-color: $theme1
+                    position: absolute
+                    top: 0
+                    opacity: 0
+                    left: 0
+                    background-color: rgba(11, 85, 19, 0.72)
+                    z-index: 1
+
+                  img
+                    object-fit: cover
+                    width: 100%
+                    height: 100%
+                
+                .news-headline-container
+                  display: flex
+                  flex-direction: column
+                  padding: 20px 5px
+
+                  span.headline-title
+                    line-break: loose
+                    color: $theme1-text
+                    max-width: 100%
+                    line-height: 33px
+                    transition: 0.1s
+                    cursor: pointer
+                    display: -webkit-box
+                    -webkit-line-clamp: 2
+                    -webkit-box-orient: vertical
+                    overflow: hidden
+                    text-overflow: ellipsis
+                    font:
+                      family: $ff-noto-sans
+                      weight: 360
+                      size: 1.2rem
+                    
+                    &:hover
+                      text-decoration: underline
+
+                  span.headline-date
+                    color: #555555
+                    margin-top: 2px
+                    font:
+                      family: $ff-noto-sans
+                      size: 1.1rem
+                      weight: 360
+      
+      .display-block
+        display: flex
+        justify-content: center
+        margin-top: 3rem
+        margin-bottom: 2rem
+        
+        .display-wrapper
+          width: 90%
+          height: fit-content
+
+
+
+
+
+
+

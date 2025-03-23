@@ -1,508 +1,508 @@
 @import '../../App'
 
 .Login
-    width: 100%
-    height: 100%
-    display: flex
+  width: 100%
+  height: 100%
+  display: flex
+  position: relative
+  
+  .banner-section
+    overflow: hidden
     position: relative
-    
-    .banner-section
-        overflow: hidden
-        position: relative
-        max-width: 600px
-        height: 100%
+    max-width: 600px
+    height: 100%
 
-        .banner-display
-            z-index: 2
-            display: flex
-            flex-direction: column
-            position: absolute
-            align-items: center
-            justify-content: center
-            top: 50%
-            left: 50%
-            transform: translate(-50%, -50%)
+    .banner-display
+      z-index: 2
+      display: flex
+      flex-direction: column
+      position: absolute
+      align-items: center
+      justify-content: center
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
 
-            img.school-logo
-                filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))
-                -webkit-filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))
-                width: 280px
-                margin-bottom: 20px
-                height: 280px
-                pointer-events: none
-                user-select: none
+      img.school-logo
+        filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))
+        -webkit-filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))
+        width: 280px
+        margin-bottom: 20px
+        height: 280px
+        pointer-events: none
+        user-select: none
 
-            span.tagline
-                text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5)
-                letter-spacing: 3px
-                text-align: center
-                width: 500px
-                color: #ffffffed
-                pointer-events: none
-                user-select: none
-                font:
-                    family: $ff-eb-garamond
-                    size: 2.3rem
-                    weight: 400
+      span.tagline
+        text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5)
+        letter-spacing: 3px
+        text-align: center
+        width: 500px
+        color: #ffffffed
+        pointer-events: none
+        user-select: none
+        font:
+          family: $ff-eb-garamond
+          size: 2.3rem
+          weight: 400
 
-        .banner-display-mobile
-            display: none
+    .banner-display-mobile
+      display: none
 
-        img.banner-img
-            z-index: 0
-            width: 100%
-            height: 100%
-            object-fit: cover
-            filter: blur(2px)
-            -webkit-filter: blur(2px)
-            pointer-events: none
-            user-select: none
+    img.banner-img
+      z-index: 0
+      width: 100%
+      height: 100%
+      object-fit: cover
+      filter: blur(2px)
+      -webkit-filter: blur(2px)
+      pointer-events: none
+      user-select: none
 
-        span.footer-text
-            z-index: 2
-            position: absolute
-            bottom: 25px
-            left: 50%
-            transform: translateX(-50%)
+    span.footer-text
+      z-index: 2
+      position: absolute
+      bottom: 25px
+      left: 50%
+      transform: translateX(-50%)
 
-            a
-                text-decoration: none
-                color: #ffffffdc
-                letter-spacing: 0px
-                font:
-                    family: $ff-merriweather-sans
-                    size: 1.4rem
-                    weight: 300
+      a
+        text-decoration: none
+        color: #ffffffdc
+        letter-spacing: 0px
+        font:
+          family: $ff-merriweather-sans
+          size: 1.4rem
+          weight: 300
 
-        .overlay
-            position: absolute
-            z-index: 1
-            top: 0
-            left: 0
-            width: 100%
-            height: 100%
-            background-color: rgba(9, 65, 9, 0.84)
-            pointer-events: none
+    .overlay
+      position: absolute
+      z-index: 1
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      background-color: rgba(9, 65, 9, 0.84)
+      pointer-events: none
 
-    .login-form-section
-        flex: 1
-        display: flex
-        justify-content: center
-        align-items: center
-        overflow: hidden
+  .login-form-section
+    flex: 1
+    display: flex
+    justify-content: center
+    align-items: center
+    overflow: hidden
 
-    .login-form-container
+  .login-form-container
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    h1
+      $box-height: 65px   
+      justify-content: center
+      align-items: center
+      display: flex
+      letter-spacing: 1px
+      text-align: center
+      margin-bottom: 2rem
+      height: $box-height
+      overflow: hidden
+      font:
+        family: $ff-open-sans
+        weight: 320
+        size: 3rem  
+
+      .text-animation
         display: flex
         flex-direction: column
-        align-items: center
+        margin-right: 18px
+        overflow: hidden
+        height: 100%
+        position: relative
 
-        h1
-            $box-height: 65px   
-            justify-content: center
-            align-items: center
-            display: flex
-            letter-spacing: 1px
-            text-align: center
-            margin-bottom: 2rem
-            height: $box-height
-            overflow: hidden
-            font:
-                family: $ff-open-sans
-                weight: 320
-                size: 3rem    
+        span
+          transition: margin 0.4s ease-out
 
-            .text-animation
-                display: flex
-                flex-direction: column
-                margin-right: 18px
-                overflow: hidden
-                height: 100%
-                position: relative
+        &.student span.student
+          margin-top: 0
 
-                span
-                    transition: margin 0.4s ease-out
-
-                &.student span.student
-                    margin-top: 0
-
-                &.admin span.student
-                    margin-top: -$box-height
-        
-        span.error-text
-            text-align: center
-            margin: 0 auto
-            letter-spacing: 1px
-            margin: 1rem 0 0.5rem 0
-            color: #e74545
-            visibility: hidden
-            font:
-                family: $ff-open-sans
-                weight: 350
-                size: 1.15rem
-            
-            &.visible-error
-                visibility: visible
-
-        .type-switch-container
-            .type-switch
-                $bradius: 2rem
-                display: flex
-                position: relative
-
-                .toggle-indicator
-                    width: 180px
-                    height: 100%
-                    position: absolute
-                    top: 0
-                    left: 0
-                    z-index: 1
-                    transition: 0.25s ease-out
-
-                    &.student
-                        background-color: $theme1
-                        border-top-left-radius: $bradius
-                        border-bottom-left-radius: $bradius
-
-                    &.admin
-                        background-color: $theme2
-                        transform: translate(180px)
-                        border-left-width: 0
-                        border-top-right-radius: $bradius
-                        border-bottom-right-radius: $bradius
-
-                button.toggle-switch-btn
-                    $bwidth: 1.5px
-                    z-index: 2
-                    width: 180px
-                    background-color: rgba(0,0,0,0)
-                    color: #222
-                    border: $bwidth solid #555
-                    cursor: pointer
-                    padding: 6px 0
-                    transition: 0.25s ease-out
-                    font:
-                        family: $ff-open-sans
-                        weight: 350
-                        size: 1.3rem
-                    
-                    &.active
-                        color: #fff
-                        font-weight: 450
-
-                        &#switch-student
-                            border-color: $theme1
-                        
-                        &#switch-admin
-                            border-color: $theme2
-
-                    &:hover
-                        font-weight: 450
-
-                    &#switch-student   
-                        border-right-width: calc($bwidth / 2)
-                        border-top-left-radius: $bradius
-                        border-bottom-left-radius: $bradius
-
-                    &#switch-admin
-                        border-left-width: calc($bwidth / 2)
-                        border-top-right-radius: $bradius
-                        border-bottom-right-radius: $bradius
-
-        .login-form
-            width: 380px
-            display: flex
-            flex-direction: column
-            align-items: center
-            justify-content: center
-
-            .login-btn-container
-                width: 100%
-                display: flex
-                justify-content: center
-                margin-top: 3rem
-
-                button#login-btn
-                    border-radius: 1rem
-                    border: none
-                    color: #fff
-                    padding: 11px 60px
-                    text-align: center
-                    letter-spacing: 2px
-                    transition: 0.25s ease-out
-                    cursor: pointer
-                    font:
-                        family: $ff-merriweather-sans
-                        size: 1.1rem
-                        weight: 400
-
-                    &.student
-                        background-color: $theme1
-
-                        &:hover
-                            transition: 0.1s ease-out
-                            background-color: $theme1-dark
-
-                    &.admin
-                        background-color: $theme2
-
-                        &:hover
-                            transition: 0.1s ease-out
-                            background-color: $theme2-dark
-
-            .text-input-container
-                width: 100%
-                display: flex
-                flex-direction: column
-
-                input:-webkit-autofill 
-                    -webkit-box-shadow: inset 0 0 0px 9999px white
-
-                .input-group
-                    position: relative
-
-                    button.show-password-btn
-                        position: absolute
-                        top: 50%
-                        right: 10px
-                        background-color: rgba(0,0,0,0)
-                        border: none
-                        font-size: 1.25rem
-                        padding: 7px
-                        transform: translateY(-50%)
-                        cursor: pointer
-                        transition: 0.15s ease-out
-
-                        &:hover
-                            i
-                                color: #333
-
-                        i
-                            color: #555
-
-                .form-input
-                    padding: 10px 15px
-                    width: 100%
-                    border: 2px solid #cbcbcb
-                    margin: 12px 0
-                    letter-spacing: 1px
-                    border-radius: 0.1rem
-                    outline: none
-                    color: #111
-                    transition: all 0.2s
-                    font:
-                        family: $ff-nunito
-                        size: 1.1rem
-                        
-                    &:focus
-                        border-color: #333
-                        color: #000
+        &.admin span.student
+          margin-top: -$box-height
     
-    @media (max-width: 1536px) 
-        .banner-section
-            max-width: 39%
+    span.error-text
+      text-align: center
+      margin: 0 auto
+      letter-spacing: 1px
+      margin: 1rem 0 0.5rem 0
+      color: #e74545
+      visibility: hidden
+      font:
+        family: $ff-open-sans
+        weight: 350
+        size: 1.15rem
+      
+      &.visible-error
+        visibility: visible
 
-            .banner-display
-                img.school-logo
-                    width: 240px
-                    height: 240px
-                    margin-bottom: 12px
-                
-                span.tagline
-                    width: 400px
-                    font-size: 1.95rem
+    .type-switch-container
+      .type-switch
+        $bradius: 2rem
+        display: flex
+        position: relative
 
-            span.footer-text
-                bottom: 20px
+        .toggle-indicator
+          width: 180px
+          height: 100%
+          position: absolute
+          top: 0
+          left: 0
+          z-index: 1
+          transition: 0.25s ease-out
 
-                a
-                    font-size: 1.2rem
+          &.student
+            background-color: $theme1
+            border-top-left-radius: $bradius
+            border-bottom-left-radius: $bradius
 
-    @media (max-width: 1280px)
-        .banner-section
-            .banner-display
-                img.school-logo
-                    width: 220px
-                    height: 220px
+          &.admin
+            background-color: $theme2
+            transform: translate(180px)
+            border-left-width: 0
+            border-top-right-radius: $bradius
+            border-bottom-right-radius: $bradius
 
-                span.tagline
-                    font-size: 1.8rem
+        button.toggle-switch-btn
+          $bwidth: 1.5px
+          z-index: 2
+          width: 180px
+          background-color: rgba(0,0,0,0)
+          color: #222
+          border: $bwidth solid #555
+          cursor: pointer
+          padding: 6px 0
+          transition: 0.25s ease-out
+          font:
+            family: $ff-open-sans
+            weight: 350
+            size: 1.3rem
+          
+          &.active
+            color: #fff
+            font-weight: 450
 
-        .login-form-container
-            h1
-                height: 55px
-                margin-bottom: 1.5rem
-                font-size: 2.5rem
+            &#switch-student
+              border-color: $theme1
+            
+            &#switch-admin
+              border-color: $theme2
 
-                .text-animation
-                    margin-right: 15px
+          &:hover
+            font-weight: 450
 
-                    &.admin span.student
-                        margin-top: -55px
+          &#switch-student   
+            border-right-width: calc($bwidth / 2)
+            border-top-left-radius: $bradius
+            border-bottom-left-radius: $bradius
 
-        .type-switch-container
-            .type-switch
-                .toggle-indicator
-                    width: 160px
+          &#switch-admin
+            border-left-width: calc($bwidth / 2)
+            border-top-right-radius: $bradius
+            border-bottom-right-radius: $bradius
 
-                    &.admin
-                        transform: translate(160px)
+    .login-form
+      width: 380px
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
 
-                button.toggle-switch-btn
-                    width: 160px
-                    padding: 4.5px
-                    font-size: 1.2rem 
+      .login-btn-container
+        width: 100%
+        display: flex
+        justify-content: center
+        margin-top: 3rem
+
+        button#login-btn
+          border-radius: 1rem
+          border: none
+          color: #fff
+          padding: 11px 60px
+          text-align: center
+          letter-spacing: 2px
+          transition: 0.25s ease-out
+          cursor: pointer
+          font:
+            family: $ff-merriweather-sans
+            size: 1.1rem
+            weight: 400
+
+          &.student
+            background-color: $theme1
+
+            &:hover
+              transition: 0.1s ease-out
+              background-color: $theme1-dark
+
+          &.admin
+            background-color: $theme2
+
+            &:hover
+              transition: 0.1s ease-out
+              background-color: $theme2-dark
+
+      .text-input-container
+        width: 100%
+        display: flex
+        flex-direction: column
+
+        input:-webkit-autofill 
+          -webkit-box-shadow: inset 0 0 0px 9999px white
+
+        .input-group
+          position: relative
+
+          button.show-password-btn
+            position: absolute
+            top: 50%
+            right: 10px
+            background-color: rgba(0,0,0,0)
+            border: none
+            font-size: 1.25rem
+            padding: 7px
+            transform: translateY(-50%)
+            cursor: pointer
+            transition: 0.15s ease-out
+
+            &:hover
+              i
+                color: #333
+
+            i
+              color: #555
+
+        .form-input
+          padding: 10px 15px
+          width: 100%
+          border: 2px solid #cbcbcb
+          margin: 12px 0
+          letter-spacing: 1px
+          border-radius: 0.1rem
+          outline: none
+          color: #111
+          transition: all 0.2s
+          font:
+            family: $ff-nunito
+            size: 1.1rem
+            
+          &:focus
+            border-color: #333
+            color: #000
+  
+  @media (max-width: 1536px) 
+    .banner-section
+      max-width: 39%
+
+      .banner-display
+        img.school-logo
+          width: 240px
+          height: 240px
+          margin-bottom: 12px
+        
+        span.tagline
+          width: 400px
+          font-size: 1.95rem
+
+      span.footer-text
+        bottom: 20px
+
+        a
+          font-size: 1.2rem
+
+  @media (max-width: 1280px)
+    .banner-section
+      .banner-display
+        img.school-logo
+          width: 220px
+          height: 220px
+
+        span.tagline
+          font-size: 1.8rem
+
+    .login-form-container
+      h1
+        height: 55px
+        margin-bottom: 1.5rem
+        font-size: 2.5rem
+
+        .text-animation
+          margin-right: 15px
+
+          &.admin span.student
+            margin-top: -55px
+
+    .type-switch-container
+      .type-switch
+        .toggle-indicator
+          width: 160px
+
+          &.admin
+            transform: translate(160px)
+
+        button.toggle-switch-btn
+          width: 160px
+          padding: 4.5px
+          font-size: 1.2rem 
+
+    .login-form
+      width: 330px  
+
+      .login-btn-container
+        margin-top: 2.8rem
+
+        button#login-btn
+          padding: 9px 50px
+          font-size: 1rem
+
+      .text-input-container
+        .input-group
+          button.show-password-btn
+            font-size: 1.1rem
+
+        .form-input
+          padding: 7px 15px
+          font-size: 0.95rem
+
+  @media (max-width: 1024px)
+    .banner-section
+      max-width: 360px
+
+      .banner-display
+        img.school-logo
+          width: 200px
+          height: 200px
+
+        span.tagline
+          font-size: 1.6rem
+
+  /* Start of Mobile View */
+  @media (max-width: 768px)
+    justify-content: center
+    align-items: center
+
+    .banner-section
+      display: flex
+      width: 100%
+      max-width: 100%
+
+      .banner-display
+        display: none
+
+      .banner-display-mobile
+        display: flex
+        z-index: 99
+        position: absolute
+        align-items: center
+        justify-content: center
+        top: 10px
+        left: 50%
+        transform: translateX(-50%)
+
+        img.school-logo
+          filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3))
+          -webkit-filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3))
+          width: 70px
+          height: 70px
+          pointer-events: none
+          user-select: none
+          margin-right: 8px
+
+        span.school-name
+          text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5)
+          text-align: center
+          color: #ffffffed
+          pointer-events: none
+          white-space: nowrap
+          user-select: none
+          font:
+            family: $ff-eb-garamond
+            size: 1.45rem
+            weight: 420
+
+    .login-form-section
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px
+      background-color: #fff
+      border-radius: 0.6rem
+      padding: 80px 40px
+      min-width: 420px
+      width: 60%
+      height: 75%
+      min-height: 420px
+      max-height: 600px
+      position: absolute
+      z-index: 99
+      align-items: flex-start
+      
+
+    .login-form-container
+      width: 90%
+      height: 100%
+
+      h1
+        font-size: 2.3rem 
+        height: 50px
+        margin-bottom: 1.3rem
+
+        .text-animation
+          margin-right: 10px
+
+          &.admin span.student
+            margin-top: -50px
+      
+      span.error-text
+        font-size: 1.1rem
+        margin: 2rem 0 0rem 0
+
+      .type-switch-container
+        display: flex
+        justify-content: center
+
+        .type-switch
+          .toggle-indicator
+            width: 150px
+            transition: 0.3s ease-out
+
+            &.admin
+              transform: translate(150px)
+
+          button.toggle-switch-btn
+            width: 150px
+            font-size: 1.1rem
+        
+      .login-form
+        flex: 1 
+        width: 100%
+        justify-content: space-around
+
+        .text-input-container
+          .form-input
+            padding: 9px 15px
+            font-size: 1rem
+
+        .login-btn-container
+          margin-top: 3rem
+          margin-bottom: 1rem
+
+          button#login-btn
+            padding: 10px 50px
+      
+  @media (max-width: 475px)
+    .login-form-section
+      width: 88%
+      min-width: 0px
+      padding: 60px 40px
+
+      .login-form-container
+        width: 100%
 
         .login-form
-            width: 330px  
-
-            .login-btn-container
-                margin-top: 2.8rem
-
-                button#login-btn
-                    padding: 9px 50px
-                    font-size: 1rem
-
-            .text-input-container
-                .input-group
-                    button.show-password-btn
-                        font-size: 1.1rem
-
-                .form-input
-                    padding: 7px 15px
-                    font-size: 0.95rem
-
-    @media (max-width: 1024px)
-        .banner-section
-            max-width: 360px
-
-            .banner-display
-                img.school-logo
-                    width: 200px
-                    height: 200px
-
-                span.tagline
-                    font-size: 1.6rem
-
-    /* Start of Mobile View */
-    @media (max-width: 768px)
-        justify-content: center
-        align-items: center
-
-        .banner-section
-            display: flex
-            width: 100%
-            max-width: 100%
-
-            .banner-display
-                display: none
-
-            .banner-display-mobile
-                display: flex
-                z-index: 99
-                position: absolute
-                align-items: center
-                justify-content: center
-                top: 10px
-                left: 50%
-                transform: translateX(-50%)
-
-                img.school-logo
-                    filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3))
-                    -webkit-filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3))
-                    width: 70px
-                    height: 70px
-                    pointer-events: none
-                    user-select: none
-                    margin-right: 8px
-
-                span.school-name
-                    text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5)
-                    text-align: center
-                    color: #ffffffed
-                    pointer-events: none
-                    white-space: nowrap
-                    user-select: none
-                    font:
-                        family: $ff-eb-garamond
-                        size: 1.45rem
-                        weight: 420
-
-        .login-form-section
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px
-            background-color: #fff
-            border-radius: 0.6rem
-            padding: 80px 40px
-            min-width: 420px
-            width: 60%
-            height: 75%
-            min-height: 420px
-            max-height: 600px
-            position: absolute
-            z-index: 99
-            align-items: flex-start
-            
-
-        .login-form-container
-            width: 90%
-            height: 100%
-
-            h1
-                font-size: 2.3rem 
-                height: 50px
-                margin-bottom: 1.3rem
-
-                .text-animation
-                    margin-right: 10px
-
-                    &.admin span.student
-                        margin-top: -50px
-            
-            span.error-text
-                font-size: 1.1rem
-                margin: 2rem 0 0rem 0
-
-            .type-switch-container
-                display: flex
-                justify-content: center
-
-                .type-switch
-                    .toggle-indicator
-                        width: 150px
-                        transition: 0.3s ease-out
-
-                        &.admin
-                            transform: translate(150px)
-
-                    button.toggle-switch-btn
-                        width: 150px
-                        font-size: 1.1rem
-                
-            .login-form
-                flex: 1 
-                width: 100%
-                justify-content: space-around
-
-                .text-input-container
-                    .form-input
-                        padding: 9px 15px
-                        font-size: 1rem
-
-                .login-btn-container
-                    margin-top: 3rem
-                    margin-bottom: 1rem
-
-                    button#login-btn
-                        padding: 10px 50px
-            
-    @media (max-width: 475px)
-        .login-form-section
-            width: 88%
-            min-width: 0px
-            padding: 60px 40px
-
-            .login-form-container
-                width: 100%
-
-                .login-form
-                    .login-btn-container
-                        margin-top: 2.4rem                                           
+          .login-btn-container
+            margin-top: 2.4rem                       

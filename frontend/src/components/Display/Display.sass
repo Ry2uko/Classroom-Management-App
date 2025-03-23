@@ -1,125 +1,479 @@
 @import '../../App'
 
 .Display
-    .search-bar-container
-        flex: 1
-        width: 600px
+  display: flex
+  align-items: center
+  flex-direction: column
+  padding: 1rem
 
-        .search-bar-input-group
-            position: relative
-            display: flex
-            height: 45px
+  .search-bar-container
+    flex: 1
+    width: 65%
+    max-width: 500px
+    min-width: 300px
 
-            button.search-btn
-                position: absolute
-                border: none
-                font-size: 1.3rem
-                height: 45px
-                width: 45px
-                border-radius: 0.8rem
-                cursor: pointer
+    &.select
+      input.search-input-text
+        border: 1px solid #888 !important
 
-                &.student
-                    color: $theme1
-                    background-color: $theme1-transparent
-                &.admin
-                    color: $theme2
-                    background-color: $theme2-transparent
-        
-            .input-text-container
-                width: 100%
+    .search-bar-input-group
+      position: relative
+      display: flex
+      height: 55px
 
-                input.search-input-text
-                    padding-left: 25px
-                    margin-left: 30px
-                    height: 100%
-                    width: 100%
-                    border: none
-                    border-radius: 0.4rem
-                    font:
-                        family: $ff-merriweather-sans
-                        size: 1rem
-                        weight: 400
+      button.search-btn
+        position: absolute
+        border: none
+        font-size: 1.45rem
+        height: 55px
+        width: 55px
+        border-radius: 0.8rem
+        cursor: pointer
 
-                    &:focus
-                        outline: none
+        &.student
+          color: $theme1
+          background-color: $theme1-transparent
+            
 
-    .display-container
-        .display-header
-            display: flex
-        
-        .display-body
-            .content-items-container
-                display: flex
-                flex-direction: column
-
-                .content-item
-                    display: flex
-                    align-items: center
-                    border: 1px solid #ccc
-                    padding: 22px 25px
-                    transition: 0.15s
-                    cursor: pointer
-
-                    &:hover
-                        background-color: #00000005
-
-                    .content-icon
-                        background-color: $theme2-transparent2
-                        border-radius: 0.5rem
-                        color: $theme2
-                        padding: 12px
-                        font-size: 1.35rem
-
-                    .kebab
-                        font-size: 1.25rem
-                        color: #222
-
-                    .kebab-container
-                        background-color: #fff
-                        position: absolute
-                        top: 0
-                        right: 0
-                        border-radius: 0.2rem
-                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
-
-                        ul
-                            li
-                                transition: 0.2s
-                                list-style: none
-                                padding: 7px 15px
-                                cursor: pointer
-                                font:
-                                    family: $ff-nunito
-                                    size: 1.2rem
-                                    text-align: center
-
-                                &:hover
-                                    background-color: #00000007
-
-                    .content-details
-                        width: 0
-                        margin-left: 20px
-                        flex: 1
-
-                        span.content-title
-                            max-width: 85%
-                            display: block
-                            white-space: nowrap
-                            overflow: hidden
-                            text-overflow: ellipsis
-                            font:
-                                family: $ff-merriweather-sans
-                                size: 1.1rem
-                                weight: 350
-                            
-                        .details-group
-                            margin-top: 5px
-                            display: flex
-
-                            .content-date
-                                display: flex
-
-                    
-
+        &.admin
+          color: $theme2
+          background-color: $theme2-transparent
     
+      .input-text-container
+        width: 100%
+
+        input.search-input-text
+          padding-left: 30px
+          margin-left: 40px
+          height: 100%
+          width: 100%
+          letter-spacing: 1px
+          border: none
+          border-radius: 0.4rem
+          font:
+            family: $ff-merriweather-sans
+            size: 1.25rem
+            weight: 380
+
+          &:focus
+            outline: none
+
+  .display-container
+    display: flex
+    flex-direction: column
+    width: 100%
+    margin-top: 2rem
+
+    .display-header
+      display: flex
+      position: relative
+      align-items: center
+      border-bottom: 1px solid #c2c2c2
+
+      button.create-btn
+        position: absolute
+        right: 5px
+        width: 40px
+        height: 40px
+        font-size: 1.25rem
+        color: #fff 
+        cursor: pointer
+        border: none
+        border-radius: 0.4rem
+
+        &.admin
+          background-color: $theme2
+
+        &.student
+          background-color: $theme1
+
+      .filters-container
+        display: flex
+        width: 85%
+        padding-inline: 25px
+        overflow: auto
+        gap: 40px
+
+        &.student .filter
+          &.selected
+            color: $theme1-text
+
+          &::after
+            background-color: $theme1
+
+          &:hover
+            color: $theme1-text
+        
+        &.admin .filter
+          &.selected
+            color: $theme2-text
+
+          &::after
+            background-color: $theme2
+
+          &:hover
+            color: $theme2-text
+
+        .filter
+          $padding-y: 12px
+
+          white-space: nowrap
+          position: relative
+          padding: $padding-y 15px 
+          transition: 0.1s
+          cursor: pointer
+          user-select: none
+          font:
+            family: $ff-nunito
+            size: 1.3rem
+            weight: 500
+
+          &::after
+            $height: 5px
+
+            position: absolute
+            display: block
+            content: ''
+            transition: 0.25s ease-out
+            margin-top: calc($padding-y - $height)
+            left: 0
+            border-top-left-radius: 1rem
+            border-top-right-radius: 1rem
+            width: 100%
+            transform: scalex(0)
+            transform-origin: center
+            height: $height
+
+          &.selected
+            color: $theme1-text
+
+            &::after
+              width: 100%
+              transform: scaleX(1)
+            
+    .display-body
+      margin-top: 20px
+
+      @mixin content-item
+        display: flex
+        position: relative
+        align-items: center
+        background-color: #fff
+        border: 1px solid #ccc
+        padding: 18px 24px
+        cursor: pointer
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+        border-radius: 0.3rem
+        border: none
+          
+        .content-icon
+          border-radius: 0.5rem
+          padding: 14px 18px
+          font-size: 1.5rem
+
+          &.student
+            background-color: $theme1-transparent
+            color: $theme1
+          &.admin
+            background-color: $theme2-transparent2
+            color: $theme2
+
+        .kebab
+          font-size: 1.6rem
+          color: #333
+          padding: 5px
+          cursor: pointer
+          border: none
+          background-color: #fff
+          transition: 0.1s
+
+          &:hover
+            color: #000
+
+        .kebab-container
+          background-color: #fff
+          position: absolute
+          top: 70px
+          z-index: 99
+          right: -75px
+          border-radius: 0.2rem
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
+
+          ul
+            li
+              transition: 0.2s
+              list-style: none
+              padding: 9px 15px
+              cursor: pointer
+              font:
+                family: $ff-nunito
+                size: 1.25rem
+                text-align: center
+
+              &:hover
+                background-color: #00000007
+
+        .content-details
+          width: 0
+          margin-left: 20px
+          flex: 1
+
+          span.content-title
+            max-width: 85%
+            display: block
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            font:
+              family: $ff-merriweather-sans
+              size: 1.3rem
+              weight: 350
+            
+          .details-group
+            margin-top: 5px
+            display: flex
+
+            .content-date
+              display: flex
+              font:
+                family: $ff-noto-sans
+                size: 1rem
+      
+      .content-items-container
+        display: flex
+        flex-direction: column
+        gap: 15px 0
+
+        .content-item
+          @include content-item
+
+      .course-items-container
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: 25px 20px
+        width: 100%
+
+        .course-item
+          $b-radius: 0.44rem
+
+          background-color: #fff
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+          display: flex
+          flex-direction: column
+          border-radius: $b-radius
+
+          .course-body
+            padding: 1.25rem 1.5rem
+            display: flex
+
+            .details-group
+              display: flex
+              flex: 1
+              gap: 12px
+              flex-direction: column
+              color: #252525
+              font:
+                family: $ff-merriweather-sans
+                size: 1.18rem
+                weight: 350
+              
+              span i
+                margin-right: 5px
+            
+            button.view-course-btn
+              font-size: 1.75rem
+              cursor: pointer
+              color: #fff
+              border: none
+              border-radius: 25%
+              padding-inline: 24px
+              transition: 0.15s
+
+              &:hover
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+
+              &.student
+                background-color: $theme1-dark
+
+              &.admin
+                background-color: $theme2
+
+          .course-header
+            position: relative
+
+            .kebab
+              font-size: 1.6rem
+              position: absolute
+              top: 0
+              right: 0
+              color: #fff
+              border: none
+              background-color: rgba(0,0,0,0)
+              z-index: 3
+              text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7)
+              padding: 5px
+              margin: 10px 20px
+              cursor: pointer
+
+            .kebab-container
+              position: absolute
+              z-index: 10
+              top: 50px
+              right: 10px
+              background-color: #fff
+              border-radius: 0.2rem
+              box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px
+              z-index: 6
+
+              ul
+                li
+                  transition: 0.2s
+                  list-style: none
+                  padding: 9px 18px
+                  cursor: pointer
+                  font:
+                    family: $ff-nunito
+                    size: 1.2rem
+                    text-align: center
+
+                  &:hover
+                    background-color: #00000007
+
+            .title-group
+              display: flex
+              flex-direction: column
+              position: absolute
+              bottom: 0
+              left: 0
+              margin: 15px 15px
+              z-index: 3
+              text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7)
+
+              span
+                color: #fff
+
+                &.course-title
+                  width: 100%
+                  display: -webkit-box
+                  -webkit-line-clamp: 2
+                  -webkit-box-orient: vertical
+                  overflow: hidden
+                  text-overflow: ellipsis
+                  max-height: 72px
+                  font:
+                    family: $ff-merriweather-sans
+                    size: 1.6rem
+                    weight: 400
+                
+                &.course-strand
+                  margin-top: 2px
+                  font:
+                    family: $ff-nunito
+                    size: 1.3rem
+                    weight: 500
+
+            .course-bg
+              width: 100%
+              height: 190px
+              position: relative
+              border-top-left-radius: $b-radius
+              border-top-right-radius: $b-radius
+
+              &::after
+                content: ""
+                position: absolute
+                border-radius: inherit
+                top: 0
+                left: 0
+                width: 100%
+                height: 100%
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 60%)
+
+              img
+                position: absolute
+                width: 100%
+                height: 100%
+                object-fit: cover
+                border-radius: inherit
+    
+      .classroom-items-container
+        display: flex
+        flex-direction: column
+        gap: 15px 0
+
+        .classroom-item
+          @include content-item
+          position: relative
+
+          button.select-btn
+            position: absolute
+            right: 0
+            background-color: rgba(0,0,0,0)
+            border: none
+            font-size: 1.75rem
+            color: #222
+            margin-right: 25px
+
+          .content-icon
+            padding: 18px 22px
+            font-size: 1.65rem
+
+          .content-details
+            margin-left: 25px
+
+            span.content-title
+              font-size: 1.25rem
+
+            .details-group
+              margin-top: 10px
+              display: flex
+              gap: 0 20px
+
+              small
+                font:
+                  size: 1.15rem
+                  family: $ff-nunito
+
+      .student-items-container
+        display: flex
+        flex-direction: column
+        gap: 15px 0
+
+        .student-item
+          @include content-item
+
+          button.select-btn
+            position: absolute
+            right: 0
+            background-color: rgba(0,0,0,0)
+            border: none
+            font-size: 1.75rem
+            color: #222
+            margin-right: 25px
+
+          .content-icon
+            height: 100%
+            width: 75px
+            border-radius: 0.4rem
+            padding: 0
+
+            img
+              border-radius: inherit
+              width: 100%
+              height: 100%
+          
+          .content-details
+            margin-left: 25px
+
+            span.content-title
+              font-size: 1.25rem
+
+            .details-group
+              margin-top: 10px
+              display: flex
+              gap: 0 20px
+
+              small
+                font:
+                  size: 1.15rem
+                  family: $ff-nunito

@@ -1,937 +1,956 @@
 @import '../../App'
-
 $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
 
 .Home.default
-    display: flex
-    background-color: $bg-alt
-    justify-content: center
-    border-radius: 2rem
-    width: 100%
-    height: 100%
-    overflow: auto
+  display: flex
+  background-color: $bg-alt
+  justify-content: center
+  border-radius: 2rem
+  width: 100%
+  height: 100%
+  overflow: auto
 
-    .loader
-        margin-top: 1.5rem
+  .loader
+    margin-top: 1.5rem
 
 .Home.student-view
-    display: flex
-    background-color: $bg-alt
-    justify-content: center
-    border-radius: 2rem
-    width: 100%
-    height: 100%
+  display: flex
+  background-color: $bg-alt
+  justify-content: center
+  border-radius: 2rem
+  width: 100%
+  height: 100%
+  overflow: auto
+
+  .loader
+    margin-top: 1.5rem
+
+  .main-content-container
+    min-width: 780px
+    flex: 1
     overflow: auto
 
-    .loader
-        margin-top: 1.5rem
-
-    .main-content-container
-        min-width: 780px
-        flex: 1
-        overflow: auto
-
-    .profile-content-container .ProfileContent
-        overflow: auto
-        display: flex
-        flex-direction: column
-        background-color: $bg-main
-        width: 320px
-        height: 100%
-        border-radius: 2rem
-
-        .profile-section-container
-            display: flex
-            flex-direction: column
-            align-items: center
-            padding: 1.5rem 0
-
-            .user-icon-container
-                width: 120px
-                height: 120px
-
-                img.user-icon
-                    width: 100%
-                    height: 100%    
-                    border-radius: 50%
-
-        .calendar-section-container
-            display: flex
-            justify-content: center
-            margin: 15px 0
-            max-height: 240px
-
-        .reminders-section-container
-            padding: 0 1rem
-            margin-top: 10px
-
-            h6
-                font:
-                    family: $ff-merriweather-sans
-                    weight: 400
-                    size: 1.1rem
-            
-            .reminders-items-container
-                margin-top: 5px
-                display: flex
-                flex-direction: column
-
-                .reminder-item
-                    cursor: pointer
-                    display: flex
-                    padding: 10px 5px
-                    transition: 0.1s ease-out
-
-                    &:hover
-                        background-color: $theme1-transparent2
-                        border-radius: 0.3rem
-
-                    .icon-container
-                        display: flex
-                        align-items: center
-
-                        i
-                            background-color: $theme1-transparent2
-                            color: $theme1-text
-                            border-radius: 0.4rem
-                            padding: 10px 15px
-                            font-size: 1.2rem
-
-
-                    .text-container
-                        display: flex
-                        flex-direction: column
-                        margin-left: 12px
-
-                        .reminder-title
-                            font:
-                                family: $ff-merriweather-sans
-                                size: 1.1rem
-                                weight: 400
-
-                        .reminder-date
-                            margin-top: 3px
-                            font:
-                                family: $ff-merriweather-sans
-                                weight: 300
-                                size: 0.9rem
-
-        .user-detail-container
-            margin-top: 12px
-            text-align: center
-
-            h3.user-name
-                margin: 0 
-                font:
-                    family: $ff-merriweather-sans
-                    weight: 800
-                    size: 1.3rem
-
-            h5.user-role
-                margin: 0
-                font:
-                    family: $ff-nunito
-                    weight: 600
-                    size: 1.1rem
-        
-        .user-profile-btn-container
-            margin-top: 15px
-        
-            .user-profile-btn
-                padding: 6px 30px
-                border-radius: 1rem
-                text-decoration: none
-                color: #fff
-                background-color: $theme1
-                font:
-                    family: $ff-roboto
-                    size: 1.1rem
-
-    .MainContent
-        padding: 0.5rem 2rem
-
-        .section-container
-            padding: 1rem 0
-
-            h4
-                color: #424242
-                font:
-                    family: $ff-merriweather-sans
-                    weight: 500
-                    size: 1.2rem
-
-            .section-header
-                display: flex
-                align-items: center
-
-                .view-all-btn
-                    margin-left: auto
-                    text-decoration: none
-                    color: #424242
-                    padding: 4px 15px
-                    background-color: #0000001e
-                    border-radius: 1rem
-                    font:
-                        family: $ff-merriweather-sans
-                        weight: 400
-                        size: 0.9rem
-
-        .courses-section
-            margin-top: 1rem
-
-            .courses-items-container
-                display: flex
-                margin-top: 15px
-                gap: 15px
-
-                .course-card
-                    box-shadow: $box-shadow
-                    background-color: #fff
-                    display: flex
-                    width: calc(100% / 3)
-                    height: 100%
-                    flex-direction: column
-                    border-radius: 0.5rem
-                    padding: 1rem
-                    transition: 0.2s ease-out
-                    cursor: pointer
-
-                    &:hover
-                        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
-
-                    .title-section
-                        margin-bottom: 2rem
-
-                        h5.course-title
-                            text-overflow: ellipsis
-                            overflow: hidden
-                            white-space: nowrap
-                            color: $theme1-text
-                            font:
-                                family: $ff-merriweather-sans
-                                size: 1.1rem
-                                weight: 500
-                        
-                        h6.course-strand
-                            font:
-                                family: $ff-nunito
-                                size: 0.9rem
-                    
-                    .details-section
-                        margin-top: auto
-                        font:
-                            family: $ff-merriweather-sans
-                            weight: 300
-                            size: 1rem                    
-
-                        i
-                            margin-right: 10px
-
-                        .course-items
-                            padding: 5px 0
-
-        .qlinks-section
-            margin-top: 1rem
-
-            .qlinks-items-container
-                width: 100%
-
-                .qlinks-row
-                    width: 100%
-                    display: flex
-                    gap: 15px
-
-                .qlinks-card
-                    width: calc(100% / 3)
-                    margin-top: 1rem
-                    background-color: #fff
-                    border-radius: 0.5rem
-                    border-bottom-width: 4px
-                    border-bottom-style: solid
-                    display: flex
-                    justify-content: center
-                    align-items: center
-                    cursor: pointer
-                    transition: 0.2s ease-out
-
-                    &:hover
-                        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
-                    
-                    .qlinks-text
-                        margin: 3.5rem 0
-                        color: #000
-                        width: 100%
-                        height: 100%
-                        justify-content: center
-                        align-items: center
-                        text-align: center
-                        text-decoration: none
-                        display: flex
-                        flex-direction: column
-                        font:
-                            weight: 400
-                            family: $ff-merriweather-sans
-                            size: 1.2rem
-                        
-                        i
-                            font-size: 1.7rem
-                            margin-bottom: 12px
-
-                    &.blue
-                        border-color: $blue
-
-                        i
-                            color: $blue
-
-                        &:hover
-                            background-color: $blue
-
-                            .qlinks-text
-                                color: #fff
-
-                                i
-                                    color: #fff
-
-                    &.red
-                        border-color: $red
-
-                        i
-                            color: $red
-                        
-                        &:hover
-                            background-color: $red
-
-                            .qlinks-text
-                                color: #fff
-
-                                i
-                                    color: #fff
-
-                    &.orange
-                        border-color: $orange
-
-                        i
-                            color: $orange
-
-                        &:hover
-                            background-color: $orange
-
-                            .qlinks-text
-                                color: #fff
-
-                                i
-                                    color: #fff
-
-                    &.purple
-                        border-color: $purple
-
-                        i
-                            color: $purple
-                        
-                        &:hover
-                            background-color: $purple
-
-                            .qlinks-text
-                                color: #fff
-
-                                i
-                                    color: #fff
-
-                    &.yellow
-                        border-color: $yellow
-
-                        i
-                            color: $yellow
-
-                        &:hover
-                            background-color: $yellow
-
-                            .qlinks-text
-                                color: #fff
-
-                                i
-                                    color: #fff
-
-                    &.teal
-                        border-color: $teal 
-
-                        i
-                            color: $teal
-
-                        &:hover
-                            background-color: $teal
-
-                            .qlinks-text
-                                color: #fff
-
-                                i
-                                    color: #fff
-
-.Home.admin-view 
+  .profile-content-container .ProfileContent
+    overflow: auto
     display: flex
     flex-direction: column
-    background-color: $bg-alt
-    border-top-left-radius: 2rem
-    border-bottom-left-radius: 2rem
-    width: 100%
+    background-color: $bg-main
+    width: 320px
     height: 100%
-    overflow: auto
-    align-items: center
+    border-radius: 2rem
 
-    .loader
-        margin-top: 1.5rem    
+    .profile-section-container
+      display: flex
+      flex-direction: column
+      align-items: center
+      padding: 1.5rem 0
 
-    .main-container
+      .user-icon-container
+        width: 120px
+        height: 120px
+
+        img.user-icon
+          width: 100%
+          height: 100%  
+          border-radius: 50%
+
+    .calendar-section-container
+      display: flex
+      justify-content: center
+      margin: 15px 0
+      max-height: 240px
+
+    .reminders-section-container
+      padding: 0 1rem
+      margin-top: 10px
+
+      h6
+        font:
+          family: $ff-merriweather-sans
+          weight: 400
+          size: 1.1rem
+      
+      .reminders-items-container
+        margin-top: 5px
         display: flex
         flex-direction: column
-        padding: 0.5rem 2rem
-        width: 100%
-        height: 100%
 
-        /* FIX LATER */
-        max-width: 1100px
-        min-width: 1080px
+        .reminder-item
+          cursor: pointer
+          display: flex
+          padding: 10px 5px
+          transition: 0.1s ease-out
 
-        > .row
-            display: flex
-            justify-content: space-between
-            margin-bottom: 1rem
-            gap: 0 15px
+          &:hover
+            background-color: $theme1-transparent
+            border-radius: 0.3rem
 
-    .dblock
-        @mixin dblock
-            background-color: #fff 
-            box-shadow: $box-shadow
-            border-radius: 0.5rem
-
-        > .dblock-body
-            padding: 15px 25px
-
-        > .dblock-header
-            display: flex
-            padding: 15px 25px
-            border-bottom: 2px solid #e5e6e7
-
-            .header-btn
-                background-color: #CDCFD2
-                color: #484848
-                border-radius: 0.5rem
-                text-decoration: none
-                padding: 3px 12px
-                display: flex
-                align-items: center
-                font:
-                    family: $ff-merriweather-sans
-                    size: 0.9rem
-
-                i
-                    font-size: 0.8rem
-                    margin-left: 5px
-
-            h5
-                flex: 1
-                font:
-                    family: $ff-merriweather-sans
-                    size: 1.25rem
-                    weight: 300
-
-        &.semi-full
-            width: 700px
-
-        &.full
-            width: 100%
-
-        &.announcements
-            @include dblock
-            width: 480px
-
-            .dblock-body
-                padding: 0
-                overflow-y: auto
-
-            .announcement-items-container
-                display: flex
-                flex-direction: column
-
-                .announcement-item
-                    max-width: 100%
-                    display: flex
-                    flex-direction: column
-                    padding: 16px 25px
-                    border-bottom: 1px solid #ccc
-                    transition: 0.15s
-
-                    &:last-child
-                        border-bottom: none
-
-                    span.announcement-title
-                        line-break: loose
-                        color: $theme2-text
-                        max-width: 90%
-                        transition: 0.1s
-                        cursor: pointer
-                        font:
-                            family: $ff-noto-sans
-                            weight: 360
-                            size: 1.2rem
-                        
-                        &:hover
-                            color: #0152CC
-
-                    span.announcement-date
-                        color: #555555
-                        margin-top: 5px
-                        font:
-                            family: $ff-noto-sans
-                            size: 0.95rem
-                            weight: 420
-
-        &.courses
-            @include dblock
-            flex: 1
-
-            .dblock-body
-                padding: 0
-
-            .course-items-container
-                display: flex
-                flex-direction: column
-
-                .course-item
-                    display: flex
-                    align-items: center
-                    border-bottom: 1px solid #ccc
-                    padding: 22px 25px
-                    transition: 0.15s
-                    cursor: pointer
-
-                    &:hover
-                        background-color: #00000005  
-
-                        .course-btn-icon
-                            color: #0152CC
-
-                    &:last-child
-                        border-bottom: none
-
-                    .course-icon
-                        background-color: $theme2-transparent2
-                        border-radius: 0.5rem
-                        color: $theme2
-                        padding: 12px
-                        font-size: 1.35rem
-                    
-                    .course-btn-icon
-                        font-size: 1.25rem
-                        color: #172B4C
-                        transition: 0.15s
-
-                    .course-details
-                        width: 0
-                        margin-left: 20px
-                        flex: 1
-
-                        span.course-title
-                            max-width: 85%
-                            display: block
-                            white-space: nowrap
-                            overflow: hidden
-                            text-overflow: ellipsis
-                            font:
-                                family: $ff-merriweather-sans
-                                size: 1.1rem
-                                weight: 350
-                        
-                        .details-group
-                            margin-top: 5px
-                            display: flex
-
-                            .detail-info
-                                margin-right: 15px
-                                color: #1a1a1a
-                                font:
-                                    family: $ff-nunito
-                                    size: 1rem
-
-                                i
-                                    margin-right: 2px
-
-        &.classroom
-            @include dblock
+          .icon-container
             display: flex
             align-items: center
-            justify-content: center
-            height: 180px
-            padding-inline: 15px
 
-            .classroom-icon
-                background-color: $theme2-transparent2
-                border-radius: 50%
-                color: $theme2
-                padding: 25px
-                font-size: 3rem
+            i
+              background-color: $theme1-transparent
+              color: $theme1-text
+              border-radius: 0.4rem
+              padding: 10px 15px
+              font-size: 1.2rem
 
-            .classroom-details
-                display: flex
-                flex-direction: column
-                margin-left: 30px
-                font-family: $ff-merriweather-sans
 
-                span.classroom-name
-                    font-size: 1.5rem
-
-                span.classroom-adviser, span.classroom-students
-                    font-size: 1.1rem
-                    margin-right: 5px
-
-                    i
-                        margin-right: 5px
-                
-            .details-group
-                margin-top: 10px
-                display: flex
-                gap: 0 20px
-                font-size: 1rem
-                font-weight: 350
-            
-            .btn-group
-                display: flex
-                gap: 0 15px
-                margin-top: 22px
-
-                .details-btn
-                    border: none
-                    cursor: pointer
-                    border-radius: 0.4rem
-                    border: 1px solid rgb(152, 152, 152)
-                    padding: 8px 15px
-                    color: #000
-                    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05)
-                    text-decoration: none
-                    background-color: #fff
-                    transition: 0.15s ease-out
-                    font:
-                        family: $ff-nunito
-                        size: 1rem
-                        weight: 500
-
-                    &:hover
-                        background-color: #f5f5f5
-
-        &.calendar
-            @include dblock
-            padding: 15px 10px
-            height: 256px
-            
-        &.students
-            @include dblock
-            flex: 1
-            height: 400px
-            overflow: hidden
-
-            .dblock-body
-                padding: 0
-
-            .student-items-container
-                display: flex
-                flex-direction: column
-
-                .student-item
-                    display: flex
-                    align-items: center
-                    padding: 15px 25px
-                    cursor: pointer
-                    transition: 0.1s
-                    border-bottom: 1px solid #ccc
-
-                    &:last-child
-                        border-bottom: none
-
-                    &:hover
-                        background-color: #00000005  
-
-                    .student-icon
-                        height: 55px
-                        width: 55px
-
-                        img
-                            width: 100%
-                            height: 100%
-                            border-radius: 0.5rem
-                            object-fit: cover
-
-                    .student-details
-                        overflow: hidden
-                        display: flex
-                        flex-direction: column
-                        margin-left: 20px
-                        padding-right: 30px
-                        flex: 1
-                        font:
-                            family: $ff-merriweather-sans
-                            weight: 350
-                        
-                        span
-                            max-width: 100%
-                            display: block
-                            white-space: nowrap
-                            overflow: hidden
-                            text-overflow: ellipsis
-
-                        span.student-name
-                            font-size: 1.25rem
-                            
-                        span.student-strand
-                            font-size: 1rem
-                            color: #333333
-                    
-                    .student-attendance
-                        .ping
-                            width: 12px
-                            height: 12px
-                            border-radius: 50%
-
-                            &.present
-                                background-color: $present
-                            &.late
-                                background-color: $late
-                            &.absent
-                                background-color: $absent
-                            &.excused
-                                background-color: $excused
-                            &.not-marked
-                                background-color: $not-marked
-
-        &.attendance
-            @include dblock
+          .text-container
             display: flex
             flex-direction: column
+            margin-left: 12px
 
-            .dblock-body
-                flex: 1
-                display: flex
-                align-items: center
+            .reminder-title
+              font:
+                family: $ff-merriweather-sans
+                size: 1.1rem
+                weight: 400
 
-    .Calendar .calendar-day.today
-        background-color: $theme2 !important                 
+            .reminder-date
+              margin-top: 3px
+              font:
+                family: $ff-merriweather-sans
+                weight: 300
+                size: 0.9rem
 
-    .WelcomeBanner 
-        height: 100%
+    .user-detail-container
+      margin-top: 12px
+      text-align: center
 
-        h2.greetings
-            color: $theme2 !important
+      h3.user-name
+        margin: 0 
+        font:
+          family: $ff-merriweather-sans
+          weight: 800
+          size: 1.3rem
+
+      h5.user-role
+        margin: 0
+        font:
+          family: $ff-nunito
+          weight: 600
+          size: 1.1rem
+    
+    .user-profile-btn-container
+      margin-top: 15px
+    
+      .user-profile-btn
+        padding: 6px 30px
+        border-radius: 1rem
+        text-decoration: none
+        color: #fff
+        background-color: $theme1
+        font:
+          family: $ff-roboto
+          size: 1.1rem
+
+  .MainContent
+    padding: 0.5rem 2rem
+
+    .section-container
+      padding: 1rem 0
+
+      h4
+        color: #424242
+        font:
+          family: $ff-merriweather-sans
+          weight: 500
+          size: 1.2rem
+
+      .section-header
+        display: flex
+        align-items: center
+
+        .view-all-btn
+          margin-left: auto
+          text-decoration: none
+          color: #424242
+          padding: 4px 15px
+          background-color: #0000001e
+          border-radius: 1rem
+          font:
+            family: $ff-merriweather-sans
+            weight: 400
+            size: 0.9rem
+
+    .courses-section
+      margin-top: 1rem
+
+      .courses-items-container
+        display: flex
+        margin-top: 15px
+        gap: 15px
+
+        .course-card
+          box-shadow: $box-shadow
+          background-color: #fff
+          display: flex
+          width: calc(100% / 3)
+          height: 100%
+          flex-direction: column
+          border-radius: 0.5rem
+          padding: 1rem
+          transition: 0.2s ease-out
+          cursor: pointer
+
+          &:hover
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
+
+          .title-section
+            margin-bottom: 2rem
+
+            h5.course-title
+              text-overflow: ellipsis
+              overflow: hidden
+              white-space: nowrap
+              color: $theme1-text
+              font:
+                family: $ff-merriweather-sans
+                size: 1.1rem
+                weight: 500
+            
+            h6.course-strand
+              font:
+                family: $ff-nunito
+                size: 0.9rem
+          
+          .details-section
+            margin-top: auto
+            font:
+              family: $ff-merriweather-sans
+              weight: 300
+              size: 1rem          
+
+            i
+              margin-right: 10px
+
+            .course-items
+              padding: 5px 0
 
     .qlinks-section
-        margin: 1rem 0
+      margin-top: 1rem
+
+      .qlinks-items-container
         width: 100%
 
-        h4
-            color: #424242
-            margin-bottom: 1rem
-            font:
-                family: $ff-merriweather-sans
-                weight: 500
-                size: 1.35rem
-
-        .qlinks-items-container
-            display: grid
-            width: 100%
-            grid-template-columns: 1fr 1fr
-            gap: 15px 10px
+        .qlinks-row
+          width: 100%
+          display: flex
+          gap: 15px
 
         .qlinks-card
-            background-color: #fff 
-            box-shadow: $box-shadow
-            border-radius: 0.25rem
-            padding: 15px 35px
-            display: flex
+          width: calc(100% / 3)
+          margin-top: 1rem
+          background-color: #fff
+          border-radius: 0.5rem
+          border-bottom-width: 4px
+          border-bottom-style: solid
+          display: flex
+          justify-content: center
+          align-items: center
+          cursor: pointer
+          transition: 0.2s ease-out
+
+          &:hover
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
+          
+          .qlinks-text
+            margin: 3.5rem 0
+            color: #000
+            width: 100%
+            height: 100%
+            justify-content: center
             align-items: center
+            text-align: center
+            text-decoration: none
+            display: flex
+            flex-direction: column
+            font:
+              weight: 400
+              family: $ff-merriweather-sans
+              size: 1.2rem
+            
+            i
+              font-size: 1.7rem
+              margin-bottom: 12px
+
+          &.blue
+            border-color: $blue
+
+            i
+              color: $blue
 
             &:hover
-                .icon-container i
-                    color: #022f5f
-                
-                .text-container
-                    color: #022f5f
+              background-color: $blue
 
-            a
-                width: 100%
-                height: 100%
-                display: flex
-                text-decoration: none
+              .qlinks-text
+                color: #fff
 
-            .icon-container
-                display: flex
-                align-items: center
-            
                 i
-                    font-size: 2.15rem
-                    transition: 0.15s
-                    color: #012246
+                  color: #fff
 
-            .text-container
-                display: flex
-                flex-direction: column
-                color: #1A1A1A
-                margin-left: 25px
-                transition: 0.15s
+          &.red
+            border-color: $red
 
-                h6
-                    font:
-                        family: $ff-merriweather-sans
-                        size: 1.35rem
-                        weight: 400
+            i
+              color: $red
+            
+            &:hover
+              background-color: $red
 
-                span
-                    margin-top: 3px
-                    font:
-                        family: $ff-nunito
-                        size: 1rem
-                        weight: 400
+              .qlinks-text
+                color: #fff
 
-.TopBar
+                i
+                  color: #fff
+
+          &.orange
+            border-color: $orange
+
+            i
+              color: $orange
+
+            &:hover
+              background-color: $orange
+
+              .qlinks-text
+                color: #fff
+
+                i
+                  color: #fff
+
+          &.purple
+            border-color: $purple
+
+            i
+              color: $purple
+            
+            &:hover
+              background-color: $purple
+
+              .qlinks-text
+                color: #fff
+
+                i
+                  color: #fff
+
+          &.yellow
+            border-color: $yellow
+
+            i
+              color: $yellow
+
+            &:hover
+              background-color: $yellow
+
+              .qlinks-text
+                color: #fff
+
+                i
+                  color: #fff
+
+          &.teal
+            border-color: $teal 
+
+            i
+              color: $teal
+
+            &:hover
+              background-color: $teal
+
+              .qlinks-text
+                color: #fff
+
+                i
+                  color: #fff
+
+.Home.admin-view 
+  display: flex
+  flex-direction: column
+  background-color: $bg-alt
+  border-top-left-radius: 2rem
+  border-bottom-left-radius: 2rem
+  width: 100%
+  height: 100%
+  overflow: auto
+  align-items: center
+
+  .loader
+    margin-top: 1.5rem  
+
+  .main-container
+    display: flex
+    flex-direction: column
+    padding: 0.5rem 2rem
+    width: 100%
+    height: 100%
+
+    /* FIX LATER */
+    max-width: 1100px
+    min-width: 1080px
+
+    > .row
+      display: flex
+      justify-content: space-between
+      margin-bottom: 1rem
+      gap: 0 15px
+
+  .dblock
+    @mixin dblock
+      background-color: #fff 
+      box-shadow: $box-shadow
+      border-radius: 0.5rem
+
+    > .dblock-body
+      padding: 15px 25px
+
+    > .dblock-header
+      display: flex
+      padding: 15px 25px
+      border-bottom: 2px solid #e5e6e7
+
+      .header-btn
+        background-color: #CDCFD2
+        color: #484848
+        border-radius: 0.5rem
+        text-decoration: none
+        padding: 3px 12px
+        display: flex
+        align-items: center
+        font:
+          family: $ff-merriweather-sans
+          size: 0.9rem
+
+        i
+          font-size: 0.8rem
+          margin-left: 5px
+
+      h5
+        flex: 1
+        font:
+          family: $ff-merriweather-sans
+          size: 1.25rem
+          weight: 300
+
+    &.semi-full
+      width: 700px
+
+    &.full
+      width: 100%
+
+    &.announcements
+      @include dblock
+      width: 480px
+
+      .dblock-body
+        padding: 0
+        overflow-y: auto
+
+      .announcement-items-container
+        display: flex
+        flex-direction: column
+
+        .announcement-item
+          max-width: 100%
+          display: flex
+          flex-direction: column
+          padding: 16px 25px
+          border-bottom: 1px solid #ccc
+          transition: 0.15s
+
+          &:last-child
+            border-bottom: none
+
+          span.announcement-title
+            line-break: loose
+            color: $theme2-text
+            max-width: 90%
+            transition: 0.1s
+            cursor: pointer
+            font:
+              family: $ff-noto-sans
+              weight: 360
+              size: 1.2rem
+            
+            &:hover
+              color: #0152CC
+
+          span.announcement-date
+            color: #555555
+            margin-top: 5px
+            font:
+              family: $ff-noto-sans
+              size: 0.95rem
+              weight: 420
+
+    &.courses
+      @include dblock
+      flex: 1
+
+      .dblock-body
+        padding: 0
+
+      .course-items-container
+        display: flex
+        flex-direction: column
+
+        .course-item
+          display: flex
+          align-items: center
+          border-bottom: 1px solid #ccc
+          padding: 22px 25px
+          transition: 0.15s
+          cursor: pointer
+
+          &:hover
+            background-color: #00000005  
+
+            .course-btn-icon
+              color: #0152CC
+
+          &:last-child
+            border-bottom: none
+
+          .course-icon
+            background-color: $theme2-transparent2
+            border-radius: 0.5rem
+            color: $theme2
+            padding: 12px
+            font-size: 1.35rem
+          
+          .course-btn-icon
+            font-size: 1.25rem
+            color: #172B4C
+            transition: 0.15s
+
+          .course-details
+            width: 0
+            margin-left: 20px
+            flex: 1
+
+            span.course-title
+              max-width: 85%
+              display: block
+              white-space: nowrap
+              overflow: hidden
+              text-overflow: ellipsis
+              font:
+                family: $ff-merriweather-sans
+                size: 1.1rem
+                weight: 350
+            
+            .details-group
+              margin-top: 5px
+              display: flex
+
+              .detail-info
+                margin-right: 15px
+                color: #1a1a1a
+                font:
+                  family: $ff-nunito
+                  size: 1rem
+
+                i
+                  margin-right: 2px
+
+    &.classroom
+      @include dblock
+      display: flex
+      align-items: center
+      justify-content: center
+      height: 180px
+      padding-inline: 15px
+
+      .classroom-icon
+        background-color: $theme2-transparent2
+        border-radius: 50%
+        color: $theme2
+        padding: 25px
+        font-size: 3rem
+
+      .classroom-details
+        display: flex
+        flex-direction: column
+        margin-left: 30px
+        font-family: $ff-merriweather-sans
+
+        span.classroom-name
+          font-size: 1.5rem
+
+        span.classroom-adviser, span.classroom-students
+          font-size: 1.1rem
+          margin-right: 5px
+
+          i
+            margin-right: 5px
+        
+      .details-group
+        margin-top: 10px
+        display: flex
+        gap: 0 20px
+        font-size: 1rem
+        font-weight: 350
+      
+      .btn-group
+        display: flex
+        gap: 0 15px
+        margin-top: 22px
+
+        .details-btn
+          border: none
+          cursor: pointer
+          border-radius: 0.4rem
+          border: 1px solid rgb(152, 152, 152)
+          padding: 8px 15px
+          color: #000
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05)
+          text-decoration: none
+          background-color: #fff
+          transition: 0.15s ease-out
+          font:
+            family: $ff-nunito
+            size: 1rem
+            weight: 500
+
+          &:hover
+            background-color: #f5f5f5
+
+    &.calendar
+      @include dblock
+      padding: 15px 10px
+      height: 256px
+      
+    &.students
+      @include dblock
+      flex: 1
+      height: 400px
+      overflow: hidden
+
+      .dblock-body
+        padding: 0
+
+      .student-items-container
+        display: flex
+        flex-direction: column
+
+        .student-item
+          display: flex
+          align-items: center
+          padding: 15px 25px
+          cursor: pointer
+          transition: 0.1s
+          border-bottom: 1px solid #ccc
+
+          &:last-child
+            border-bottom: none
+
+          &:hover
+            background-color: #00000005  
+
+          .student-icon
+            height: 55px
+            width: 55px
+
+            img
+              width: 100%
+              height: 100%
+              border-radius: 0.5rem
+              object-fit: cover
+
+          .student-details
+            overflow: hidden
+            display: flex
+            flex-direction: column
+            margin-left: 20px
+            padding-right: 30px
+            flex: 1
+            font:
+              family: $ff-merriweather-sans
+              weight: 350
+            
+            span
+              max-width: 100%
+              display: block
+              white-space: nowrap
+              overflow: hidden
+              text-overflow: ellipsis
+
+            span.student-name
+              font-size: 1.25rem
+              
+            span.student-strand
+              font-size: 1rem
+              color: #333333
+          
+          .student-attendance
+            .ping
+              width: 12px
+              height: 12px
+              border-radius: 50%
+
+              &.present
+                background-color: $present
+              &.late
+                background-color: $late
+              &.absent
+                background-color: $absent
+              &.excused
+                background-color: $excused
+              &.not-marked
+                background-color: $not-marked
+
+    &.attendance
+      @include dblock
+      display: flex
+      flex-direction: column
+
+      .dblock-body
+        flex: 1
+        display: flex
+        align-items: center
+
+  .Calendar .calendar-day.today
+    background-color: $theme2 !important         
+
+  .WelcomeBanner 
+    height: 100%
+
+    h2.greetings
+      color: $theme2 !important
+
+  .qlinks-section
+    margin: 1rem 0
+    width: 100%
+
+    h4
+      color: #424242
+      margin-bottom: 1rem
+      font:
+        family: $ff-merriweather-sans
+        weight: 500
+        size: 1.35rem
+
+    .qlinks-items-container
+      display: grid
+      width: 100%
+      grid-template-columns: 1fr 1fr
+      gap: 15px 10px
+
+    .qlinks-card
+      background-color: #fff 
+      box-shadow: $box-shadow
+      border-radius: 0.25rem
+      padding: 15px 35px
+      display: flex
+      align-items: center
+
+      &:hover
+        .icon-container i
+          color: #022f5f
+        
+        .text-container
+          color: #022f5f
+
+      a
+        width: 100%
+        height: 100%
+        display: flex
+        text-decoration: none
+
+      .icon-container
+        display: flex
+        align-items: center
+      
+        i
+          font-size: 2.15rem
+          transition: 0.15s
+          color: #012246
+
+      .text-container
+        display: flex
+        flex-direction: column
+        color: #1A1A1A
+        margin-left: 25px
+        transition: 0.15s
+
+        h6
+          font:
+            family: $ff-merriweather-sans
+            size: 1.35rem
+            weight: 400
+
+        span
+          margin-top: 3px
+          font:
+            family: $ff-nunito
+            size: 1rem
+            weight: 400
+
+.Home
+  .Modal
+    position: relative
+
+    .wrapper
+      padding: 1rem 0.5rem
+      width: 900px
+
+      button.close-modal
+        background-color: inherit
+        border: none
+        padding: 5px
+        position: absolute
+        color:  #252525
+        cursor: pointer
+        top: 0
+        margin: 10px 15px
+        right: 0
+        font-size: 1.6rem
+
+  .TopBar
     display: flex
     width: 100%
     padding: 1.5rem 2rem
     align-items: center
 
     .date-container
-        display: flex
-        align-items: center
-        .date-text
-            color: #464646
-            font:
-                family: $ff-merriweather-sans
-                weight: 400
-                size: 1.1rem
+      display: flex
+      align-items: center
+      .date-text
+        color: #464646
+        font:
+          family: $ff-merriweather-sans
+          weight: 400
+          size: 1.1rem
 
-        .admin-btn-group
-            margin-left: 15px
+      .admin-btn-group
+        margin-left: 15px
 
-        .topbar-btn
-            background-color: #fff
-            font-size: 1.3rem
-            padding: 7px 12px
-            margin: 0 7px
-            border: none
-            border-radius: 0.2rem
-            color: #172B4C
-            transition: 0.15s ease-out
-            cursor: pointer
+      .topbar-btn
+        background-color: #fff
+        font-size: 1.3rem
+        padding: 7px 12px
+        margin: 0 7px
+        border: none
+        border-radius: 0.2rem
+        color: #172B4C
+        transition: 0.15s ease-out
+        cursor: pointer
 
-            &:hover
-                color: #0152CC
+        &:hover
+          color: #0152CC
 
     .search-bar-container
-        flex: 1
+      flex: 1
 
-        .search-bar-input-group
-            position: relative
-            display: flex
-            height: 45px
+      .search-bar-input-group
+        position: relative
+        display: flex
+        height: 45px
 
-            button.search-btn
-                position: absolute
-                border: none
-                font-size: 1.3rem
-                height: 45px
-                width: 45px
-                border-radius: 0.8rem
-                cursor: pointer
+        button.search-btn
+          position: absolute
+          border: none
+          font-size: 1.3rem
+          height: 45px
+          width: 45px
+          border-radius: 0.8rem
+          cursor: pointer
 
-                &.student
-                    color: $theme1
-                    background-color: $theme1-transparent
-                &.admin
-                    color: $theme2
-                    background-color: $theme2-transparent
-        
-            .input-text-container
-                input.search-input-text
-                    padding-left: 25px
-                    margin-left: 30px
-                    height: 100%
-                    width: 100%
-                    border: none
-                    border-radius: 0.4rem
-                    font:
-                        family: $ff-merriweather-sans
-                        size: 1rem
-                        weight: 400
+          &.student
+            color: $theme1
+            background-color: $theme1-transparent
+          &.admin
+            color: $theme2
+            background-color: $theme2-transparent
+      
+        .input-text-container
+          input.search-input-text
+            padding-left: 25px
+            margin-left: 30px
+            height: 100%
+            width: 100%
+            border: none
+            border-radius: 0.4rem
+            font:
+              family: $ff-merriweather-sans
+              size: 1rem
+              weight: 400
 
-                    &:focus
-                        outline: none
+            &:focus
+              outline: none
 
-.Calendar
+  .Calendar
     width: 280px
     display: flex
     flex-direction: column
     font:
-        family: $ff-merriweather-sans
-        weight: 300
-        size: 1rem
+      family: $ff-merriweather-sans
+      weight: 300
+      size: 1rem
 
     .calendar-header
-        display: flex
-        justify-content: space-between
-        
-        button#calendar-prev-btn, button#calendar-next-btn
-            padding: 5px 10px
-            cursor: pointer
-            font-size: 1.1rem
-            background-color: #fff
-            border: none
-            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px
-            border-radius: 0.5rem
-            transition: 0.1s ease-out
+      display: flex
+      justify-content: space-between
+      
+      button#calendar-prev-btn, button#calendar-next-btn
+        padding: 5px 10px
+        cursor: pointer
+        font-size: 1.1rem
+        background-color: #fff
+        border: none
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px
+        border-radius: 0.5rem
+        transition: 0.1s ease-out
 
-            &:hover
-                background-color: #f1f1f1
+        &:hover
+          background-color: #f1f1f1
 
-        #calendar-month-year
-            font:
-                weight: 600
-                size: 1.1rem
+      #calendar-month-year
+        font:
+          weight: 600
+          size: 1.1rem
 
     .calendar-body
+      margin-top: 7px
+      display: flex
+      flex-direction: column
+
+      .calendar-weekdays
+        display: flex
+        justify-content: space-around
+        text-align: center
+
+        .weekday
+          width: 14.28%
+          font:
+            weight: 600
+            size: 0.9rem
+      
+      .calendar-days
         margin-top: 7px
         display: flex
-        flex-direction: column
+        flex-wrap: wrap
 
-        .calendar-weekdays
-            display: flex
-            justify-content: space-around
-            text-align: center
+        .calendar-day
+          padding: 4px
+          width: 14.28%
+          text-align: center
+          font:
+            family: $ff-roboto
+            weight: 400
+            size: 1rem
+          
+          &.dimmed
+            opacity: 0.5
 
-            .weekday
-                width: 14.28%
-                font:
-                    weight: 600
-                    size: 0.9rem
-        
-        .calendar-days
-            margin-top: 7px
-            display: flex
-            flex-wrap: wrap
+          &.today
+            color: #fff
+            background-color: $theme1
+            border-radius: 0.3rem
 
-            .calendar-day
-                padding: 4px
-                width: 14.28%
-                text-align: center
-                font:
-                    family: $ff-roboto
-                    weight: 400
-                    size: 1rem
-                
-                &.dimmed
-                    opacity: 0.5
-
-                &.today
-                    color: #fff
-                    background-color: $theme1
-                    border-radius: 0.3rem
-
-.WelcomeBanner
+  .WelcomeBanner
     box-shadow: $box-shadow
     display: flex
     background-color: #fff
@@ -942,96 +961,96 @@ $box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
     position: relative
 
     .banner-section-left
-        display: flex
-        flex-direction: column
-        justify-content: center
-        padding: 1rem
-        height: 100%
-        flex: 1
+      display: flex
+      flex-direction: column
+      justify-content: center
+      padding: 1rem
+      height: 100%
+      flex: 1
 
-        h2.greetings
-            z-index: 1
-            color: $theme1-text
-            font:
-                family: $ff-merriweather-sans
-                size: 1.8rem
-                weight: 800
+      h2.greetings
+        z-index: 1
+        color: $theme1-text
+        font:
+          family: $ff-merriweather-sans
+          size: 1.8rem
+          weight: 800
 
-        .attendance-status-text-container, .schedule-status-text-container
-            margin-top: 15px
-            
-            .row
-                margin-top: 20px
-                display: flex
-                align-items: center
-                width: 100%
+      .attendance-status-text-container, .schedule-status-text-container
+        margin-top: 15px
+        
+        .row
+          margin-top: 20px
+          display: flex
+          align-items: center
+          width: 100%
 
-            .attendance-status-text, .schedule-status-text
-                color: #464646
-                font:
-                    family: $ff-merriweather-sans
-                    size: 1rem
-                    weight: 400
+        .attendance-status-text, .schedule-status-text
+          color: #464646
+          font:
+            family: $ff-merriweather-sans
+            size: 1rem
+            weight: 400
 
-                .attendance-highlight, .schedule-highlight
-                    font-weight: 500
+          .attendance-highlight, .schedule-highlight
+            font-weight: 500
 
-            button.switch-view
-                border: none
-                padding: 5px 0
-                cursor: pointer
-                display: flex
-                border-radius: 0.4rem
-                align-items: center
-                text-align: center
-                padding: 8px
-                color: #484848
-                margin-left: 10px
-                transition: 0.15s
-                font:
-                    family: $ff-nunito
-                    size: 1.1rem
+        button.switch-view
+          border: none
+          padding: 5px 0
+          cursor: pointer
+          display: flex
+          border-radius: 0.4rem
+          align-items: center
+          text-align: center
+          padding: 8px
+          color: #484848
+          margin-left: 10px
+          transition: 0.15s
+          font:
+            family: $ff-nunito
+            size: 1.1rem
 
-                &.to-student
-                    &:hover
-                        background-color: $theme1-transparent2
-                        color: $theme1
+          &.to-student
+            &:hover
+              background-color: $theme1-transparent2
+              color: $theme1
 
-                &.to-admin
-                    &:hover
-                        background-color: $theme2-transparent
-                        color: $theme2
+          &.to-admin
+            &:hover
+              background-color: $theme2-transparent
+              color: $theme2
 
-            a.check-attendance-btn, a.view-schedule-btn
-                text-decoration: none
-                display: inline-block
-                padding: 8px 20px
-                background-color: $theme1
-                color: #fff
-                border: none
-                border-radius: 0.8rem
-                cursor: pointer
-                font:
-                    family: $ff-nunito
-                    size: 1rem
-                    weight: 400
-                
-            a.view-schedule-btn
-                background-color: $theme2
+        a.check-attendance-btn, a.view-schedule-btn
+          text-decoration: none
+          display: inline-block
+          padding: 8px 20px
+          background-color: $theme1
+          color: #fff
+          border: none
+          border-radius: 0.8rem
+          cursor: pointer
+          font:
+            family: $ff-nunito
+            size: 1rem
+            weight: 400
+          
+        a.view-schedule-btn
+          background-color: $theme2
 
     .banner-section-right
-        display: flex
-        height: 100%
-        justify-content: center
-        align-items: center
-        width: 40%
-        
-        .banner-hero-container
-            img.banner-hero
-                pointer-events: none
-                user-select: none
-                z-index: 0
-                bottom: 0
-                right: -20px
-                position: absolute
-                width: 350px
+      display: flex
+      height: 100%
+      justify-content: center
+      align-items: center
+      width: 40%
+      
+      .banner-hero-container
+        img.banner-hero
+          pointer-events: none
+          user-select: none
+          z-index: 0
+          bottom: 0
+          right: -20px
+          position: absolute
+          width: 350px

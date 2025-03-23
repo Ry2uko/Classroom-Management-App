@@ -84,34 +84,41 @@ body, html, #root {
 }
 
 @keyframes bblFadInOut {
-  0%, 80%, 100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
-  }
+  box-shadow: 0 2.5em 0 -1.3em;
+  box-shadow: 0 2.5em 0 0;
+}
+.Display {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
 }
 .Display .search-bar-container {
   flex: 1;
-  width: 600px;
+  width: 65%;
+  max-width: 500px;
+  min-width: 300px;
+}
+.Display .search-bar-container.select input.search-input-text {
+  border: 1px solid #888 !important;
 }
 .Display .search-bar-container .search-bar-input-group {
   position: relative;
   display: flex;
-  height: 45px;
+  height: 55px;
 }
 .Display .search-bar-container .search-bar-input-group button.search-btn {
   position: absolute;
   border: none;
-  font-size: 1.3rem;
-  height: 45px;
-  width: 45px;
+  font-size: 1.45rem;
+  height: 55px;
+  width: 55px;
   border-radius: 0.8rem;
   cursor: pointer;
 }
 .Display .search-bar-container .search-bar-input-group button.search-btn.student {
   color: #239732;
-  background-color: #9DCAA7;
+  background-color: #B2DBB7;
 }
 .Display .search-bar-container .search-bar-input-group button.search-btn.admin {
   color: #006fe6;
@@ -121,63 +128,167 @@ body, html, #root {
   width: 100%;
 }
 .Display .search-bar-container .search-bar-input-group .input-text-container input.search-input-text {
-  padding-left: 25px;
-  margin-left: 30px;
+  padding-left: 30px;
+  margin-left: 40px;
   height: 100%;
   width: 100%;
+  letter-spacing: 1px;
   border: none;
   border-radius: 0.4rem;
   font-family: "Merriweather Sans", serif;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.25rem;
+  font-weight: 380;
 }
 .Display .search-bar-container .search-bar-input-group .input-text-container input.search-input-text:focus {
   outline: none;
 }
+.Display .display-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 2rem;
+}
 .Display .display-container .display-header {
   display: flex;
+  position: relative;
+  align-items: center;
+  border-bottom: 1px solid #c2c2c2;
+}
+.Display .display-container .display-header button.create-btn {
+  position: absolute;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.25rem;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+}
+.Display .display-container .display-header button.create-btn.admin {
+  background-color: #006fe6;
+}
+.Display .display-container .display-header button.create-btn.student {
+  background-color: #239732;
+}
+.Display .display-container .display-header .filters-container {
+  display: flex;
+  width: 85%;
+  padding-inline: 25px;
+  overflow: auto;
+  gap: 40px;
+}
+.Display .display-container .display-header .filters-container.student .filter.selected {
+  color: #167f24;
+}
+.Display .display-container .display-header .filters-container.student .filter::after {
+  background-color: #239732;
+}
+.Display .display-container .display-header .filters-container.student .filter:hover {
+  color: #167f24;
+}
+.Display .display-container .display-header .filters-container.admin .filter.selected {
+  color: #0060c6;
+}
+.Display .display-container .display-header .filters-container.admin .filter::after {
+  background-color: #006fe6;
+}
+.Display .display-container .display-header .filters-container.admin .filter:hover {
+  color: #0060c6;
+}
+.Display .display-container .display-header .filters-container .filter {
+  white-space: nowrap;
+  position: relative;
+  padding: 12px 15px;
+  transition: 0.1s;
+  cursor: pointer;
+  user-select: none;
+  font-family: "Nunito", serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.Display .display-container .display-header .filters-container .filter::after {
+  position: absolute;
+  display: block;
+  content: "";
+  transition: 0.25s ease-out;
+  margin-top: 7px;
+  left: 0;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  width: 100%;
+  transform: scalex(0);
+  transform-origin: center;
+  height: 5px;
+}
+.Display .display-container .display-header .filters-container .filter.selected {
+  color: #167f24;
+}
+.Display .display-container .display-header .filters-container .filter.selected::after {
+  width: 100%;
+  transform: scaleX(1);
+}
+.Display .display-container .display-body {
+  margin-top: 20px;
 }
 .Display .display-container .display-body .content-items-container {
   display: flex;
   flex-direction: column;
+  gap: 15px 0;
 }
 .Display .display-container .display-body .content-items-container .content-item {
   display: flex;
+  position: relative;
   align-items: center;
+  background-color: #fff;
   border: 1px solid #ccc;
-  padding: 22px 25px;
-  transition: 0.15s;
+  padding: 18px 24px;
   cursor: pointer;
-}
-.Display .display-container .display-body .content-items-container .content-item:hover {
-  background-color: rgba(0, 0, 0, 0.0196078431);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0.3rem;
+  border: none;
 }
 .Display .display-container .display-body .content-items-container .content-item .content-icon {
-  background-color: #B2D3F8;
   border-radius: 0.5rem;
+  padding: 14px 18px;
+  font-size: 1.5rem;
+}
+.Display .display-container .display-body .content-items-container .content-item .content-icon.student {
+  background-color: #B2DBB7;
+  color: #239732;
+}
+.Display .display-container .display-body .content-items-container .content-item .content-icon.admin {
+  background-color: #B2D3F8;
   color: #006fe6;
-  padding: 12px;
-  font-size: 1.35rem;
 }
 .Display .display-container .display-body .content-items-container .content-item .kebab {
-  font-size: 1.25rem;
-  color: #222;
+  font-size: 1.6rem;
+  color: #333;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
+  transition: 0.1s;
+}
+.Display .display-container .display-body .content-items-container .content-item .kebab:hover {
+  color: #000;
 }
 .Display .display-container .display-body .content-items-container .content-item .kebab-container {
   background-color: #fff;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 70px;
+  z-index: 99;
+  right: -75px;
   border-radius: 0.2rem;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .Display .display-container .display-body .content-items-container .content-item .kebab-container ul li {
   transition: 0.2s;
   list-style: none;
-  padding: 7px 15px;
+  padding: 9px 15px;
   cursor: pointer;
   font-family: "Nunito", serif;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-text-align: center;
 }
 .Display .display-container .display-body .content-items-container .content-item .kebab-container ul li:hover {
@@ -195,7 +306,7 @@ body, html, #root {
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: "Merriweather Sans", serif;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 350;
 }
 .Display .display-container .display-body .content-items-container .content-item .content-details .details-group {
@@ -204,4 +315,386 @@ body, html, #root {
 }
 .Display .display-container .display-body .content-items-container .content-item .content-details .details-group .content-date {
   display: flex;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1rem;
+}
+.Display .display-container .display-body .course-items-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 20px;
+  width: 100%;
+}
+.Display .display-container .display-body .course-items-container .course-item {
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.44rem;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body .details-group {
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  flex-direction: column;
+  color: #252525;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.18rem;
+  font-weight: 350;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body .details-group span i {
+  margin-right: 5px;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body button.view-course-btn {
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  border-radius: 25%;
+  padding-inline: 24px;
+  transition: 0.15s;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body button.view-course-btn:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body button.view-course-btn.student {
+  background-color: #239031;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-body button.view-course-btn.admin {
+  background-color: #006fe6;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header {
+  position: relative;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .kebab {
+  font-size: 1.6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 3;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  padding: 5px;
+  margin: 10px 20px;
+  cursor: pointer;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .kebab-container {
+  position: absolute;
+  z-index: 10;
+  top: 50px;
+  right: 10px;
+  background-color: #fff;
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+  z-index: 6;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .kebab-container ul li {
+  transition: 0.2s;
+  list-style: none;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-size: 1.2rem;
+  font-text-align: center;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .kebab-container ul li:hover {
+  background-color: rgba(0, 0, 0, 0.0274509804);
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .title-group {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 15px 15px;
+  z-index: 3;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .title-group span {
+  color: #fff;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .title-group span.course-title {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 72px;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .title-group span.course-strand {
+  margin-top: 2px;
+  font-family: "Nunito", serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .course-bg {
+  width: 100%;
+  height: 190px;
+  position: relative;
+  border-top-left-radius: 0.44rem;
+  border-top-right-radius: 0.44rem;
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .course-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 60%);
+}
+.Display .display-container .display-body .course-items-container .course-item .course-header .course-bg img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.Display .display-container .display-body .classroom-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 18px 24px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0.3rem;
+  border: none;
+  position: relative;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-icon {
+  border-radius: 0.5rem;
+  padding: 14px 18px;
+  font-size: 1.5rem;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-icon.student {
+  background-color: #B2DBB7;
+  color: #239732;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-icon.admin {
+  background-color: #B2D3F8;
+  color: #006fe6;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .kebab {
+  font-size: 1.6rem;
+  color: #333;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
+  transition: 0.1s;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .kebab:hover {
+  color: #000;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .kebab-container {
+  background-color: #fff;
+  position: absolute;
+  top: 70px;
+  z-index: 99;
+  right: -75px;
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .kebab-container ul li {
+  transition: 0.2s;
+  list-style: none;
+  padding: 9px 15px;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-size: 1.25rem;
+  font-text-align: center;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .kebab-container ul li:hover {
+  background-color: rgba(0, 0, 0, 0.0274509804);
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details {
+  width: 0;
+  margin-left: 20px;
+  flex: 1;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details span.content-title {
+  max-width: 85%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.3rem;
+  font-weight: 350;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details .details-group {
+  margin-top: 5px;
+  display: flex;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details .details-group .content-date {
+  display: flex;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1rem;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item button.select-btn {
+  position: absolute;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-size: 1.75rem;
+  color: #222;
+  margin-right: 25px;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-icon {
+  padding: 18px 22px;
+  font-size: 1.65rem;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details {
+  margin-left: 25px;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details span.content-title {
+  font-size: 1.25rem;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details .details-group {
+  margin-top: 10px;
+  display: flex;
+  gap: 0 20px;
+}
+.Display .display-container .display-body .classroom-items-container .classroom-item .content-details .details-group small {
+  font-size: 1.15rem;
+  font-family: "Nunito", serif;
+}
+.Display .display-container .display-body .student-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0;
+}
+.Display .display-container .display-body .student-items-container .student-item {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 18px 24px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0.3rem;
+  border: none;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-icon {
+  border-radius: 0.5rem;
+  padding: 14px 18px;
+  font-size: 1.5rem;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-icon.student {
+  background-color: #B2DBB7;
+  color: #239732;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-icon.admin {
+  background-color: #B2D3F8;
+  color: #006fe6;
+}
+.Display .display-container .display-body .student-items-container .student-item .kebab {
+  font-size: 1.6rem;
+  color: #333;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
+  transition: 0.1s;
+}
+.Display .display-container .display-body .student-items-container .student-item .kebab:hover {
+  color: #000;
+}
+.Display .display-container .display-body .student-items-container .student-item .kebab-container {
+  background-color: #fff;
+  position: absolute;
+  top: 70px;
+  z-index: 99;
+  right: -75px;
+  border-radius: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.Display .display-container .display-body .student-items-container .student-item .kebab-container ul li {
+  transition: 0.2s;
+  list-style: none;
+  padding: 9px 15px;
+  cursor: pointer;
+  font-family: "Nunito", serif;
+  font-size: 1.25rem;
+  font-text-align: center;
+}
+.Display .display-container .display-body .student-items-container .student-item .kebab-container ul li:hover {
+  background-color: rgba(0, 0, 0, 0.0274509804);
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details {
+  width: 0;
+  margin-left: 20px;
+  flex: 1;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details span.content-title {
+  max-width: 85%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Merriweather Sans", serif;
+  font-size: 1.3rem;
+  font-weight: 350;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details .details-group {
+  margin-top: 5px;
+  display: flex;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details .details-group .content-date {
+  display: flex;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1rem;
+}
+.Display .display-container .display-body .student-items-container .student-item button.select-btn {
+  position: absolute;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-size: 1.75rem;
+  color: #222;
+  margin-right: 25px;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-icon {
+  height: 100%;
+  width: 75px;
+  border-radius: 0.4rem;
+  padding: 0;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-icon img {
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details {
+  margin-left: 25px;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details span.content-title {
+  font-size: 1.25rem;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details .details-group {
+  margin-top: 10px;
+  display: flex;
+  gap: 0 20px;
+}
+.Display .display-container .display-body .student-items-container .student-item .content-details .details-group small {
+  font-size: 1.15rem;
+  font-family: "Nunito", serif;
 }/*# sourceMappingURL=Display.css.map */

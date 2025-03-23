@@ -7,13 +7,13 @@ const LoginProvider = ({ children }) => {
 
   // Sync local storage and local state
   useEffect(() => {
-    localStorage.setItem('_loginType', loginType);
+  localStorage.setItem('_loginType', loginType);
   }, [loginType]); 
 
   return (
-    <LoginContext.Provider value={{ loginType, setLoginType }}>
-      { children }
-    </LoginContext.Provider>
+  <LoginContext.Provider value={{ loginType, setLoginType }}>
+    { children }
+  </LoginContext.Provider>
   );
 };
 

@@ -4,21 +4,21 @@ import { fetchUserData } from '../../utils/apiUtils';
 import './Attendance.css';
 
 const Attendance = ({ user, fetchUserSessionData }) => {
-    const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-    useEffect(() => {
-        fetchUserSessionData();
-    }, []);
+  useEffect(() => {
+    fetchUserSessionData();
+  }, []);
 
-    return (
-        <div className="Attendance">
-            { dataLoaded ? (
-                <h1>Attendance</h1>
-            )   : (
-                <span className="loader"></span>
-            )}
-        </div>
-    );
+  return (
+    <div className="Attendance">
+      { dataLoaded ? (
+        <h1>Attendance</h1>
+      )   : (
+        <span className="loader"></span>
+      )}
+    </div>
+  );
 };
 
 export default Attendance;

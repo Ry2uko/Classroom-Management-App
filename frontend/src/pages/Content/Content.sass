@@ -1,206 +1,206 @@
 @import '../../App'
 
 .Content
+  display: flex
+  flex-direction: column
+  background-color: $bg-alt
+  width: 100%
+  height: 100%
+  border-top-left-radius: 2rem
+  border-bottom-left-radius: 2rem
+  align-items: center
+  overflow-y: auto
+
+  .loader
+    margin-top: 1.5rem
+  
+  .main-container
     display: flex
-    flex-direction: column
-    background-color: $bg-alt
-    width: 100%
-    height: 100%
-    border-top-left-radius: 2rem
-    border-bottom-left-radius: 2rem
-    align-items: center
-    overflow-y: auto
+    justify-content: center
+    padding: 2rem 0
+    height: fit-content
 
-    .loader
-        margin-top: 1.5rem
+  .content
+    display: flex
     
-    .main-container
+    .content-icon
+      margin-right: 15px
+
+      i
         display: flex
+        align-items: center
         justify-content: center
-        padding: 2rem 0
-        height: fit-content
+        width: 50px
+        height: 50px
+        font-size: 1.75rem
+        border-radius: 0.5rem
+        color: $theme2
+        background-color: $theme2-transparent
 
-    .content
-        display: flex
+    .content-main
+      width: 800px
+      display: flex
+      flex-direction: column
+      height: fit-content
+
+      .content-header
+        position: relative
+
+        .kebab
+          position: absolute
+          top: 0
+          right: 0
+          font-size: 1.8rem
+          border: none
+          padding: 5px
+          cursor: pointer
+          color: #222
+          background-color: rgba(0,0,0,0)
+
+        .kebab-container
+          background-color: #fff
+          position: absolute
+          top: 50px
+          right: 0
+          border-radius: 0.2rem
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
+
+          ul
+            li
+              transition: 0.2s
+              list-style: none
+              padding: 7px 15px
+              cursor: pointer
+              font:
+                family: $ff-nunito
+                size: 1.2rem
+                text-align: center
+              
+              &:hover
+                background-color: #00000007
+
+        .content-title
+          font:
+            family: $ff-nunito
+            size: 2rem
+            weight: 500
+
+        .header-group
+          display: flex
+          color: #333
+          margin-left: 2px
+          font:
+            family: $ff-noto-sans
+            size: 1.25rem
+            weight: 450
+
+          small
+            &.divider
+              margin-inline: 5px
         
-        .content-icon
-            margin-right: 15px
+      .content-body
+        margin-top: 1.15rem
+        display: flex
+        flex-direction: column
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+        background-color: #fff
+        border-radius: 0.35rem
+        padding: 1.5rem 2rem
 
-            i
+        .content-markdown
+          $max-indent: 32
+
+          font:
+            family: $ff-noto-sans
+            size: 1.05rem
+
+          ol
+            li
+              list-style-position: inside
+
+              &[data-list="ordered"]
+                list-style-type: decimal
+              
+              &[data-list="bullet"]
+                list-style-type: disc
+
+              @for $i from 1 through $max-indent
+                &.ql-indent-#{$i}
+                  margin-left: #{$i * 20px}
+                
+                  &[data-list="ordered"]
+                    list-style-type: nth((decimal, lower-alpha, lower-roman, upper-alpha, upper-roman), ($i % 5) + 1)
+        
+        .attachments-container
+          margin-top: 1.5rem
+
+          .attachment-items-container
+            display: grid
+            grid-template-columns: repeat(2, 1fr)
+            gap: 15px 
+
+          .attachment
+            width: 100%
+            display: flex
+            min-width: 0
+            align-items: center
+            position: relative
+            padding: 10px
+            cursor: pointer
+            border: 1px solid #DADCE0
+            border-radius: 0.25rem
+            background: #fff
+
+            .attachment-icon
+              flex-shrink: 0
+              width: 45px
+              height: 45px
+              display: flex
+              justify-content: center
+              align-items: center
+              border-radius: 0.3rem
+              background: #fff
+
+              i
+                color: $theme2
+                font-size: 1.75rem
+
+            .attachment-main
+              flex: 1
+              display: flex
+              flex-direction: column
+              margin-left: 10px
+              overflow: hidden
+              font-family: $ff-nunito
+              min-width: 0
+
+              .row
                 display: flex
                 align-items: center
-                justify-content: center
-                width: 50px
-                height: 50px
-                font-size: 1.75rem
-                border-radius: 0.5rem
-                color: $theme2
-                background-color: $theme2-transparent
+                width: 100%
+                overflow: hidden
 
-        .content-main
-            width: 800px
-            display: flex
-            flex-direction: column
-            height: fit-content
+                span
+                  &.attachment-title, &.attachment-content
+                    display: inline-block
+                    white-space: nowrap
+                    overflow: hidden
+                    text-overflow: clip
 
-            .content-header
-                position: relative
-
-                .kebab
-                    position: absolute
-                    top: 0
-                    right: 0
-                    font-size: 1.8rem
-                    border: none
-                    padding: 5px
-                    cursor: pointer
-                    color: #222
-                    background-color: rgba(0,0,0,0)
-
-                .kebab-container
-                    background-color: #fff
-                    position: absolute
-                    top: 50px
-                    right: 0
-                    border-radius: 0.2rem
-                    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px
-
-                    ul
-                        li
-                            transition: 0.2s
-                            list-style: none
-                            padding: 7px 15px
-                            cursor: pointer
-                            font:
-                                family: $ff-nunito
-                                size: 1.2rem
-                                text-align: center
-                            
-                            &:hover
-                                background-color: #00000007
-
-                .content-title
+                  &.attachment-title
+                    max-width: 70%
                     font:
-                        family: $ff-nunito
-                        size: 2rem
-                        weight: 500
+                      size: 1.05rem
+                      weight: 450
 
-                .header-group
-                    display: flex
-                    color: #333
-                    margin-left: 2px
-                    font:
-                        family: $ff-noto-sans
-                        size: 1.25rem
-                        weight: 450
-
+                  &.attachment-content
+                    max-width: 90%
                     small
-                        &.divider
-                            margin-inline: 5px
-                
-            .content-body
-                margin-top: 1.15rem
-                display: flex
-                flex-direction: column
-                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
-                background-color: #fff
-                border-radius: 0.35rem
-                padding: 1.5rem 2rem
+                      color: #333
+                      font-size: 0.9rem
 
-                .content-markdown
-                    $max-indent: 32
-
-                    font:
-                        family: $ff-noto-sans
-                        size: 1.05rem
-
-                    ol
-                        li
-                            list-style-position: inside
-
-                            &[data-list="ordered"]
-                                list-style-type: decimal
-                            
-                            &[data-list="bullet"]
-                                list-style-type: disc
-
-                            @for $i from 1 through $max-indent
-                                &.ql-indent-#{$i}
-                                    margin-left: #{$i * 20px}
-                                
-                                    &[data-list="ordered"]
-                                        list-style-type: nth((decimal, lower-alpha, lower-roman, upper-alpha, upper-roman), ($i % 5) + 1)
-                
-                .attachments-container
-                    margin-top: 1.5rem
-
-                    .attachment-items-container
-                        display: grid
-                        grid-template-columns: repeat(2, 1fr)
-                        gap: 15px 
-
-                    .attachment
-                        width: 100%
-                        display: flex
-                        min-width: 0
-                        align-items: center
-                        position: relative
-                        padding: 10px
-                        cursor: pointer
-                        border: 1px solid #DADCE0
-                        border-radius: 0.25rem
-                        background: #fff
-
-                        .attachment-icon
-                            flex-shrink: 0
-                            width: 45px
-                            height: 45px
-                            display: flex
-                            justify-content: center
-                            align-items: center
-                            border-radius: 0.3rem
-                            background: #fff
-
-                            i
-                                color: $theme2
-                                font-size: 1.75rem
-
-                        .attachment-main
-                            flex: 1
-                            display: flex
-                            flex-direction: column
-                            margin-left: 10px
-                            overflow: hidden
-                            font-family: $ff-nunito
-                            min-width: 0
-
-                            .row
-                                display: flex
-                                align-items: center
-                                width: 100%
-                                overflow: hidden
-
-                                span
-                                    &.attachment-title, &.attachment-content
-                                        display: inline-block
-                                        white-space: nowrap
-                                        overflow: hidden
-                                        text-overflow: clip
-
-                                    &.attachment-title
-                                        max-width: 70%
-                                        font:
-                                            size: 1.05rem
-                                            weight: 450
-
-                                    &.attachment-content
-                                        max-width: 90%
-                                        small
-                                            color: #333
-                                            font-size: 0.9rem
-
-                                    &.divider
-                                        margin-inline: 5px
-                                    
-                                    &.attachment-mimetype
-                                        fotn-weight: 450
+                  &.divider
+                    margin-inline: 5px
+                  
+                  &.attachment-mimetype
+                    fotn-weight: 450
