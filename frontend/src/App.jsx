@@ -142,6 +142,16 @@ const App = () => {
           </ProtectedRoute>
         } />
         { /* NOT FINISHED */ }
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Navigation handleLogout={handleLogout} />
+            <div className="meow-wrapper">
+              <div className="meow">
+                <img src="/images/meow.png"></img>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } />
         <Route path="/calendar" element={
           <ProtectedRoute>
             <Navigation handleLogout={handleLogout} />

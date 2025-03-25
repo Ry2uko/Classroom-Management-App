@@ -148,7 +148,8 @@ class UserSessionView(APIView):
             'profile_img': user.profile_img.url if user.profile_img else None,
             'classroom_id': user.classroom.id if user.classroom else None,  
             'type': user.type,
-            'role': user.role
+            'role': user.role,
+            'sex': user.sex,
         })
 
 
@@ -434,7 +435,7 @@ class ClassroomViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Classroom.objects.all()
         user_id = self.request.query_params.get('user', None)
-        print(self.request.session.items())
+
         if user_id is not None:
             try:
                 user = User.objects.get(id=user_id)

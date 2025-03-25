@@ -16,8 +16,6 @@ class FullNameAuthBackend(BaseBackend):
             # 'admin' account type accounts for both 'admin' and 'super_admin' for this context
             if user.role == 'student' and account_type == 'admin' and user.type == 'student':
                 return None
-            elif user.role == 'teacher' and account_type == 'student':
-                return None
 
         except User.DoesNotExist:
             return None

@@ -1,9 +1,10 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useContext, useEffect, useState } from 'react';
 import DonutChart from '../../components/DonutChart/DonutChart';
 import { fetchHomeData } from '../../services/homeService';
-import { fetchUserData } from '../../utils/apiUtils';
+import { fetchClassroomData, fetchUserData } from '../../utils/apiUtils';
 import { LoginContext } from '../../contexts/LoginContext';
+import { ClassroomContext } from '../../contexts/ClassroomContext';
 import Modal from '../../components/Modal/Modal';
 import Display from '../../components/Display/Display';
 import './Home.css';
@@ -79,10 +80,12 @@ const StudentHome = ({ user, fetchUserSessionData }) => {
 }
 
 const AdminHome = ({ user, fetchUserSessionData }) => {
-  const [dataLoaded, setDataLoaded] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const { loginType } = useContext(LoginContext);
-  
-  const [selectedClassroom, setSelectedClassroom] = useState(-1);
+
+  const { userClassroom, setUserClassroom } = useContext(ClassroomContext);
+  const [classroomData, setClassroomData] = useState({});
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAnimating, setIsModalAnimating] = useState(false);
 
@@ -95,8 +98,18 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
     setIsModalAnimating(false);
     setTimeout(() => {
       setIsModalOpen(false);
-      setSelectedClassroom(-1);
     }, 225); // wait for animation
+  };
+
+  const fetchData = async () => {
+    try {
+      const classroomData_ = await fetchClassroomData(userClassroom);
+
+      setClassroomData(classroomData_);
+      setDataLoaded(true);
+    } catch (err) {
+      console.error('Failed to fetch classroom data: ', err);
+    }
   };
 
   const attendanceData = [
@@ -117,6 +130,10 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
     // Fetch on home page render
     fetchUserSessionData();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [userClassroom]);
 
   return (
     <div className="Home admin-view">
@@ -150,13 +167,13 @@ const AdminHome = ({ user, fetchUserSessionData }) => {
                   <i className="fa-solid fa-chalkboard-user"></i>
                 </div>
                 <div className="classroom-details">
-                  <span className="classroom-name">12-STEM Our Lady of the Most Holy Rosary</span>
+                  <span className="classroom-name">{classroomData.grade_level}-{classroomData.strand} {classroomData.name}</span>
                   <div className="details-group">
                     <span className="classroom-students">
-                      <i className="fa-solid fa-users"></i> 16 Students
+                      <i className="fa-solid fa-users"></i> {classroomData.total_students} Students
                     </span>
                     <span className="classroom-adviser">
-                      <i className="fa-regular fa-circle-user"></i> Sir Joseph
+                      <i className="fa-regular fa-circle-user"></i> {classroomData.adviser_name}
                     </span>
                   </div>
                   <div className="btn-group">
@@ -556,7 +573,18 @@ const WelcomeBanner = ({ user, banner = 'student' }) => {
   return (
     <div className="WelcomeBanner">
       <div className="banner-section-left">
-        <h2 className="greetings">Good morning, {user.username}!</h2>
+        <h2 className="greetings">Good morning, {
+          
+          user.role === 'teacher' ? (
+            <>
+              { user.sex === 'M' ? `Sir ${user.username}` : `Ms. ${user.username}` }
+            </>
+          ) : (
+            <>
+              { user.username }
+            </>
+          )
+        }!</h2>
         {banner === 'student' ? (
           <div className="attendance-status-text-container">
             <p className="attendance-status-text">You are marked as <span className="attendance-highlight">Present</span></p>
@@ -767,6 +795,8 @@ const TopBar = () => {
   const [isCreateDropdownOpen, setIsCreateDropdownOpen] = useState(false);
   const { loginType } = useContext(LoginContext);
 
+  const navigate = useNavigate();
+
   const handleSearch = () => {
     return;
   };
@@ -825,7 +855,7 @@ const TopBar = () => {
             <button type="button" className="topbar-btn" onClick={() => setIsCreateDropdownOpen(!isCreateDropdownOpen)}>
               <i className="fa-solid fa-plus"></i>
             </button>
-            <button type="button" className="topbar-btn">
+            <button type="button" className="topbar-btn" onClick={() => navigate('/profile')}>
               <i className="fa-solid fa-user"></i>
             </button>
           </div>

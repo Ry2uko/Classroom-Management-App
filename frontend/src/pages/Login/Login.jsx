@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContext';
@@ -64,7 +64,7 @@ const Login = () => {
       localStorage.setItem('refreshToken', refresh);
 
       setLoginType(inputLoginType);
-
+      
       navigate('/', { 
         replace: true, 
        });
@@ -76,10 +76,12 @@ const Login = () => {
     }
   };
 
-  const isAuthenticated = !!localStorage.getItem('accessToken');
-  if (isAuthenticated) {
-    return <Navigate to="/" replace/>
-  }
+  useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem("accessToken");
+    if (isAuthenticated) {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   return (
     <div className="Login">

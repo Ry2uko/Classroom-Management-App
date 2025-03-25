@@ -159,7 +159,7 @@ const Display = ({ displayType='content', displayData, mode='display', displayCo
                       <i className="fa-regular fa-circle-user"></i> Ms Juvie
                     </span>
                   </div>
-                  <button type="button" className={`view-course-btn ${displayTheme}`}>
+                  <button type="button" className={`view-course-btn ${displayTheme}`}  onClick={() => navigate('/course/1')}>
                     <i className="fa-solid fa-angle-right"></i>
                   </button>
                 </div>
@@ -196,7 +196,7 @@ const Display = ({ displayType='content', displayData, mode='display', displayCo
                       <i className="fa-regular fa-circle-user"></i> Ms Juvie
                     </span>
                   </div>
-                  <button type="button" className={`view-course-btn ${displayTheme}`}>
+                  <button type="button" className={`view-course-btn ${displayTheme}`} onClick={() => navigate('/course/1')}>
                     <i className="fa-solid fa-angle-right"></i>
                   </button>
                 </div>

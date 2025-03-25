@@ -42,8 +42,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         """
 
         # Check user type if valid
-        # Student admins can either log in as a student or an admin
-        # While, teachers can only log in as admins
+        # Student admins and teachers can either log in as a student or an admin
         if account_type.lower() not in [user_type[0] for user_type in USER_TYPES]:
             raise serializers.ValidationError({ 'detail': 'Invalid account type.' })
 
@@ -107,9 +106,22 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ClassroomSerializer(serializers.ModelSerializer):
+    total_students = serializers.SerializerMethodField()
+    adviser_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Classroom
-        fields = '__all__'
+        fields = ['id', 'name', 'strand', 'grade_level', 'class_adviser', 'total_students', 'adviser_name']
+
+    def get_total_students(self, obj):
+      return obj.users.filter(role="student").count()
+    
+    def get_adviser_name(self, obj):
+        if obj.class_adviser:
+          prefix = 'Sir' if obj.class_adviser.sex == 'M' else 'Ms.'
+          return f"{prefix} {obj.class_adviser.username}"
+        
+        return 'No Adviser'
 
 
 class ContentSerializer(serializers.ModelSerializer):

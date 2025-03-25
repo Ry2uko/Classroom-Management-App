@@ -5,15 +5,26 @@ import { ClassroomContext } from '../../contexts/ClassroomContext';
 import DonutChart from '../../components/DonutChart/DonutChart';
 import Modal from '../../components/Modal/Modal';
 import Display from '../../components/Display/Display';
+import { fetchClassroomData } from '../../utils/apiUtils';
 import './Classroom.css';
 
 const Classroom = ({ user, fetchUserSessionData }) => {
-  const [dataLoaded, setDataLoaded] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const { loginType } = useContext(LoginContext);
 
-  const [selectedClassroom, setSelectedClassroom] = useState(-1);
+  const { userClassroom, setUserClassroom } = useContext(ClassroomContext);
+  const [ classroomData, setClassroomData ] = useState({});
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAnimating, setIsModalAnimating] = useState(false);
+
+  const attendanceData = [
+    { label: 'Present', value: 28 },
+    { label: 'Late', value: 8 },
+    { label: 'Absent', value: 2 },
+    { label: 'Excused', value: 1 },
+    { label: 'Not Marked', value: 5 },
+  ];
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -24,17 +35,19 @@ const Classroom = ({ user, fetchUserSessionData }) => {
     setIsModalAnimating(false);
     setTimeout(() => {
       setIsModalOpen(false);
-      setSelectedClassroom(-1);
     }, 225); // wait for animation
   };
 
-  const attendanceData = [
-    { label: 'Present', value: 28 },
-    { label: 'Late', value: 8 },
-    { label: 'Absent', value: 2 },
-    { label: 'Excused', value: 1 },
-    { label: 'Not Marked', value: 5 },
-  ];
+  const fetchData = async () => {
+    try {
+      const classroomData_ = await fetchClassroomData(userClassroom);
+
+      setClassroomData(classroomData_);
+      setDataLoaded(true);
+    } catch (err) {
+      console.error('Failed to fetch classroom data: ', err);
+    } 
+  };
 
   const testContent = [
     {
@@ -43,8 +56,13 @@ const Classroom = ({ user, fetchUserSessionData }) => {
   ];
 
   useEffect(() => {
+    // fetch on classroom page render
     fetchUserSessionData();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [userClassroom]);
 
   return (
     <div className="Classroom">
@@ -65,34 +83,42 @@ const Classroom = ({ user, fetchUserSessionData }) => {
           <div className="main-container">
             <div className="row">
               <div className="dblock full classroom">
-                <div className={`classroom-icon ${loginType}`}>
-                  <i className="fa-solid fa-chalkboard-user"></i>
-                </div>
-                <div className="classroom-details">
-                  <span className="classroom-name">12-STEM Our Lady of the Most Holy Rosary</span>
-                  <div className="details-group">
-                    <span className="classroom-students">
-                      <i className="fa-solid fa-users"></i> 16 Students
-                    </span>
-                    <span className="classroom-adviser">
-                      <i className="fa-regular fa-circle-user"></i> Sir Joseph
-                    </span>
-                  </div>
-                  <div className="btn-group">
-                    <Link to="/schedule" className="details-btn">
-                      Class Schedule
-                    </Link>
-                    { loginType === 'student' ? (
-                      <button type="button" className="details-btn">
-                        12-STABSS <i className="fa-solid fa-chevron-right"></i>
-                      </button>
-                    ) : (
-                      <button type="button" className="details-btn" onClick={openModal}>
-                        Switch Classroom
-                      </button>
-                    )}
-                  </div>
-                </div>
+                { userClassroom ? (
+                  <>
+                    <div className={`classroom-icon ${loginType}`}>
+                      <i className="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div className="classroom-details">
+                      <span className="classroom-name">
+                        {classroomData.grade_level}-{classroomData.strand} {classroomData.name}
+                      </span>
+                      <div className="details-group">
+                        <span className="classroom-students">
+                          <i className="fa-solid fa-users"></i> {classroomData.total_students} Students
+                        </span>
+                        <span className="classroom-adviser">
+                          <i className="fa-regular fa-circle-user"></i> {classroomData.adviser_name}
+                        </span>
+                      </div>
+                      <div className="btn-group">
+                        <Link to="/schedule" className="details-btn">
+                          Class Schedule
+                        </Link>
+                        {loginType === 'student' ? (
+                          <button type="button" className="details-btn">
+                            12-STABSS <i className="fa-solid fa-chevron-right"></i>
+                          </button>
+                        ) : (
+                          <button type="button" className="details-btn" onClick={openModal}>
+                            Switch Classroom
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <span className={`loader ${loginType}`}></span>
+                )}
               </div>
             </div>
             {
