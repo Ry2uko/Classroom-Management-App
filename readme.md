@@ -18,10 +18,11 @@ git clone https://github.com/Ry2uko/Classroom-Management-App.git
 	- Do the same with [Google Sheets](https://docs.google.com/spreadsheets/u/0/?pli=1), and share with your service account, then copy the spreadsheet id from the url: `https://docs.google.com/spreadsheets/d/<spreadsheet_id>/edit?gid=0#gid=0`
 	- This folder and spreadsheet is where files from the classroom management app and attendance will be stored
 4. Setting the environment variables
-	- Create a `.env` file using the `.env.sample` template and paste the older id and spreadsheet id from earlier
+	- Create a `.env` file using the `.env.sample` template and paste the folder id and spreadsheet id from earlier
 5. Run the following commands (`/backend`)
 ```
 pip install -r requirements.txt
+python manage.py makemigrations api
 python manage.py migrate
 python manage.py runserver
 ```
