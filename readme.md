@@ -7,7 +7,8 @@ git clone https://github.com/Ry2uko/Classroom-Management-App.git
 2. Creating Google API credentials using a service account
    - Create a new Google account
    - Log in to [Google Cloud Console](https://console.cloud.google.com) and create a new project
-   - Go to APIs & Services on the navigation menu then unto Credentials
+   - Go to APIs & Services on the navigation menu and select "Enabled APIs & services". Search "Google Drive API" and "Google Sheets API", then enable them.
+   - After that, go to the "Credentials" tab
    - Create credentials then select "Service account"
    - After creating a service account, from the credentials screen, select your service account. Go to the keys tab and "Add key", then proceeding to create a new key (JSON). 
    - The JSON file will automatically be downloaded, which is your credentials. You can rename this file as `credentials.json`, then put in the project directory.
